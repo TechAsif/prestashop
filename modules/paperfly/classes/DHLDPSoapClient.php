@@ -32,11 +32,6 @@ class DHLDPSoapClient extends SoapClient
                 }
             }
         }
-        var_dump($request);
-        var_dump($location);
-        var_dump($action);
-        var_dump($version);
-        die();
         return parent::__doRequest($request, $location, $action, $version);
     }
 }

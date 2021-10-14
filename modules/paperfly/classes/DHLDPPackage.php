@@ -13,7 +13,7 @@
 
 class DHLDPPackage extends ObjectModel
 {
-    public $id_dhldp_label;
+    public $id_paperfly_label;
     public $length;
     public $width;
     public $height;
@@ -24,10 +24,10 @@ class DHLDPPackage extends ObjectModel
     public $date_upd;
 
     public static $definition = array(
-        'table' => 'dhldp_package',
-        'primary' => 'id_dhldp_package',
+        'table' => 'paperfly_package',
+        'primary' => 'id_paperfly_package',
         'fields' => array(
-            'id_dhldp_label' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true),
+            'id_paperfly_label' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true),
             'length' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId'),
             'width' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId'),
             'height' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId'),

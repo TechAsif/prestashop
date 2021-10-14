@@ -250,7 +250,7 @@
         </tbody>
     </table>
     {else}
-        <span class="alert-warning">{l s='no dhl carrier' mod='dhldp'}</span>
+        <span class="alert-warning">{l s='no paperfly carrier' mod='dhldp'}</span>
     {/if}
 	</div>
   {/foreach}

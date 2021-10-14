@@ -70,9 +70,9 @@ var dhldp_list = {
 	  }
       if (typeof el_after != "undefined")
         $(document.createElement('a')).addClass('button btn btn-warning bulk-actions')
-            .attr({'href': '#','id': 'generateDHLDPDhlLabels'}).text(dhldp_list.translate('Generate DHL labels')).insertAfter($(el_after));
+            .attr({'href': '#','id': 'generateDHLDPDhlLabels'}).text(dhldp_list.translate('Generate PAPERFLY labels')).insertAfter($(el_after));
     $(document.createElement('a')).addClass('button btn btn-warning bulk-actions')
-        .attr({'href': '#','id': 'generateDHLDPDpLabels'}).text(dhldp_list.translate('Generate DP labels')).insertAfter($(el_after));
+        .attr({'href': '#','id': 'generateDHLDPDpLabels'}).text(dhldp_list.translate('Generate LGTech labels')).insertAfter($(el_after));
   },
   
   processButtonClick: function(mode = 'dhl') {

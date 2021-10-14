@@ -11,7 +11,7 @@
  * @link      http://www.silbersaiten.de
  */
 
-class DPLabel extends ObjectModel
+class LGLabel extends ObjectModel
 {
     public $id_order_carrier;
     public $product;
@@ -31,8 +31,8 @@ class DPLabel extends ObjectModel
     public $label_position;
 
     public static $definition = array(
-        'table' => 'dhldp_dp_label',
-        'primary' => 'id_dhldp_dp_label',
+        'table' => 'paperfly_lg_label',
+        'primary' => 'id_paperfly_lg_label',
         'fields' => array(
             'id_order_carrier' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true),
             'product' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId'),

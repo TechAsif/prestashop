@@ -20,8 +20,8 @@ class DHLDPOrder extends ObjectModel
     public $date_upd;
 
     public static $definition = array(
-        'table' => 'dhldp_order',
-        'primary' => 'id_dhldp_order',
+        'table' => 'paperfly_order',
+        'primary' => 'id_paperfly_order',
         'fields' => array(
             'id_cart' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true),
             'id_order' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => false),
@@ -33,18 +33,18 @@ class DHLDPOrder extends ObjectModel
 
     public static function hasPermissionForTransferring($id_cart)
     {
-        return Db::getInstance()->getValue('SELECT permission_tpd FROM '._DB_PREFIX_.'dhldp_order WHERE id_cart='.(int)$id_cart);
+        return Db::getInstance()->getValue('SELECT permission_tpd FROM '._DB_PREFIX_.'paperfly_order WHERE id_cart='.(int)$id_cart);
     }
 
     public static function getPermissionForTransferring($id_cart)
     {
-        return Db::getInstance()->getRow('SELECT permission_tpd, date_add FROM '._DB_PREFIX_.'dhldp_order WHERE id_cart='.(int)$id_cart);
+        return Db::getInstance()->getRow('SELECT permission_tpd, date_add FROM '._DB_PREFIX_.'paperfly_order WHERE id_cart='.(int)$id_cart);
     }
 
     public static function updatePermission($id_cart, $permission)
     {
-        $id_dhldp_order = Db::getInstance()->getValue('SELECT id_dhldp_order FROM '._DB_PREFIX_.'dhldp_order WHERE id_cart='.(int)$id_cart);
-        $do = new DhlDPOrder((int)$id_dhldp_order);
+        $id_paperfly_order = Db::getInstance()->getValue('SELECT id_paperfly_order FROM '._DB_PREFIX_.'paperfly_order WHERE id_cart='.(int)$id_cart);
+        $do = new DhlDPOrder((int)$id_paperfly_order);
         $do->id_cart = (int)$id_cart;
         $do->permission_tpd = (int)$permission;
         if ($do->save()) {

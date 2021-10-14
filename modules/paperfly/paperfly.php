@@ -16,37 +16,38 @@ if (!defined('_PS_VERSION_')) {
 }
 
 require_once(dirname(__FILE__).'/classes/DHLDPApi.php');
-require_once(dirname(__FILE__).'/classes/DHLDPLabel.php');
+require_once(dirname(__FILE__).'/classes/PAPERFLYLabel.php');
 require_once(dirname(__FILE__).'/classes/DHLDPPackage.php');
 require_once(dirname(__FILE__).'/classes/DHLDPOrder.php');
-
+require_once(dirname(__FILE__).'/classes/PAPERFLYOrder.php');
+require_once(dirname(__FILE__).'/classes/PAPERFLYOrderTracking.php');
 require_once(dirname(__FILE__).'/classes/DPApi.php');
-require_once(dirname(__FILE__).'/classes/DPLabel.php');
+require_once(dirname(__FILE__).'/classes/LGLabel.php');
 
-class DhlDp extends Module
+class PaperFly extends Module
 {
-    public $dhldp_api;
-    public static $conf_prefix = 'DHLDP_';
+    public $paperfly_api;
+    public static $conf_prefix = '_PAPERFLY';
 
 
     public function __construct()
     {
-        $this->name = 'dhldp';
+        $this->name = 'paperfly';
         $this->tab = 'shipping_logistics';
         $this->version = '1.0.11';
-        $this->author = 'Silbersaiten';
-        $this->module_key = '96d5521c4c1259e8e87786597735aa4e';
+        $this->author = 'rokan';
+//        $this->module_key = '96d5521c4c1259e8e87786597735aa4e';
         $this->need_instance = 0;
 
         $this->bootstrap = true;
 
         parent::__construct();
 
-        $this->displayName = $this->l('DHL Deutschepost');
-        $this->description = $this->l('DHL and Deutschepost shipment service');
+        $this->displayName = $this->l('Paperfly LG Tech');
+        $this->description = $this->l('Paperfly and Lets go tech shipment service');
         $this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
 
-        $this->dhldp_api = new DHLDPApi($this);
+        $this->paperfly_api = new DHLDPApi($this);
         $this->dp_api = new DPApi();
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
 		$this->is177 = version_compare(_PS_VERSION_, '1.7.7.0') >= 0 ? 1 : 0;
@@ -64,10 +65,12 @@ class DhlDp extends Module
         $return &= parent::install();
 
         $return &= $this->createDbTables();
-        $return &= $this->installTab('AdminDhldpManifest', 'DHL', 'AdminParentShipping', true);
+        $return &= $this->installTab('AdminDhldpManifest', 'PAPERFLY', 'AdminParentShipping', true);
         $return &= $this->registerHook('displayBackOfficeHeader');
         $return &= $this->registerHook('displayAdminOrder');
         $return &= $this->registerHook('actionOrderReturn');
+        $return &= $this->registerHook('actionValidateOrder');
+        $return &= $this->registerHook('actionValidateOrderAfter');
         $return &= $this->registerHook('actionObjectOrderReturnUpdateAfter');
         $return &= $this->registerHook('displayHeader');
         $return &= $this->registerHook('actionProductAdd');
@@ -134,8 +137,8 @@ class DhlDp extends Module
         $return = true;
 
         $return &= (bool)Db::getInstance()->Execute(
-            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'dhldp_label` (
-                `id_dhldp_label` int(11) NOT NULL AUTO_INCREMENT,
+            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'paperfly_label` (
+                `id_paperfly_label` int(11) NOT NULL AUTO_INCREMENT,
                 `id_order_carrier` int(11) NOT NULL,
                 `product_code` varchar(30) NOT NULL,
                 `options` text,
@@ -157,13 +160,13 @@ class DhlDp extends Module
                 `idc_type` varchar(20),
                 `int_idc` varchar(50),
                 `int_idc_type` varchar(20),
-                PRIMARY KEY (`id_dhldp_label`)
+                PRIMARY KEY (`id_paperfly_label`)
                 ) ENGINE='._MYSQL_ENGINE_.'  DEFAULT CHARSET=utf8'
         );
         $return &= (bool)Db::getInstance()->Execute(
-            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'dhldp_package` (
-                `id_dhldp_package` int(11) NOT NULL AUTO_INCREMENT,
-                `id_dhldp_label` int(11) NOT NULL,
+            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'paperfly_package` (
+                `id_paperfly_package` int(11) NOT NULL AUTO_INCREMENT,
+                `id_paperfly_label` int(11) NOT NULL,
                 `length` int(11) NOT NULL DEFAULT \'0\',
                 `width` int(11) NOT NULL DEFAULT \'0\',
                 `height` int(11) NOT NULL DEFAULT \'0\',
@@ -172,24 +175,24 @@ class DhlDp extends Module
                 `shipment_number` varchar(255) DEFAULT NULL,
                 `date_add` datetime NOT NULL,
                 `date_upd` datetime NOT NULL,
-                PRIMARY KEY (`id_dhldp_package`)
+                PRIMARY KEY (`id_paperfly_package`)
                 ) ENGINE='._MYSQL_ENGINE_.'  DEFAULT CHARSET=utf8'
         );
 
-        $return &= (bool)Db::getInstance()->Execute(
-            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'dhldp_order` (
-                `id_dhldp_order` int(11) NOT NULL AUTO_INCREMENT,
-                `id_cart` int(11) NOT NULL,
-                `id_order` int(11),
-                `permission_tpd` tinyint(1) NOT NULL DEFAULT \'0\',
-                `date_add` datetime NOT NULL,
-                `date_upd` datetime NOT NULL,
-                PRIMARY KEY (`id_dhldp_order`)
-                ) ENGINE='._MYSQL_ENGINE_.'  DEFAULT CHARSET=utf8'
-        );
+//        $return &= (bool)Db::getInstance()->Execute(
+//            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'paperfly_order` (
+//                `id_paperfly_order` int(11) NOT NULL AUTO_INCREMENT,
+//                `id_cart` int(11) NOT NULL,
+//                `id_order` int(11),
+//                `permission_tpd` tinyint(1) NOT NULL DEFAULT \'0\',
+//                `date_add` datetime NOT NULL,
+//                `date_upd` datetime NOT NULL,
+//                PRIMARY KEY (`id_paperfly_order`)
+//                ) ENGINE='._MYSQL_ENGINE_.'  DEFAULT CHARSET=utf8'
+//        );
 
         $return &= (bool)Db::getInstance()->Execute(
-            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'dhldp_product_customs` (
+            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'paperfly_product_customs` (
                 `id_product` int(11) NOT NULL,
                 `id_product_attribute` int(11),
                 `customs_tariff_number` varchar(10),
@@ -201,8 +204,8 @@ class DhlDp extends Module
         );
 
         $return &= (bool)Db::getInstance()->Execute(
-            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'dhldp_dp_label` (
-                `id_dhldp_dp_label` int(11) NOT NULL AUTO_INCREMENT,
+            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'paperfly_lg_label` (
+                `id_paperfly_lg_label` int(11) NOT NULL AUTO_INCREMENT,
                 `id_order_carrier` int(11) NOT NULL,
                 `product` int(11) NOT NULL,
                 `total` decimal(20,6) NOT NULL DEFAULT \'0\',
@@ -219,44 +222,74 @@ class DhlDp extends Module
                 `page_format_id` int(11) NOT NULL  DEFAULT \'0\',
                 `date_add` datetime NOT NULL,
                 `date_upd` datetime NOT NULL,
-                PRIMARY KEY (`id_dhldp_dp_label`)
+                PRIMARY KEY (`id_paperfly_lg_label`)
                 ) ENGINE='._MYSQL_ENGINE_.'  DEFAULT CHARSET=utf8'
         );
         $return &= (bool)Db::getInstance()->Execute(
-            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'dhldp_dp_productlist` (
-                `id_dhldp_dp_productlist` int(11) NOT NULL AUTO_INCREMENT,
+            'CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'paperfly_lg_productlist` (
+                `id_paperfly_lg_productlist` int(11) NOT NULL AUTO_INCREMENT,
                 `id` int(11) NOT NULL,
                 `name` varchar(256) NOT NULL,
                 `price` decimal(20,2) NOT NULL DEFAULT \'0\',
                 `price_contract` decimal(20,2) NOT NULL DEFAULT \'0\',
                 `date_add` datetime NOT NULL,
                 `date_upd` datetime NOT NULL,
-                PRIMARY KEY (`id_dhldp_dp_productlist`)
+                PRIMARY KEY (`id_paperfly_lg_productlist`)
                 ) ENGINE='._MYSQL_ENGINE_.'  DEFAULT CHARSET=utf8'
         );
 
+        $return &= (bool)Db::getInstance()->Execute(
+            'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'paperfly_order` (
+                `id_paperfly_order` int(11) NOT NULL AUTO_INCREMENT,
+                `id_cart` int(11) NOT NULL,
+                `id_order` int(11) NOT NULL,
+                `id_customer` int(11) NOT NULL,
+                `tracking_number` varchar(40) NOT NULL,
+                `reference` varchar(40) NOT NULL,
+                `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+                `api_response_status_code` varchar(40),
+                `api_response_status_message` varchar(500),
+                PRIMARY KEY (`id_paperfly_order`)
+                ) ENGINE=' . _MYSQL_ENGINE_ . '  DEFAULT CHARSET=utf8'
+        );
+
+        $return &= (bool)Db::getInstance()->Execute(
+            'CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'paperfly_order_tracking` (
+                `id_paperfly_order_tracking` int(11) NOT NULL AUTO_INCREMENT,
+                `id_order` int(11) NOT NULL,
+                `reference` varchar(20) NOT NULL,
+                `id_paperfly_order` int(11) NOT NULL,
+                `tracking_number` varchar(20) NOT NULL,
+                `tracking_event_key` varchar(100) NOT NULL,
+                `tracking_event_value` varchar(200) NOT NULL,
+                `date_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `api_response_status_code` varchar(40),
+                `api_response_status_message` varchar(500),
+                PRIMARY KEY (`id_paperfly_order_tracking`)
+                ) ENGINE=' . _MYSQL_ENGINE_ . '  DEFAULT CHARSET=utf8'
+        );
         return $return;
     }
 
     public function deleteDeliveryLabel($shipment_number, $id_shop = null)
     {
-        $this->dhldp_api->setApiVersionByIdShop($id_shop);
+        $this->paperfly_api->setApiVersionByIdShop($id_shop);
 
         $operation = 'deleteShipmentOrder';
         $request = array(
             'shipmentNumber' => $shipment_number
         );
 
-        $response = $this->dhldp_api->callDHLApi(
+        $response = $this->paperfly_api->callDHLApi(
             $operation,
             $request,
             $id_shop
         );
         if (is_array($response) && isset($response['shipmentNumber'])) {
-            $id_dhldp_label = DHLDPLabel::getLabelIDByShipmentNumber($shipment_number);
-            if ($id_dhldp_label > 0) {
-                $dhldp_label = new DHLDPLabel($id_dhldp_label);
-                if ($dhldp_label->delete()) {
+            $id_paperfly_label = PAPERFLYLabel::getLabelIDByShipmentNumber($shipment_number);
+            if ($id_paperfly_label > 0) {
+                $paperfly_label = new PAPERFLYLabel($id_paperfly_label);
+                if ($paperfly_label->delete()) {
                     return true;
                 }
             }
@@ -266,14 +299,14 @@ class DhlDp extends Module
 
     public function doManifest($shipment_number, $id_shop = null)
     {
-        $this->dhldp_api->setApiVersionByIdShop($id_shop);
+        $this->paperfly_api->setApiVersionByIdShop($id_shop);
 
         $operation = 'doManifest';
         $request = array(
            'shipmentNumber' => $shipment_number
         );
 
-        $response = $this->dhldp_api->callDHLApi(
+        $response = $this->paperfly_api->callDHLApi(
             $operation,
             $request,
             $id_shop
@@ -305,7 +338,7 @@ class DhlDp extends Module
             'returnDocumentType' => 'SHIPMENT_LABEL'
         );
 
-        $response = $this->dhldp_api->callDhlRetoureApi(
+        $response = $this->paperfly_api->callDhlRetoureApi(
             $return_order,
             $id_shop
         );
@@ -313,42 +346,42 @@ class DhlDp extends Module
         //$response = '{"shipmentNumber":"999990405288","labelData":"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jmNTW/KFoQrtSKSXmQ8nVMJyPIyL6lOHonr/ReO4Q0mtigOpcEzY05K8aFoQn03hEA3KOhZRmaGujKRfNMV1qu+JM2zi3/vPPyJla6gKZW5kc3RyZWFtCmVuZG9iago1IDAgb2JqCjw8L0tpZHNbNiAwIFJdL1R5cGUvUGFnZXMvQ291bnQgMS9JVFhUKDIuMS43KT4+CmVuZG9iago3IDAgb2JqCjw8L1R5cGUvQ2F0YWxvZy9QYWdlcyA1IDAgUj4+CmVuZG9iago4IDAgb2JqCjw8L01vZERhdGUoRDoyMDIwMDgxNzE1MzQ1NSswMicwMCcpL0NyZWF0aW9uRGF0ZShEOjIwMjAwODE3MTUzNDU1KzAyJzAwJykvUHJvZHVjZXIoaVRleHQgMi4xLjcgYnkgMVQzWFQpPj4KZW5kb2JqCnhyZWYKMCA5CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDQ4MCAwMDAwMCBuIAowMDAwMDAwMjk5IDAwMDAwIG4gCjAwMDAwMDAzOTIgMDAwMDAgbiAKMDAwMDAwMDAxNSAwMDAwMCBuIAowMDAwMDI5Nzk1IDAwMDAwIG4gCjAwMDAwMDAxMzIgMDAwMDAgbiAKMDAwMDAyOTg1OCAwMDAwMCBuIAowMDAwMDI5OTAzIDAwMDAwIG4gCnRyYWlsZXIKPDwvSW5mbyA4IDAgUi9JRCBbPDIyODVhY2QzN2U3N2JiYjVjMGZmMzE4YmM3MTBhYjU4PjwxNDYzYzRkZjQyZDRkYjc2MGRmMTY1OTFiOTM5NzMzND5dL1Jvb3QgNyAwIFIvU2l6ZSA5Pj4Kc3RhcnR4cmVmCjMwMDI1CiUlRU9GCg==","qrLabelData":"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","routingCode":"40327653113+99000933106001"}';
 
         if (is_array($response) && isset($response['shipmentNumber'])) {
-            $dhldp_label = new DHLDPLabel();
+            $paperfly_label = new PAPERFLYLabel();
 
-            $dhldp_label->id_order_carrier = (int)$id_order_carrier;
-            $dhldp_label->product_code = 'ra';
-            $dhldp_label->options = '';
-            $dhldp_label->shipment_number = isset($response['shipmentNumber'])?$response['shipmentNumber']:$response['shipmentNumber'];
-            $dhldp_label->label_url = isset($response['shipmentNumber'])?$response['shipmentNumber']:$response['shipmentNumber'];
-            $dhldp_label->export_label_url = '';
-            $dhldp_label->cod_label_url = '';
-            $dhldp_label->return_label_url = '';
-            $dhldp_label->is_complete = 1;
-            $dhldp_label->is_return = 1;
-            $dhldp_label->with_return = 0;
-            $dhldp_label->id_order_return = (int)$id_order_return;
-            $dhldp_label->shipment_date = '';
-            $dhldp_label->api_version = $this->dhldp_api->getApiVersion();
-            $dhldp_label->routing_code = $response['routingCode'];
-            $dhldp_label->idc = '';
-            $dhldp_label->idc_type = '';
-            $dhldp_label->int_idc = '';
-            $dhldp_label->int_idc_type = '';
+            $paperfly_label->id_order_carrier = (int)$id_order_carrier;
+            $paperfly_label->product_code = 'ra';
+            $paperfly_label->options = '';
+            $paperfly_label->shipment_number = isset($response['shipmentNumber'])?$response['shipmentNumber']:$response['shipmentNumber'];
+            $paperfly_label->label_url = isset($response['shipmentNumber'])?$response['shipmentNumber']:$response['shipmentNumber'];
+            $paperfly_label->export_label_url = '';
+            $paperfly_label->cod_label_url = '';
+            $paperfly_label->return_label_url = '';
+            $paperfly_label->is_complete = 1;
+            $paperfly_label->is_return = 1;
+            $paperfly_label->with_return = 0;
+            $paperfly_label->id_order_return = (int)$id_order_return;
+            $paperfly_label->shipment_date = '';
+            $paperfly_label->api_version = $this->paperfly_api->getApiVersion();
+            $paperfly_label->routing_code = $response['routingCode'];
+            $paperfly_label->idc = '';
+            $paperfly_label->idc_type = '';
+            $paperfly_label->int_idc = '';
+            $paperfly_label->int_idc_type = '';
 
-            $pdf_file = $this->saveLabelFile($dhldp_label->label_url, base64_decode($response['labelData']));
+            $pdf_file = $this->saveLabelFile($paperfly_label->label_url, base64_decode($response['labelData']));
 
-            if (!$dhldp_label->save()) {
+            if (!$paperfly_label->save()) {
                 return false;
             } else {
-                $dhldp_package = new DHLDPPackage();
-                $dhldp_package->id_dhldp_label = $dhldp_label->id;
-                $dhldp_package->weight = 1;
-                $dhldp_package->length = 1;
-                $dhldp_package->width = 1;
-                $dhldp_package->height = 1;
-                $dhldp_package->package_type = 'PK';
-                $dhldp_package->shipment_number = $dhldp_label->shipment_number;
-                $dhldp_package->save();
+                $paperfly_package = new DHLDPPackage();
+                $paperfly_package->id_paperfly_label = $paperfly_label->id;
+                $paperfly_package->weight = 1;
+                $paperfly_package->length = 1;
+                $paperfly_package->width = 1;
+                $paperfly_package->height = 1;
+                $paperfly_package->package_type = 'PK';
+                $paperfly_package->shipment_number = $paperfly_label->shipment_number;
+                $paperfly_package->save();
 
                 $order_carrier = new OrderCarrier((int)$id_order_carrier);
                 $id_order = $order_carrier->id_order;
@@ -365,13 +398,13 @@ class DhlDp extends Module
                     $template = 'dhl_return_label';
                     $subject = $this->l('Return label');
 
-                    $pdf_file = $this->getLabelFilePathByLabelUrl($dhldp_label->label_url);
+                    $pdf_file = $this->getLabelFilePathByLabelUrl($paperfly_label->label_url);
 
                     if ($pdf_file != '') {
                         $file_attachment = array(
                             'dhl_return_label' => array(
                                 'content' => Tools::file_get_contents($pdf_file),
-                                'name' => 'dhldp_return_label_'.$order->id.'_'.$id_order_return.'.pdf',
+                                'name' => 'paperfly_return_label_'.$order->id.'_'.$id_order_return.'.pdf',
                                 'mime' => 'application/pdf'
                             )
                         );
@@ -405,7 +438,7 @@ class DhlDp extends Module
     }
 
     public function createDhlDeliveryLabel(
-        $dhldp_delivery_address,
+        $paperfly_delivery_address,
         $product_code,
         $packages,
         $options,
@@ -423,19 +456,19 @@ class DhlDp extends Module
             unset($options['export_docs']['show_DHLDP_export_documents']);
         }
 
-        $this->dhldp_api->setApiVersionByIdShop($id_shop);
+        $this->paperfly_api->setApiVersionByIdShop($id_shop);
 
         $aproduct_code = explode(':', $product_code);
 
-        $receiver = $dhldp_delivery_address;
-        $shipper = $this->dhldp_api->getShipper($id_shop);
+        $receiver = $paperfly_delivery_address;
+        $shipper = $this->paperfly_api->getShipper($id_shop);
 
-        $def = $this->dhldp_api->getDefinedProducts($aproduct_code[0], $receiver['countryISOCode'], $shipper['countryISOCode'], $this->dhldp_api->getApiVersion());
+        $def = $this->paperfly_api->getDefinedProducts($aproduct_code[0], $receiver['countryISOCode'], $shipper['countryISOCode'], $this->paperfly_api->getApiVersion());
 
         if (self::getConfig('DHL_MODE', $id_shop) == 1) {
             $ekp = self::getConfig('DHL_LIVE_EKP', $id_shop);
         } else {
-            $ekp = DHLDPApi::$dhl_sbx_ekp[$this->dhldp_api->getApiVersion()];
+            $ekp = DHLDPApi::$dhl_sbx_ekp[$this->paperfly_api->getApiVersion()];
         }
 
         $shipment_order = array(
@@ -452,8 +485,8 @@ class DhlDp extends Module
                 'Receiver' => $receiver
             ),
         );
-		
-		if ($this->dhldp_api->getMajorApiVersion() != 3) {
+
+		if ($this->paperfly_api->getMajorApiVersion() != 3) {
 			$shipment_order['LabelResponseType'] = 'URL';
 			$shipment_order['PRINTONLYIFCODEABLE'] = 0;
 		} else {
@@ -668,10 +701,10 @@ class DhlDp extends Module
         }
 
        // echo '<pre>'.print_r($shipment_order, true).'</pre>'; exit;
-		
+
 		$shipment_order_request = array('ShipmentOrder' => $shipment_order);
-		
-		if ($this->dhldp_api->getMajorApiVersion() == 3) {
+
+		if ($this->paperfly_api->getMajorApiVersion() == 3) {
 			$shipment_order_request['labelResponseType'] = 'URL';
 			if (self::getConfig('DHL_LABEL_FORMAT', $id_shop) != '') {
 				$shipment_order_request['labelFormat'] = self::getConfig('DHL_LABEL_FORMAT', $id_shop);
@@ -684,14 +717,14 @@ class DhlDp extends Module
         //echo '<pre>'.print_r($def, true).'</pre>';
         //echo '<pre>'.print_r($options, true).'</pre>';
         //echo '<pre>'.print_r($shipment_order, true).'</pre>'; exit;
-        $response = $this->dhldp_api->callDHLApi(
+        $response = $this->paperfly_api->callDHLApi(
             'createShipmentOrder',
             $shipment_order_request,
             $id_shop
         );
 
         if (is_array($response) && isset($response['shipmentNumber'])) {
-            $dhl_label = new DHLDPLabel();
+            $dhl_label = new PAPERFLYLabel();
 
             $dhl_label->id_order_carrier = (int)$id_order_carrier;
             $dhl_label->product_code = $product_code;
@@ -718,14 +751,14 @@ class DhlDp extends Module
             $dhl_label->with_return = (int)$with_return;
             $dhl_label->id_order_return = (int)$id_order_return;
             $dhl_label->shipment_date = $options['shipment_date'];
-            $dhl_label->api_version = $this->dhldp_api->getApiVersion();
+            $dhl_label->api_version = $this->paperfly_api->getApiVersion();
 
             if (!$dhl_label->save()) {
                 return false;
             } else {
                 if (isset($shipment_order['Shipment']['ShipmentDetails']['ShipmentItem']['weightInKG'])) {
                     $dhl_package = new DHLDPPackage();
-                    $dhl_package->id_dhldp_label = $dhl_label->id;
+                    $dhl_package->id_paperfly_label = $dhl_label->id;
                     $dhl_package->weight = $shipment_order['Shipment']['ShipmentDetails']['ShipmentItem']['weightInKG'];
                     $dhl_package->length = $shipment_order['Shipment']['ShipmentDetails']['ShipmentItem']['lengthInCM'];
                     $dhl_package->width = $shipment_order['Shipment']['ShipmentDetails']['ShipmentItem']['widthInCM'];
@@ -736,7 +769,7 @@ class DhlDp extends Module
                 } else {
                     foreach ($shipment_order['Shipment']['ShipmentDetails']['ShipmentItem'] as $package) {
                         $dhl_package = new DHLDPPackage();
-                        $dhl_package->id_dhldp_label = $dhl_label->id;
+                        $dhl_package->id_paperfly_label = $dhl_label->id;
                         $dhl_package->weight = $package['WeightInKG'];
                         $dhl_package->length = $package['LengthInCM'];
                         $dhl_package->width = $package['WidthInCM'];
@@ -817,7 +850,7 @@ class DhlDp extends Module
          * $params['orderReturn']->state = 1
          */
         $order = new Order((int)$params['orderReturn']->id_order);
-        if (Validate::isLoadedObject($order) && $this->dhldp_api->setApiVersionByIdShop($order->id_shop)) {
+        if (Validate::isLoadedObject($order) && $this->paperfly_api->setApiVersionByIdShop($order->id_shop)) {
             if (self::getConfig('DHL_RETURNS_EXTEND', $order->id_shop) &&
                 (self::getConfig('DHL_RETURNS_IMMED', $order->id_shop))) {
                 // restriction - only for germany
@@ -835,10 +868,100 @@ class DhlDp extends Module
         }
     }
 
+    public function hookActionValidateOrderAfter($params)
+    {
+//        var_dump($params['cart']);
+//        var_dump($params['order']);
+//        die('here');
+        /*
+         * $params['orderReturn']->id_order
+         * $params['orderReturn']->id_customer
+         * $params['orderReturn']->state = 1
+         */
+//        $order = new Order((int)$params['orderReturn']->id_order);
+//        if (Validate::isLoadedObject($order) && $this->paperfly_api->setApiVersionByIdShop($order->id_shop)) {
+//            if (self::getConfig('DHL_RETURNS_EXTEND', $order->id_shop) &&
+//                (self::getConfig('DHL_RETURNS_IMMED', $order->id_shop))) {
+//                // restriction - only for germany
+//                //if ($this->isGermanyAddress($order->id_address_delivery)) {
+//                $order_carriers = $this->filterShipping($order->getShipping(), (int)$order->id_shop);
+//                if (is_array($order_carriers) && count($order_carriers) > 0) {
+//                    // change state
+//                    $params['orderReturn']->state = 2;
+//                    $params['orderReturn']->save();
+//
+//                    // mail will be send on hookActionObjectOrderReturnUpdateAfter
+//                }
+//                //}
+//            }
+//        }
+    }
+
+    public function hookActionValidateOrder($params)
+    {
+
+        /*
+         * $params['orderReturn']->id_order
+         * $params['orderReturn']->id_customer
+         * $params['orderReturn']->state = 1
+         */
+
+        $order = $params['order'];
+        $api_response = self::sentToPaperFlyOrder($order);
+        $tracking_api_response = self::sentToPaperflyOrderTrackingApi($order);
+        $tracking_response_data = (json_decode($tracking_api_response)->response_code == '200') ? json_decode($tracking_api_response)->success->trackingStatus : '';
+
+
+        $traking_number = "'" . json_decode($api_response)->success->tracking_number . "'";
+        $order_api_response_code = "'" . json_decode($api_response)->response_code . "'";
+        $order_api_response_message = ($order_api_response_code == '200') ? json_decode($api_response)->success->message :
+            json_decode($api_response)->error->message;
+
+        $tracking_api_response_code = "'" . json_decode($tracking_api_response)->response_code . "'";
+        $tracking_api_response_message = "'" . ($tracking_api_response_code == '200') ? json_decode($tracking_api_response)->success->message :
+            json_decode($tracking_api_response)->error->message . "'";
+        $reference = "'" . $order->reference . "'";
+        $sql = 'INSERT INTO ' . _DB_PREFIX_ . 'paperfly_order
+            (`id_cart`, `id_order`, `id_customer`,`tracking_number`, `reference`,`api_response_status_code`,`api_response_status_message`)
+            values(
+             ' . (int)$order->id_cart . ',
+             ' . (int)$order->id . ',
+             ' . (int)$order->id_customer . ',
+             ' . $traking_number . ',
+             ' . $reference . ',
+             ' . $order_api_response_code . ',
+             ' . $order_api_response_code . '
+            
+               )';
+
+        Db::getInstance()->execute($sql);
+        $id_paperfly_order = Db::getInstance()->Insert_ID();
+
+        foreach ((array)$tracking_response_data[0] as $key => $value) {
+            $this_key = "'" . $key . "'";
+            $this_val = "'" . $value . "'";
+            $sql_tracking = 'INSERT INTO ' . _DB_PREFIX_ . 'paperfly_order_tracking
+            (`id_order`,`reference`, `id_paperfly_order`, `tracking_number`,`tracking_event_key`,`tracking_event_value`,
+            `api_response_status_code`,`api_response_status_message`)
+            values(
+             ' . (int)$order->id . ',
+             ' . $reference . ',
+             ' . $id_paperfly_order . ',
+             ' . $traking_number . ',
+             ' . $this_key . ',
+             ' . $this_val . ',
+             ' . $tracking_api_response_code . ',
+             ' . $tracking_api_response_code . '
+            )';
+            Db::getInstance()->execute($sql_tracking);
+        }
+
+    }
+
     public function getLastNonReturnLabelData($id_order_carrier)
     {
         return Db::getInstance()->executeS(
-            'SELECT * FROM `'._DB_PREFIX_.'dhldp_label` l  WHERE l.`id_order_carrier`= '.
+            'SELECT * FROM `'._DB_PREFIX_.'paperfly_label` l  WHERE l.`id_order_carrier`= '.
             (int)$id_order_carrier.' AND l.is_return != 1  ORDER BY l.`date_add` DESC LIMIT 1'
         );
     }
@@ -846,7 +969,7 @@ class DhlDp extends Module
     public function getLastReturnLabelDataForIdOrderReturn($id_order_carrier, $id_order_return)
     {
         return Db::getInstance()->getRow(
-            'SELECT * FROM `'._DB_PREFIX_.'dhldp_label` l  WHERE l.`id_order_carrier`= '.
+            'SELECT * FROM `'._DB_PREFIX_.'paperfly_label` l  WHERE l.`id_order_carrier`= '.
             (int)$id_order_carrier.' AND l.`id_order_return`='.(int)$id_order_return.' ORDER BY l.`date_add` DESC'
         );
     }
@@ -857,7 +980,7 @@ class DhlDp extends Module
          * $params['object']
          */
         $order = new Order((int)$params['object']->id_order);
-        if (Validate::isLoadedObject($order) && $this->dhldp_api->setApiVersionByIdShop($order->id_shop)) {
+        if (Validate::isLoadedObject($order) && $this->paperfly_api->setApiVersionByIdShop($order->id_shop)) {
             if (self::getConfig('DHL_RETURNS_EXTEND', $order->id_shop) && $params['object']->state == 2) {
                 // restriction - only for germany
                 //if ($this->isGermanyAddress($order->id_address_delivery)) {
@@ -866,7 +989,7 @@ class DhlDp extends Module
                     foreach ($order_carriers as $order_carrier) {
                         $last_label = $this->getLastNonReturnLabelData($order_carrier['id_order_carrier']);
 
-                        if (is_array($last_label) && isset($last_label[0]['id_dhldp_label'])) {
+                        if (is_array($last_label) && isset($last_label[0]['id_paperfly_label'])) {
                             //send mail with button
                             $customer = new Customer((int)$order->id_customer);
                             $data = array(
@@ -884,7 +1007,7 @@ class DhlDp extends Module
                                 )
                             );
                             $template = 'dhl_return_approved';
-                            $subject = $this->l('Return has been approved. Get DHL Return label');
+                            $subject = $this->l('Return has been approved. Get PAPERFLY Return label');
                             $file_attachment = array();
                             Mail::Send(
                                 (int)$order->id_lang,
@@ -965,29 +1088,29 @@ class DhlDp extends Module
                 $this->context->controller->addJS($this->_path . 'views/js/address.js');
                 $this->context->controller->addCSS($this->_path . 'views/css/map.css');
             } else {
-                $this->context->controller->registerJavascript('dhldp_address', 'modules/' . $this->name . '/views/js/address.js', array('position' => 'bottom', 'priority' => 100));
-                $this->context->controller->registerStylesheet('dhldp_map', 'modules/' . $this->name . '/views/css/map.css', array('media' => 'all', 'priority' => 150));
+                $this->context->controller->registerJavascript('paperfly_address', 'modules/' . $this->name . '/views/js/address.js', array('position' => 'bottom', 'priority' => 100));
+                $this->context->controller->registerStylesheet('paperfly_map', 'modules/' . $this->name . '/views/css/map.css', array('media' => 'all', 'priority' => 150));
             }
 
-            $dhldp_address_data = array(
+            $paperfly_address_data = array(
                 'address_types' => $this->getDHLAddressTypes(),
                 'input_values' => array()
             );
 
 
-            $this->context->smarty->assign('dhldp_address_data', $dhldp_address_data);
+            $this->context->smarty->assign('paperfly_address_data', $paperfly_address_data);
             $this->context->smarty->assign(
-                'dhldp_ajax',
+                'paperfly_ajax',
                 $this->context->link->getModuleLink($this->name, 'address', array('ajax' => true), true)
             );
-            $this->context->smarty->assign('dhldp_path', $this->getPathUri());
+            $this->context->smarty->assign('paperfly_path', $this->getPathUri());
 
             if (Configuration::get('PS_RESTRICT_DELIVERED_COUNTRIES')) {
                 $countries = Carrier::getDeliveredCountries($this->context->language->id, true, true);
             } else {
                 $countries = Country::getCountries($this->context->language->id, true);
             }
-            $this->context->smarty->assign('dhldp_country_data', $countries);
+            $this->context->smarty->assign('paperfly_country_data', $countries);
             return $this->display(__FILE__, '/views/templates/hook/address.tpl');
         } elseif (($this->context->controller instanceof OrderController) &&
             (self::getConfig('DHL_GOOGLEMAPAPIKEY', $this->context->shop->id) != '') &&
@@ -1022,36 +1145,36 @@ class DhlDp extends Module
                 $this->context->controller->addJS($this->_path . 'views/js/address.js');
                 $this->context->controller->addCSS($this->_path . 'views/css/map.css');
             } else {
-                $this->context->controller->registerJavascript('dhldp_address', 'modules/' . $this->name . '/views/js/address.js', array('position' => 'bottom', 'priority' => 100));
-                $this->context->controller->registerStylesheet('dhldp_map', 'modules/' . $this->name . '/views/css/map.css', array('media' => 'all', 'priority' => 150));
+                $this->context->controller->registerJavascript('paperfly_address', 'modules/' . $this->name . '/views/js/address.js', array('position' => 'bottom', 'priority' => 100));
+                $this->context->controller->registerStylesheet('paperfly_map', 'modules/' . $this->name . '/views/css/map.css', array('media' => 'all', 'priority' => 150));
             }
 
-            $dhldp_address_data = array(
+            $paperfly_address_data = array(
                 'address_types' => $this->getDHLAddressTypes(),
                 'input_values' => array()
             );
 
-            $this->context->smarty->assign('dhldp_address_data', $dhldp_address_data);
+            $this->context->smarty->assign('paperfly_address_data', $paperfly_address_data);
             $this->context->smarty->assign(
-                'dhldp_ajax',
+                'paperfly_ajax',
                 $this->context->link->getModuleLink($this->name, 'address', array('ajax' => true))
             );
-            $this->context->smarty->assign('dhldp_path', $this->getPathUri());
+            $this->context->smarty->assign('paperfly_path', $this->getPathUri());
 
             if (Configuration::get('PS_RESTRICT_DELIVERED_COUNTRIES')) {
                 $countries = Carrier::getDeliveredCountries($this->context->language->id, true, true);
             } else {
                 $countries = Country::getCountries($this->context->language->id, true);
             }
-            $this->context->smarty->assign('dhldp_country_data', $countries);
+            $this->context->smarty->assign('paperfly_country_data', $countries);
             return $this->display(__FILE__, '/views/templates/hook/address.tpl');
-        } elseif (($this->context->controller instanceof OrderFollowController)  && $this->dhldp_api->setApiVersionByIdShop($this->context->shop->id)) {
+        } elseif (($this->context->controller instanceof OrderFollowController)  && $this->paperfly_api->setApiVersionByIdShop($this->context->shop->id)) {
             if (self::getConfig('DHL_RETURNS_EXTEND')) {
                 $this->context->controller->addJquery();
                 if (version_compare(_PS_VERSION_, '1.7', '<')) {
                     $this->context->controller->addJS($this->_path . 'views/js/order_returns.js');
                 } else {
-                    $this->context->controller->registerJavascript('dhldp_order_returns', 'modules/' . $this->name . '/views/js/order_returns.js', array('position' => 'bottom', 'priority' => 100));
+                    $this->context->controller->registerJavascript('paperfly_order_returns', 'modules/' . $this->name . '/views/js/order_returns.js', array('position' => 'bottom', 'priority' => 100));
                 }
                 $dhl_order_returns = array();
                 $ordersReturn = OrderReturn::getOrdersReturn($this->context->customer->id);
@@ -1070,7 +1193,7 @@ class DhlDp extends Module
                                             $last_label = $this->getLastNonReturnLabelData(
                                                 $order_carrier['id_order_carrier']
                                             );
-                                            if (is_array($last_label) && isset($last_label[0]['id_dhldp_label'])) {
+                                            if (is_array($last_label) && isset($last_label[0]['id_paperfly_label'])) {
                                                 $url = $this->context->link->getModuleLink(
                                                     $this->name,
                                                     'return',
@@ -1111,8 +1234,8 @@ class DhlDp extends Module
             if (is_array($ids_dhl) && count($ids_dhl)) {
                 $this->context->smarty->assign(
                     array(
-                        'js_dhldp_path' => $this->getPathUri(),
-                        'js_dhldp_carriers' => $ids_dhl,
+                        'js_paperfly_path' => $this->getPathUri(),
+                        'js_paperfly_carriers' => $ids_dhl,
                         'dhl_permission_private' => DHLDPOrder::hasPermissionForTransferring($params['cart']->id)
                     )
                 );
@@ -1147,8 +1270,8 @@ class DhlDp extends Module
                     'product_link_rewrite' => $product->link_rewrite,
                     'product_name' => $product->name,
                     'allow_to_use' => true,
-                    'ctn' => Db::getInstance()->getValue('select customs_tariff_number from '._DB_PREFIX_.'dhldp_product_customs WHERE id_product='.(int)$id_product.' AND id_product_attribute=0'),
-                    'coo' => Db::getInstance()->getValue('select country_of_origin from '._DB_PREFIX_.'dhldp_product_customs WHERE id_product='.(int)$id_product.' AND id_product_attribute=0'),
+                    'ctn' => Db::getInstance()->getValue('select customs_tariff_number from '._DB_PREFIX_.'paperfly_product_customs WHERE id_product='.(int)$id_product.' AND id_product_attribute=0'),
+                    'coo' => Db::getInstance()->getValue('select country_of_origin from '._DB_PREFIX_.'paperfly_product_customs WHERE id_product='.(int)$id_product.' AND id_product_attribute=0'),
                     'combinations' => $combinations
                 )
             );
@@ -1159,36 +1282,36 @@ class DhlDp extends Module
 
     public function hookActionProductAdd($params) {
         if ($params['id_product'] > 0) {
-            if (Db::getInstance()->getValue('select customs_tariff_number from '._DB_PREFIX_.'dhldp_product_customs WHERE id_product='.(int)$params['id_product'].' AND id_product_attribute=0') !== false) {
-                Db::getInstance()->update('dhldp_product_customs', array('customs_tariff_number' => pSQL(Tools::getValue('dhldp_ctn', '')), 'country_of_origin' => pSQL(Tools::getValue('dhldp_coo', '')), 'date_upd' => date('Y-m-d H:i:s')), 'id_product='.(int)$params['id_product'].' AND id_product_attribute=0');
+            if (Db::getInstance()->getValue('select customs_tariff_number from '._DB_PREFIX_.'paperfly_product_customs WHERE id_product='.(int)$params['id_product'].' AND id_product_attribute=0') !== false) {
+                Db::getInstance()->update('paperfly_product_customs', array('customs_tariff_number' => pSQL(Tools::getValue('paperfly_ctn', '')), 'country_of_origin' => pSQL(Tools::getValue('paperfly_coo', '')), 'date_upd' => date('Y-m-d H:i:s')), 'id_product='.(int)$params['id_product'].' AND id_product_attribute=0');
             } else {
-                Db::getInstance()->insert('dhldp_product_customs', array('customs_tariff_number' => pSQL(Tools::getValue('dhldp_ctn', '')), 'country_of_origin' => pSQL(Tools::getValue('dhldp_coo', '')), 'date_upd' => date('Y-m-d H:i:s'), 'id_product' => (int)$params['id_product'], 'id_product_attribute' => '0', 'date_add' => date('Y-m-d H:i:s')));
+                Db::getInstance()->insert('paperfly_product_customs', array('customs_tariff_number' => pSQL(Tools::getValue('paperfly_ctn', '')), 'country_of_origin' => pSQL(Tools::getValue('paperfly_coo', '')), 'date_upd' => date('Y-m-d H:i:s'), 'id_product' => (int)$params['id_product'], 'id_product_attribute' => '0', 'date_add' => date('Y-m-d H:i:s')));
             }
         }
     }
 
     public function hookActionProductUpdate($params) {
         if ($params['id_product'] > 0) {
-            if (Db::getInstance()->getValue('select customs_tariff_number from '._DB_PREFIX_.'dhldp_product_customs WHERE id_product='.(int)$params['id_product'].' AND id_product_attribute=0') !== false) {
-                Db::getInstance()->update('dhldp_product_customs', array('customs_tariff_number' => pSQL(Tools::getValue('dhldp_ctn', '')), 'country_of_origin' => pSQL(Tools::getValue('dhldp_coo', '')), 'date_upd' => date('Y-m-d H:i:s')), 'id_product='.(int)$params['id_product'].' AND id_product_attribute=0');
+            if (Db::getInstance()->getValue('select customs_tariff_number from '._DB_PREFIX_.'paperfly_product_customs WHERE id_product='.(int)$params['id_product'].' AND id_product_attribute=0') !== false) {
+                Db::getInstance()->update('paperfly_product_customs', array('customs_tariff_number' => pSQL(Tools::getValue('paperfly_ctn', '')), 'country_of_origin' => pSQL(Tools::getValue('paperfly_coo', '')), 'date_upd' => date('Y-m-d H:i:s')), 'id_product='.(int)$params['id_product'].' AND id_product_attribute=0');
             } else {
-                Db::getInstance()->insert('dhldp_product_customs', array('customs_tariff_number' => pSQL(Tools::getValue('dhldp_ctn', '')), 'country_of_origin' => pSQL(Tools::getValue('dhldp_coo', '')), 'date_upd' => date('Y-m-d H:i:s'), 'id_product' => (int)$params['id_product'], 'id_product_attribute' => '0', 'date_add' => date('Y-m-d H:i:s')));
+                Db::getInstance()->insert('paperfly_product_customs', array('customs_tariff_number' => pSQL(Tools::getValue('paperfly_ctn', '')), 'country_of_origin' => pSQL(Tools::getValue('paperfly_coo', '')), 'date_upd' => date('Y-m-d H:i:s'), 'id_product' => (int)$params['id_product'], 'id_product_attribute' => '0', 'date_add' => date('Y-m-d H:i:s')));
             }
         }
     }
 
     public function hookActionProductDelete($params) {
         if ($params['id_product'] > 0) {
-            Db::getInstance()->delete('dhldp_product_customs', 'id_product='.(int)$params['id_product']);
+            Db::getInstance()->delete('paperfly_product_customs', 'id_product='.(int)$params['id_product']);
         }
     }
 
     public function hookActionProductAttributeDelete($params) {
         if ($params['id_product'] > 0) {
             if ($params['id_product_attribute'] > 0) {
-                Db::getInstance()->delete('dhldp_product_customs', 'id_product=' . (int)$params['id_product'] . ' and id_product_attribute=' . (int)$params['id_product_attribute']);
+                Db::getInstance()->delete('paperfly_product_customs', 'id_product=' . (int)$params['id_product'] . ' and id_product_attribute=' . (int)$params['id_product_attribute']);
             } elseif ((int)$params['id_product_attribute'] == 0) {
-                Db::getInstance()->delete('dhldp_product_customs', 'id_product=' . (int)$params['id_product'] . ' and id_product_attribute!=0');
+                Db::getInstance()->delete('paperfly_product_customs', 'id_product=' . (int)$params['id_product'] . ' and id_product_attribute!=0');
             }
         }
     }
@@ -1218,7 +1341,7 @@ class DhlDp extends Module
 
         if (count($id_order_carrier) > 0) {
             $selected_values = Db::getInstance()->executeS(
-                'SELECT * FROM `'._DB_PREFIX_.'dhldp_label` l
+                'SELECT * FROM `'._DB_PREFIX_.'paperfly_label` l
                  WHERE l.`id_order_carrier` IN ('.implode(',', array_map('intval', $id_order_carrier)).')'.
                 ' ORDER BY `date_add`'
             );
@@ -1237,8 +1360,8 @@ class DhlDp extends Module
                     $selected_values[$selected_value_index]['product_name'] = '';
                 }
 
-                $selected_values[$selected_value_index]['packages'] = DHLDPLabel::getPackages(
-                    $selected_value['id_dhldp_label']
+                $selected_values[$selected_value_index]['packages'] = PAPERFLYLabel::getPackages(
+                    $selected_value['id_paperfly_label']
                 );
                 $selected_values[$selected_value_index]['options_decoded'] = Tools::jsonDecode(
                     $selected_value['options'],
@@ -1314,9 +1437,10 @@ class DhlDp extends Module
 
     public function displayDPAdminOrder($params)
     {
+//        print_r($params);
+//        die('here');
         $order = new Order((int)$params['id_order']);
         $label_format = Configuration::get('DHLDP_DP_LABEL_FORMAT', false, false, $order->id_shop);
-
         if (Tools::getIsset('submitDPLabelRequest')) {
             $id_address = (int)Tools::getValue('id_address');
             $product = Tools::getValue('product');
@@ -1384,8 +1508,10 @@ class DhlDp extends Module
                 $this->context->smarty->assign('deutschepost_errors', $form_errors);
             }
         }
-
+//        print_r($order->getShipping());
+//        die('here2');
         $shipping = $this->filterDPShipping($order->getShipping(), (int)$order->id_shop);
+
         $html = '';
         if (is_array($shipping)) {
             foreach ($shipping as $shipping_item) {
@@ -1427,13 +1553,14 @@ class DhlDp extends Module
                 $html .= $this->display(__FILE__, 'dp-admin-carriers.tpl');
             }
         }
+//        var_dump($html);
         return $html;
     }
 
     public function displayDHLAdminOrder($params)
     {
         $order = new Order((int)$params['id_order']);
-        $this->dhldp_api->setApiVersionByIdShop($order->id_shop);
+        $this->paperfly_api->setApiVersionByIdShop($order->id_shop);
 
         if (Tools::getIsset('deleteDHLDPDhlLabel')) {
             $dhl_errors = array();
@@ -1441,11 +1568,11 @@ class DhlDp extends Module
 
             $shipment_number = Tools::getValue('shipment_number');
             if ($shipment_number != '') {
-                if (DHLDPLabel::getLabelIDByShipmentNumber($shipment_number) != false) {
+                if (PAPERFLYLabel::getLabelIDByShipmentNumber($shipment_number) != false) {
                     $result = $this->deleteDeliveryLabel($shipment_number, $order->id_shop);
                     if (!$result) {
-                        if (is_array($this->dhldp_api->errors) && count($this->dhldp_api->errors) > 0) {
-                            $dhl_errors = array_merge($dhl_errors, $this->dhldp_api->errors);
+                        if (is_array($this->paperfly_api->errors) && count($this->paperfly_api->errors) > 0) {
+                            $dhl_errors = array_merge($dhl_errors, $this->paperfly_api->errors);
                         } else {
                             $dhl_errors[] = $this->l('Unable to delete label for this shipment number');
                         }
@@ -1456,7 +1583,7 @@ class DhlDp extends Module
                     $dhl_errors[] = $this->l('No label for this shipment number');
                 }
             }
-            $this->context->smarty->assign('dhl_errors', $dhl_errors);			
+            $this->context->smarty->assign('dhl_errors', $dhl_errors);
             $this->context->smarty->assign('dhl_confirmations', $dhl_confirmations);
         }
 
@@ -1466,11 +1593,11 @@ class DhlDp extends Module
 
             $shipment_number = Tools::getValue('shipment_number');
             if ($shipment_number != '') {
-                if (DHLDPLabel::getLabelIDByShipmentNumber($shipment_number) != false) {
+                if (PAPERFLYLabel::getLabelIDByShipmentNumber($shipment_number) != false) {
                     $result = $this->doManifest($shipment_number, $order->id_shop);
                     if (!$result) {
-                        if (is_array($this->dhldp_api->errors) && count($this->dhldp_api->errors) > 0) {
-                            $dhl_errors = array_merge($dhl_errors, $this->dhldp_api->errors);
+                        if (is_array($this->paperfly_api->errors) && count($this->paperfly_api->errors) > 0) {
+                            $dhl_errors = array_merge($dhl_errors, $this->paperfly_api->errors);
                         } else {
                             $dhl_errors[] = $this->l('Unable to do manifest for this shipment number');
                         }
@@ -1493,7 +1620,7 @@ class DhlDp extends Module
             $addit_services_input = Tools::getValue('addit_services');
             $export_docs_input = Tools::getValue('export_docs');
 
-            $receiver_address = $this->dhldp_api->getDHLDeliveryAddress(
+            $receiver_address = $this->paperfly_api->getDHLDeliveryAddress(
                 $id_address,
                 isset($address_input[$id_order_carrier]) ? $address_input[$id_order_carrier] : false,
                 $order
@@ -1502,11 +1629,11 @@ class DhlDp extends Module
             $formatted_products = $this->getFormattedAddedDhlProducts(array($product_code));
             if (is_array($formatted_products[0])) {
                 $aproduct_code = explode(':', $product_code);
-                $product_def = $this->dhldp_api->getDefinedProducts(
+                $product_def = $this->paperfly_api->getDefinedProducts(
                     $aproduct_code[0],
                     isset($receiver_address['Address']['Origin']['countryISOCode'])?$receiver_address['Address']['Origin']['countryISOCode']:'DE',
-                    $this->dhldp_api->getShipperCountry($order->id_shop),
-                    $this->dhldp_api->getApiVersion()
+                    $this->paperfly_api->getShipperCountry($order->id_shop),
+                    $this->paperfly_api->getApiVersion()
                 );
                 if (!is_array($product_def)) {
                     $formatted_product = false;
@@ -1532,9 +1659,9 @@ class DhlDp extends Module
                     'height' => (int)Tools::getValue('dhl_height', 0),
                 )
             );
-            if ($this->dhldp_api->getMajorApiVersion() == 1 && Tools::getIsset('submitDHLDPDhlLabelWithReturnRequest')) {
+            if ($this->paperfly_api->getMajorApiVersion() == 1 && Tools::getIsset('submitDHLDPDhlLabelWithReturnRequest')) {
                 $dhl_errors[] = $this->l('This operation is no available');
-            } elseif ($this->dhldp_api->getMajorApiVersion() == 2 && Tools::getIsset('submitDHLDPDhlLabelReturnRequest')) {
+            } elseif ($this->paperfly_api->getMajorApiVersion() == 2 && Tools::getIsset('submitDHLDPDhlLabelReturnRequest')) {
                 $dhl_errors[] = $this->l('This operation is no available');
             } elseif (Tools::strlen($product_code) == 0) {
                 $dhl_errors[] = $this->l('Please select product.');
@@ -1584,8 +1711,8 @@ class DhlDp extends Module
                 );
 
                 if (!$result) {
-                    if (is_array($this->dhldp_api->errors) && count($this->dhldp_api->errors) > 0) {
-                        $dhl_errors = array_merge($dhl_errors, $this->dhldp_api->errors);
+                    if (is_array($this->paperfly_api->errors) && count($this->paperfly_api->errors) > 0) {
+                        $dhl_errors = array_merge($dhl_errors, $this->paperfly_api->errors);
                     } else {
                         $dhl_errors[] = $this->l('Unable to generate label for this request');
                     }
@@ -1594,8 +1721,8 @@ class DhlDp extends Module
                 }
             }
 
-            if (is_array($this->dhldp_api->warnings) && count($this->dhldp_api->warnings) > 0) {
-                $dhl_warnings = array_merge($dhl_warnings, $this->dhldp_api->warnings);
+            if (is_array($this->paperfly_api->warnings) && count($this->paperfly_api->warnings) > 0) {
+                $dhl_warnings = array_merge($dhl_warnings, $this->paperfly_api->warnings);
             }
 
             $this->context->smarty->assign('dhl_errors', $dhl_errors);
@@ -1631,7 +1758,7 @@ class DhlDp extends Module
                         'labels'              => $labels,
                         'last_label'          => $last_label,
                         'enable_return'       => false,
-                        'with_return'         => /*($this->dhldp_api->getMajorApiVersion() == 2)*/false,
+                        'with_return'         => /*($this->paperfly_api->getMajorApiVersion() == 2)*/false,
                         'dhl_visual_age_check'    => self::getConfig('DHL_AGE_CHECK', $order->id_shop),
                         'dhl_products'        => $dhl_products,
                         'form_action'         => $this->context->link->getAdminLink('AdminOrders', true, array(), array(
@@ -1645,7 +1772,7 @@ class DhlDp extends Module
                         'package_width' 	  => self::getConfig('DHL_DEFAULT_WIDTH', $order->id_shop),
                         'package_height' 	  => self::getConfig('DHL_DEFAULT_HEIGHT', $order->id_shop),
                         'shipment_date'       => date('Y-m-d'),
-                        'dhldp_dhl_products_params' => $dhl_products,
+                        'paperfly_dhl_products_params' => $dhl_products,
                         'self'                => dirname(__FILE__),
                         'module_version' => $this->version,
                         'module_name' => $this->displayName
@@ -1741,7 +1868,7 @@ class DhlDp extends Module
             }
         }
         $delivery_address = new Address((int)$id_address_delivery);
-        $norm_address = $this->dhldp_api->normalizeAddress($delivery_address);
+        $norm_address = $this->paperfly_api->normalizeAddress($delivery_address);
         $zip = '';
         if (isset($norm_address['Address']['Origin']['countryISOCode'])) {
             if ($norm_address['Address']['Origin']['countryISOCode'] == 'DE') {
@@ -1875,7 +2002,7 @@ class DhlDp extends Module
             $i = 0;
             foreach ($order_positions as $order_position) {
                 if ($i < 99) {
-                    $product_customs = Db::getInstance()->getRow('select customs_tariff_number, country_of_origin from '._DB_PREFIX_.'dhldp_product_customs WHERE id_product='.(int)$order_position['id_product'].' and id_product_attribute=0');
+                    $product_customs = Db::getInstance()->getRow('select customs_tariff_number, country_of_origin from '._DB_PREFIX_.'paperfly_product_customs WHERE id_product='.(int)$order_position['id_product'].' and id_product_attribute=0');
                     $exportdoc_positions[] = array(
                         'description' => $order_position['product_name'],
                         'countryCodeOrigin' => ($product_customs && $product_customs['country_of_origin'] != '')?$product_customs['country_of_origin']:self::getConfig('DHL_COUNTRY', $order->id_shop),
@@ -2136,14 +2263,14 @@ class DhlDp extends Module
             if ($order_carrier->update()) {
                 $customer = new Customer((int)$order->id_customer);
                 $carrier = new Carrier((int)$order->id_carrier, $order->id_lang);
-				
+
 				$ret = Hook::exec('actionGetIDOrderStateByIDCarrier', array('id_carrier' => $order_carrier->id_carrier, 'id_shop' => $order->id_shop), null, true);
 
 				// don't send in_transit if 0
                 if (isset($ret['dhlcarrieraddress']['id_os']) && isset($ret['dhlcarrieraddress']['send_intransit']) && $ret['dhlcarrieraddress']['send_intransit'] == 0) {
                     return true;
                 }
-				
+
                 // Send mail to customer
                 if (self::getConfig('DHL_INTRANSIT_MAIL', $order->id_shop)) {
                     $tracking_url = str_replace('[tracking_number]', $tracking_number, DHLDPApi::$tracking_url);
@@ -2183,7 +2310,7 @@ class DhlDp extends Module
                     false,
                     $order->id_shop
                 );
-			
+
                 return true;
             }
         }
@@ -2217,6 +2344,7 @@ class DhlDp extends Module
             $id_order = Tools::getValue('id_order');
         }
         if (($this->context->controller->controller_name == 'AdminOrders' || $this->context->controller instanceof AdminOrdersController) && !$id_order) {
+
             $this->context->controller->addJquery();
             $this->context->controller->addJS($this->_path . 'views/js/order-list.js');
             if ($this->is177) {
@@ -2228,8 +2356,8 @@ class DhlDp extends Module
                 var dhldp_translation = ' .
                 Tools::jsonEncode(
                     array(
-                        'Generate DHL labels' => $this->l('Generate DHL labels'),
-                        'Generate DP labels' => $this->l('Generate Deutschepost labels'),
+                        'Generate PAPERFLY labels' => $this->l('Generate PAPERFLY labels'),
+                        'Generate LGTech labels' => $this->l('Generate LGTech labels'),
                     )
                 ) . '</script>';
         } elseif (($this->context->controller->controller_name == 'AdminOrders' || $this->context->controller instanceof AdminOrdersController) && $id_order) {
@@ -2268,7 +2396,7 @@ class DhlDp extends Module
                     }
                     $this->context->controller->addJS($this->_path . 'views/js/admin_configure.js');
 
-                    $dhl_products = $this->dhldp_api->getDefinedProducts('', '', self::getConfig('DHL_COUNTRY'), self::getConfig('DHL_API_VERSION'));
+                    $dhl_products = $this->paperfly_api->getDefinedProducts('', '', self::getConfig('DHL_COUNTRY'), self::getConfig('DHL_API_VERSION'));
                     $dhl_products_js = array();
                     foreach ($dhl_products as $dhl_product_key => $dhl_product) {
                         if ($dhl_product['active'] == true) {
@@ -2442,9 +2570,9 @@ class DhlDp extends Module
         return array(
             'cparam' => 'view',
             'pages' => array(
-                'settings_dhl' => array('name' => $this->l('DHL settings'), 'default' => true),
-                'settings_dp' => array('name' => $this->l('Deutschepost settings')),
-                'information' => array('name' => $this->l('Information'), 'icon' => ''),
+                'settings_dhl' => array('name' => $this->l('Paperfly settings'), 'default' => true),
+                'settings_dp' => array('name' => $this->l('Lets go tech settings')),
+//                'information' => array('name' => $this->l('Information'), 'icon' => ''),
             )
         );
     }
@@ -2523,9 +2651,9 @@ class DhlDp extends Module
                 $order_errors[]  = $this->l('Invalid length');
             }
 
-            $this->dhldp_api->setApiVersionByIdShop($order->id_shop);
+            $this->paperfly_api->setApiVersionByIdShop($order->id_shop);
 
-            $receiver_address = $this->dhldp_api->getDHLDeliveryAddress(
+            $receiver_address = $this->paperfly_api->getDHLDeliveryAddress(
                 $c['id_address'],
                 isset($address_input[$id_order_carrier]) ? $address_input[$id_order_carrier] : false,
                 $order
@@ -2534,11 +2662,11 @@ class DhlDp extends Module
             $formatted_products = $this->getFormattedAddedDhlProducts(array($c['dhl_product_code']));
             if (is_array($formatted_products[0])) {
                 $aproduct_code = explode(':', $c['dhl_product_code']);
-                $product_def = $this->dhldp_api->getDefinedProducts(
+                $product_def = $this->paperfly_api->getDefinedProducts(
                     $aproduct_code[0],
                     isset($receiver_address['Address']['Origin']['countryISOCode'])?$receiver_address['Address']['Origin']['countryISOCode']:'DE',
-                    $this->dhldp_api->getShipperCountry($order->id_shop),
-                    $this->dhldp_api->getApiVersion()
+                    $this->paperfly_api->getShipperCountry($order->id_shop),
+                    $this->paperfly_api->getApiVersion()
                 );
                 if (!is_array($product_def)) {
                     $formatted_product = false;
@@ -2627,19 +2755,19 @@ class DhlDp extends Module
                 );
 
                 if (!$result) {
-                    if (is_array($this->dhldp_api->errors) && count($this->dhldp_api->errors) > 0) {
-                        /*foreach ($this->dhldp_api->errors as $dhldp_api_error) {
-                            $this->_errors[] = sprintf($this->l('Order #%s :'), $c['order_id']).' '.$dhldp_api_error;
+                    if (is_array($this->paperfly_api->errors) && count($this->paperfly_api->errors) > 0) {
+                        /*foreach ($this->paperfly_api->errors as $paperfly_api_error) {
+                            $this->_errors[] = sprintf($this->l('Order #%s :'), $c['order_id']).' '.$paperfly_api_error;
                         }*/
-                        $order_errors = array_merge($order_errors, $this->dhldp_api->errors);
+                        $order_errors = array_merge($order_errors, $this->paperfly_api->errors);
                     } else {
                         $order_errors[] = $this->_errors[] = sprintf($this->l('Order #%s :'), $c['order_id']).' '.$this->l('Unable to generate label for this request');
                     }
                     $error_order_line[] = $c['order_id'];
                 } else {
                     $order_confirmations[] = $this->l('Shipment order and shipping label have been created.');
-                    if (is_array($this->dhldp_api->warnings) && count($this->dhldp_api->warnings) > 0) {
-                        $order_warnings = array_merge($order_warnings, $this->dhldp_api->warnings);
+                    if (is_array($this->paperfly_api->warnings) && count($this->paperfly_api->warnings) > 0) {
+                        $order_warnings = array_merge($order_warnings, $this->paperfly_api->warnings);
                         $warning_order_line[] = $c['order_id'];
                     } else {
                         $success_order_line[] = $c['order_id'];
@@ -3031,7 +3159,7 @@ class DhlDp extends Module
         $this->context->smarty->assign(
             array(
                 'initdhl_link' => $helper->currentIndex.'&view=init_dhl&token='.$helper->token,
-                'dhldp_dhl_api_version' => Tools::getValue('DHLDP_DHL_API_VERSION', self::getConfig('DHL_API_VERSION')?self::getConfig('DHL_API_VERSION'):'2.1'),
+                'paperfly_dhl_api_version' => Tools::getValue('DHLDP_DHL_API_VERSION', self::getConfig('DHL_API_VERSION')?self::getConfig('DHL_API_VERSION'):'2.1'),
             )
         );
         $helper->fields_value['DHLDP_DHL_API_VERSION'] = $this->context->smarty->fetch(
@@ -3092,7 +3220,7 @@ class DhlDp extends Module
 
         // Helper
         $helper->currentIndex = AdminController::$currentIndex.'&configure='.$this->name.'&view=init_dhl';
-        $helper->table = 'dhldp_ini_configure';
+        $helper->table = 'paperfly_ini_configure';
         $helper->token = Tools::getAdminTokenLite('AdminModules');
         $helper->module = $this;
         $helper->identifier = null;
@@ -3120,7 +3248,7 @@ class DhlDp extends Module
     {
         $formatted = array();
         if (is_array($added_dhl_products)) {
-            $dhl_products = $this->dhldp_api->getDefinedProducts('', $to_country, $from_country, $api_version);
+            $dhl_products = $this->paperfly_api->getDefinedProducts('', $to_country, $from_country, $api_version);
             foreach ($added_dhl_products as $added_dhl_product) {
                 $a = explode(':', $added_dhl_product);
                 foreach ($dhl_products as $dhl_product_key => $dhl_product) {
@@ -3250,7 +3378,7 @@ class DhlDp extends Module
             array(
                 'form'  => array(
                     'form' => array(
-                        'id_form'     => 'dhldp_init_settings',
+                        'id_form'     => 'paperfly_init_settings',
                         'legend'      => array(
                             'title' => $this->l('DHL init settings'),
                             'icon'  => 'icon-circle',
@@ -3268,7 +3396,7 @@ class DhlDp extends Module
                             array(
                                 'name'     => 'DHLDP_DHL_API_VERSION',
                                 'type'     => 'select',
-                                'label'    => $this->l('DHL API version'),
+                                'label'    => $this->l('PAPERFLY API version'),
                                 'class'    => 't',
                                 'required' => true,
                                 'options'   => $api_version_options
@@ -3285,7 +3413,7 @@ class DhlDp extends Module
 
         return $form_fields;
     }
-    
+
     protected function getFormFieldsDPSettings()
     {
         $form_fields = array(
@@ -3620,7 +3748,7 @@ class DhlDp extends Module
             );
         }
 
-        $this->dhldp_api->setApiVersion(self::getConfig('DHL_API_VERSION'));
+        $this->paperfly_api->setApiVersion(self::getConfig('DHL_API_VERSION'));
 
 
         $form_fields = array_merge(
@@ -3686,7 +3814,7 @@ class DhlDp extends Module
                             array(
                                 'name'     => 'DHLDP_DHL_API_VERSION',
                                 'type'     => 'free',
-                                'label'    => $this->l('DHL API version'),
+                                'label'    => $this->l('PAPERFLY API version'),
                                 'disabled' => true
                             ),
                             array(
@@ -3757,15 +3885,15 @@ class DhlDp extends Module
                     'form' => array(
                         'id_form'     => 'dhl_products',
                         'legend'      => array(
-                            'title' => $this->l('DHL products'),
+                            'title' => $this->l('PAPERFLY products'),
                             'icon'  => 'icon-circle',
                         ),
-                        'description' => $this->l('Please enter products of DHL and participation numbers in according your DHL account. You can identify DHL products and participation numbers on "http://www.intraship.de". Sign up and navigate to "Versandabwicklung Paket" -> "Neuer Auftrag". You will find names of products and participation numbers which located at the end of each selection option in selection field "Standart produkt". Participation numbers should be exactly 2  characters long, for example, "01", "02".'),
+                        'description' => $this->l('Please enter products of PAPERFLY and participation numbers in according your PAPERFLY account. You can identify PAPERFLY products and participation numbers on "http://www.intraship.de". Sign up and navigate to "Versandabwicklung Paket" -> "Neuer Auftrag". You will find names of products and participation numbers which located at the end of each selection option in selection field "Standart produkt". Participation numbers should be exactly 2  characters long, for example, "01", "02".'),
                         'input'       => array(
                             array(
                                 'name'  => 'dhl_products',
                                 'type'  => 'free',
-                                'label' => $this->l('DHL Products'),
+                                'label' => $this->l('PAPERFLY Products'),
                                 'desc'  => $this->l(''),
                                 'class' => 't',
                             ),
@@ -3880,7 +4008,7 @@ class DhlDp extends Module
                             array(
                                 'type'     => (_PS_VERSION_ < '1.6.0.0') ? 'radio' : 'switch',
                                 'name'     => 'DHLDP_DHL_PFPS',
-                                'label'    => $this->l('Enable DHL Postfiliales and DHL Packstations'),
+                                'label'    => $this->l('Enable PAPERFLY Postfiliales and PAPERFLY Packstations'),
                                 'desc'     => $this->l('Including extension for addresses of customer'),
                                 'class'    => (_PS_VERSION_ < '1.6.0.0') ? 't' : '',
                                 'is_bool'  => true,
@@ -3898,7 +4026,7 @@ class DhlDp extends Module
                                 'type'     => 'text',
                                 'name'     => 'DHLDP_DHL_GOOGLEMAPAPIKEY',
                                 'label'    => $this->l('Google Map API key'),
-                                'desc'     => $this->l('Google API key is used for showing map with locations of DHL Postfiliales and DHL Packstations. It is required if you set enabled DHL Postfiliales and DHL Packstations.'),
+                                'desc'     => $this->l('Google API key is used for showing map with locations of PAPERFLY Postfiliales and PAPERFLY Packstations. It is required if you set enabled PAPERFLY Postfiliales and PAPERFLY Packstations.'),
                             ),
                             array(
                                 'type'     => (_PS_VERSION_ < '1.6.0.0') ? 'radio' : 'switch',
@@ -3920,7 +4048,7 @@ class DhlDp extends Module
                                 'type'    => 'select',
                                 'label'   => $this->l('Enable updating order status'),
                                 'name'    => 'DHLDP_DHL_CHANGE_OS',
-                                'desc'    => $this->l('Order status will be changed "Shipped" automatically after creating DHL label'),
+                                'desc'    => $this->l('Order status will be changed "Shipped" automatically after creating PAPERFLY label'),
                                 'options' => array(
                                     'query' => array_merge(
                                         array(
@@ -3938,8 +4066,8 @@ class DhlDp extends Module
                             array(
                                 'type'     => (_PS_VERSION_ < '1.6.0.0') ? 'radio' : 'switch',
                                 'name'     => 'DHLDP_DHL_CONFIRMATION_PRIVATE',
-                                'label'    => $this->l('Enable customer confirmation for permission transferring private information to DHL service'),
-                                'desc'    => $this->l('If you are enable it, then shop will ask customer permission for sending e-mail address and phone number to DHL service in frontend. If you disabled it, then e-mail address and phone number will be sent to DHL service by default.'),
+                                'label'    => $this->l('Enable customer confirmation for permission transferring private information to PAPERFLY service'),
+                                'desc'    => $this->l('If you are enable it, then shop will ask customer permission for sending e-mail address and phone number to PAPERFLY service in frontend. If you disabled it, then e-mail address and phone number will be sent to PAPERFLY service by default.'),
                                 'class'    => (_PS_VERSION_ < '1.6.0.0') ? 't' : '',
                                 'is_bool'  => true,
                                 'disabled' => false,
@@ -3966,7 +4094,7 @@ class DhlDp extends Module
         $form_fields['form4'] = array(
             'form' => array(
                 'legend' => array(
-                    'title' => $this->l('DHL Retoure settings and additional settings for Merchandise return (RMA)'),
+                    'title' => $this->l('PAPERFLY Retoure settings and additional settings for Merchandise return (RMA)'),
                     'icon' => 'icon-truck'
                 ),
                 'description' => $this->l('If you enable returns in shop on "Sell/Customer service/Merchandise returns/Merchandise return (RMA) options/Enable returns", then you will possibility to pass Return Labels automatically.'),
@@ -4005,7 +4133,7 @@ class DhlDp extends Module
                                 'value' => 0,
                             )
                         ),
-                        'form_group_class' => 'hide dhldp_dhl_ra',
+                        'form_group_class' => 'hide paperfly_dhl_ra',
                     ),
                     array(
                         'type' => 'select',
@@ -4014,7 +4142,7 @@ class DhlDp extends Module
                         'desc' => $this->l('Enable creating Return label for countries of sender address'),
                         'required' => true,
                         'multiple' => true,
-                        'form_group_class' => 'hide dhldp_dhl_ra',
+                        'form_group_class' => 'hide paperfly_dhl_ra',
                         'class' => 'select2',
                         'options' => array(
                             'query' => $this->getCountriesForRA($this->context->language->id),
@@ -4034,7 +4162,7 @@ class DhlDp extends Module
             'name'     => 'DHLDP_DHL_LABEL_WITH_RETURN',
             'type'     => (_PS_VERSION_ < '1.6.0.0') ? 'radio' : 'switch',
             'label'    => $this->l('Enable generate label with return label'),
-            'desc'     => $this->l('This option adds enclosed return label to generated label. Your customers receive a fully prepared return label with their delivery. If they choose to send an item back, all they have to do is pack it and affix the label. Supported products: DHL Paket, DHL Paket Austria, DHL Paket Taggleich, DHL Kurier Taggleich, DHL Karier Wunschzeit'),
+            'desc'     => $this->l('This option adds enclosed return label to generated label. Your customers receive a fully prepared return label with their delivery. If they choose to send an item back, all they have to do is pack it and affix the label. Supported products: PAPERFLY Paket, PAPERFLY Paket Austria, PAPERFLY Paket Taggleich, PAPERFLY Kurier Taggleich, PAPERFLY Karier Wunschzeit'),
             'class'    => (_PS_VERSION_ < '1.6.0.0') ? 't' : '',
             'is_bool'  => true,
             'disabled' => false,
@@ -4188,7 +4316,7 @@ class DhlDp extends Module
                     'title' => $this->l('Bank data'),
                     'icon'  => 'icon-circle',
                 ),
-                'description' => $this->l('Bank data can be provided here for different purposes. E.g. if COD is booked as service, bank data must be provided by DHL customer (mandatory server logic). The collected money will be transferred to specified bank account.'),
+                'description' => $this->l('Bank data can be provided here for different purposes. E.g. if COD is booked as service, bank data must be provided by PAPERFLY customer (mandatory server logic). The collected money will be transferred to specified bank account.'),
                 'input'       => array(
                     array(
                         'name'     => 'DHLDP_DHL_ACCOUNT_OWNER',
@@ -4224,6 +4352,47 @@ class DhlDp extends Module
                         'label'    => $this->l('Note'),
                         'desc'     => $this->l('Max. 35 characters. Use [order_reference_number] in note for adding Order ID or Order Reference in according with "Reference number in label is" setting. Example, "Bestellnummer [order_reference_number]" will add "Bestellnummer KHWLILZLL" in note.'),
                         'required' => false,
+                    ),
+                ),
+                'submit'      => array(
+                    'title' => $this->l('Save'),
+                    'name'  => 'submitSaveOptions',
+                )
+            )
+        );
+        /*****create setup from for paperfly settings******/
+        $form_fields['form7'] = array(
+            'form' => array(
+                'id_form'     => 'paperfly_setup',
+                'legend'      => array(
+                    'title' => $this->l('Paper Fly Account Setup'),
+                    'icon'  => 'icon-circle',
+                ),
+                'description' => $this->l('Provide paperfly credential to connect'),
+                'input'       => array(
+                    array(
+                        'name'     => 'SANDBOX_URL',
+                        'type'     => 'text',
+                        'label'    => $this->l('Sandbox Url'),
+                        'required' => true,
+                    ),
+                    array(
+                        'name'     => 'PAPERFLY_KEY',
+                        'type'     => 'text',
+                        'label'    => $this->l('Paperfly key'),
+                        'required' => true,
+                    ),
+                    array(
+                        'name'     => 'PAPERFLY_USER_NAME',
+                        'type'     => 'text',
+                        'label'    => $this->l('User Name'),
+                        'required' => true,
+                    ),
+                    array(
+                        'name'     => 'PAPERFLY_USER_PASSWORD',
+                        'type'     => 'password',
+                        'label'    => $this->l('Password'),
+                        'required' => true,
                     ),
                 ),
                 'submit'      => array(
@@ -4573,14 +4742,14 @@ class DhlDp extends Module
 
             if (count($form_errors) == 0) {
                 if (in_array(Configuration::get('DHLDP_DHL_API_VERSION'), DHLDPApi::getSupportedApiVersions())) {
-                    $this->dhldp_api->setApiVersion(Configuration::get('DHLDP_DHL_API_VERSION'));
+                    $this->paperfly_api->setApiVersion(Configuration::get('DHLDP_DHL_API_VERSION'));
                 }
-                $check_client = $this->dhldp_api->checkDHLAccount(
+                $check_client = $this->paperfly_api->checkDHLAccount(
                     $dhl_mode,
-                    ($dhl_mode == 1) ? DHLDPApi::$dhl_live_ciguser[$this->dhldp_api->getApiVersion()] : DHLDPApi::$dhl_sbx_ciguser,
-                    ($dhl_mode == 1) ? DHLDPApi::$dhl_live_cigpass[$this->dhldp_api->getApiVersion()] : DHLDPApi::$dhl_sbx_cigpass,
-                    ($dhl_mode == 1) ? $dhl_live_user : DHLDPApi::$dhl_sbx_user[$this->dhldp_api->getApiVersion()],
-                    ($dhl_mode == 1) ? $dhl_live_sign : DHLDPApi::$dhl_sbx_sign[$this->dhldp_api->getApiVersion()]
+                    ($dhl_mode == 1) ? DHLDPApi::$dhl_live_ciguser[$this->paperfly_api->getApiVersion()] : DHLDPApi::$dhl_sbx_ciguser,
+                    ($dhl_mode == 1) ? DHLDPApi::$dhl_live_cigpass[$this->paperfly_api->getApiVersion()] : DHLDPApi::$dhl_sbx_cigpass,
+                    ($dhl_mode == 1) ? $dhl_live_user : DHLDPApi::$dhl_sbx_user[$this->paperfly_api->getApiVersion()],
+                    ($dhl_mode == 1) ? $dhl_live_sign : DHLDPApi::$dhl_sbx_sign[$this->paperfly_api->getApiVersion()]
                 );
 
                 if (!is_object($check_client) ||
@@ -4591,7 +4760,7 @@ class DhlDp extends Module
                     if (isset($check_client->status->statusMessage)) {
                         $form_errors[] = $this->_errors[] = $check_client->status->statusCode.' '.$check_client->status->statusMessage;
                     }
-                    self::logToFile('DHL', implode(', ', $this->dhldp_api->errors), 'general');
+                    self::logToFile('DHL', implode(', ', $this->paperfly_api->errors), 'general');
                 }
             }
 
@@ -4622,15 +4791,15 @@ class DhlDp extends Module
             if (trim(Tools::getValue('DHLDP_DHL_PACK_WEIGHT')) != '' && !preg_match('/^[0-9]{1,10}([,.]{1}[0-9]{1,9})?$/', trim(Tools::getValue('DHLDP_DHL_PACK_WEIGHT')))) {
                 $form_errors[] = $this->_errors[] = $this->l('Please enter correct weight of pack in kg');
             }
-			
+
 			if (trim(Tools::getValue('DHLDP_DHL_DEFAULT_LENGTH')) != '' && !preg_match('/^[0-9]{1,10}([,.]{1}[0-9]{1,9})?$/', trim(Tools::getValue('DHLDP_DHL_DEFAULT_LENGTH')))) {
                 $form_errors[] = $this->_errors[] = $this->l('Please enter correct default length of package in cm');
             }
-			
+
 			if (trim(Tools::getValue('DHLDP_DHL_DEFAULT_WIDTH')) != '' && !preg_match('/^[0-9]{1,10}([,.]{1}[0-9]{1,9})?$/', trim(Tools::getValue('DHLDP_DHL_DEFAULT_WIDTH')))) {
                 $form_errors[] = $this->_errors[] = $this->l('Please enter correct default width of package in cm');
             }
-			
+
 			if (trim(Tools::getValue('DHLDP_DHL_DEFAULT_HEIGHT')) != '' && !preg_match('/^[0-9]{1,10}([,.]{1}[0-9]{1,9})?$/', trim(Tools::getValue('DHLDP_DHL_DEFAULT_HEIGHT')))) {
                 $form_errors[] = $this->_errors[] = $this->l('Please enter correct default height of package in cm');
             }
@@ -4641,11 +4810,11 @@ class DhlDp extends Module
             if ((int)Tools::getValue('DHLDP_DHL_RETURNS_EXTEND') == 1 && !count(Tools::getValue('DHLDP_DHL_RA_COUNTRIES', array()))) {
                 $form_errors[] = $this->_errors[] = $this->l('Please select countries for Return label');
             }
-			
+
 			if (Tools::getValue('DHLDP_DHL_LABEL_FORMAT') != '' && !in_array(Tools::getValue('DHLDP_DHL_LABEL_FORMAT'), array_keys($this->getLabelFormats()))) {
 				$form_errors[] = $this->_errors[] = $this->l('Invalid label format');
 			}
-			
+
 			if (Tools::getValue('DHLDP_DHL_RETOURE_LABEL_FORMAT') != '' && !in_array(Tools::getValue('DHLDP_DHL_RETOURE_LABEL_FORMAT'), array_keys($this->getRetoureLabelFormats()))) {
 				$form_errors[] = $this->_errors[] = $this->l('Invalid retoure label format');
 			}
@@ -4768,6 +4937,11 @@ class DhlDp extends Module
                     Configuration::updateValue('DHLDP_DHL_BIC', Tools::getValue('DHLDP_DHL_BIC')) &&
                     Configuration::updateValue('DHLDP_DHL_NOTE', Tools::getValue('DHLDP_DHL_NOTE'));
 
+                    Configuration::updateValue('PAPERFLY_URL', Tools::getValue('PAPERFLY_URL')) &&
+                    Configuration::updateValue('SANDBOX_URL', Tools::getValue('SANDBOX_URL')) &&
+                    Configuration::updateValue('PAPERFLY_USER_NAME', Tools::getValue('PAPERFLY_USER_NAME')) &&
+                    Configuration::updateValue('PAPERFLY_USER_PASSWORD', Tools::getValue('PAPERFLY_USER_PASSWORD'));
+
                 if ($result_save == true) {
                     $this->_confirmations[] = $this->l('Settings updated');
                 }
@@ -4775,8 +4949,8 @@ class DhlDp extends Module
         }
         return $this->displayMessages();
     }
-	
-	private function getLabelFormats() 
+
+	private function getLabelFormats()
 	{
 		return array(
 		    'A4' => 'A4',
@@ -4787,12 +4961,12 @@ class DhlDp extends Module
             '910-300-710' => '910-300-710 (105x203mm)'
         );
 	}
-	
-	private function getRetoureLabelFormats() 
+
+	private function getRetoureLabelFormats()
 	{
 		return $this->getLabelFormats();
 	}
-	
+
 	private function getArrayOptionsForSelect($array)
 	{
 		if (is_array($array)) {
@@ -4825,7 +4999,7 @@ class DhlDp extends Module
 
         if (count($id_order_carrier) > 0) {
             $selected_values = Db::getInstance()->executeS(
-                'SELECT * FROM `'._DB_PREFIX_.'dhldp_dp_label` l
+                'SELECT * FROM `'._DB_PREFIX_.'paperfly_dp_label` l
                  WHERE l.`id_order_carrier` IN ('.implode(',', array_map('intval', $id_order_carrier)).')'.
                 ' ORDER BY `date_add`'
             );
@@ -4965,7 +5139,7 @@ class DhlDp extends Module
             //stdClass Object ( [link] => https://internetmarke.deutschepost.de/PcfExtensionWeb/document?keyphase=0&data=ihiNb0veRtkpv%2FxXrOE4q6SZ5r41RWPG [walletBallance] => 148709 [shoppingCart] => stdClass Object ( [orderId] => 938899224 [voucherList] => stdClass Object ( [voucherId] => A0011E78DF0000019569 ) ) )
 
             if (is_object($response) && isset($response->link)) {
-                $dp_label = new DPLabel();
+                $dp_label = new LGLabel();
 
                 $dp_label->id_order_carrier = (int)$id_order_carrier;
                 $dp_label->product = $product;
@@ -5135,5 +5309,89 @@ class DhlDp extends Module
             return $c;
         }
         return $countries;
+    }
+
+    /*******sent to shipping via paperfly***********/
+
+    public function sentToPaperFlyOrder($order){
+
+        $delivery_address_id=$order->id_address_delivery;
+        $address= Db::getInstance()->executeS(
+            'SELECT *
+            FROM `'._DB_PREFIX_.'address`
+            WHERE id_address ='.$delivery_address_id
+        );
+
+        $post_data = new stdClass();
+        $post_data->merOrderRef = $order->reference;
+        $post_data->pickMerchantName = "Rokan";
+        $post_data->pickMerchantAddress = "Dhanmondi";
+        $post_data->pickMerchantThana = "Dhanmondi";
+        $post_data->pickMerchantDistrict = "Dhaka";
+        $post_data->pickupMerchantPhone = "01829331461";
+        $post_data->productSizeWeight = "standard";
+        $post_data->productBrief = "USB Fan";
+        $post_data->packagePrice = "1500";
+        $post_data->deliveryOption = "regular";
+        $post_data->custname = $address[0]['firstname'].' '.$address[0]['lastname'];
+        $post_data->custaddress = $address[0]['address1'];
+        $post_data->customerThana = 'Badda';
+        $post_data->customerDistrict = $address[0]['city'];
+        $post_data->custPhone =$address[0]['phone'];
+        $post_data->max_weight = "10";
+        $post_data_obj = json_encode($post_data);
+
+        $apiJsonResponse = self::callPaperFlyAPI("POST","https://sandbox.paperflybd.com/OrderPlacement",$post_data_obj,'Paperfly_~La?Rj73FcLm');
+//       print_r($apiJsonResponse);
+//       die('here');
+        return $apiJsonResponse;
+
+    }
+
+    /*******sent to shipping via paperfly***********/
+
+    public function sentToPaperflyOrderTrackingApi($order){
+
+        $post_data = new stdClass();
+        $post_data->ReferenceNumber = $order->reference;
+        $post_data_obj = json_encode($post_data);
+        $apiJsonResponse = self::callPaperFlyAPI("POST","https://sandbox.paperflybd.com/API-Order-Tracking",$post_data_obj,'Paperfly_~La?Rj73FcLm');
+        return $apiJsonResponse;
+
+    }
+
+
+    /********API call response********/
+
+    public function callPaperFlyAPI($method, $url, $data = false,$headers = false)
+    {
+        $curl = curl_init();
+        switch ($method)
+        {
+            case "POST":
+                curl_setopt($curl, CURLOPT_POST, 1);
+                if ($data)
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                break;
+            case "PUT":
+                curl_setopt($curl, CURLOPT_PUT, 1);
+                break;
+            default:
+                if ($data)
+                    $url = sprintf("%s?%s", $url, http_build_query($data));
+        }
+
+        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($curl, CURLOPT_USERPWD, "c116552:1234");
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'paperflykey: Paperfly_~La?Rj73FcLm',
+            'Authorization: Basic YzExNjU1MjoxMjM0',
+            'Content-Type: application/json'
+        ));
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($curl);
+        curl_close($curl);
+        return $result;
     }
 }

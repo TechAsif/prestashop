@@ -121,13 +121,13 @@ class DPApi
                         'date_add' => date('Y-m-d H:i:s'),
                         'date_upd' => date('Y-m-d H:i:s')
                     );
-                    $pt = Db::getInstance()->getRow('select id_dhldp_dp_productlist, id, price from '._DB_PREFIX_.'dhldp_dp_productlist where id='.(int)$p['id']);
+                    $pt = Db::getInstance()->getRow('select id_paperfly_lg_productlist, id, price from '._DB_PREFIX_.'paperfly_lg_productlist where id='.(int)$p['id']);
                     if ($pt) {
                         if ($pt['price'] != $p['price']) {
-                            Db::getInstance()->update('dhldp_dp_productlist', array('price' => $p['price'], 'date_upd' => date('Y-m-d H:i:s')), 'id=' . (int)$p['id']);
+                            Db::getInstance()->update('paperfly_lg_productlist', array('price' => $p['price'], 'date_upd' => date('Y-m-d H:i:s')), 'id=' . (int)$p['id']);
                         }
                     } else {
-                        Db::getInstance()->insert('dhldp_dp_productlist', $p);
+                        Db::getInstance()->insert('paperfly_lg_productlist', $p);
                     }
                 }
                 return true;
@@ -187,10 +187,10 @@ class DPApi
                     'id' => $p->productCode,
                     'price_contract' => $p->price/100
                 );
-                Db::getInstance()->update('dhldp_dp_productlist', array('price_contract' => $pt[$p->productCode]['price_contract'], 'date_upd' => date('Y-m-d H:i:s')), 'id='.(int)$p->productCode);
+                Db::getInstance()->update('paperfly_lg_productlist', array('price_contract' => $pt[$p->productCode]['price_contract'], 'date_upd' => date('Y-m-d H:i:s')), 'id='.(int)$p->productCode);
             }
             if (count($pt)) {
-                Db::getInstance()->update('dhldp_dp_productlist',
+                Db::getInstance()->update('paperfly_lg_productlist',
                     array('price_contract' => 0, 'date_upd' => date('Y-m-d H:i:s')),
                     'id not in ('.implode(',', array_keys($pt)).')');
                 return true;
@@ -559,7 +559,7 @@ class DPApi
         }
         return $res;
         */
-        $list = Db::getInstance()->executes('select * from '._DB_PREFIX_.'dhldp_dp_productlist'.(($product_code != '')?' where id='.(int)$product_code :'').' order by id');
+        $list = Db::getInstance()->executes('select * from '._DB_PREFIX_.'paperfly_lg_productlist'.(($product_code != '')?' where id='.(int)$product_code :'').' order by id');
         $res = array();
         foreach ($list as $p) {
             $r = array(

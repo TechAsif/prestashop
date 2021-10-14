@@ -15,7 +15,7 @@
 			<tr>
 				<td>{l s='Carrier' mod='dhldp'}</td>
 				<td>{l s='Enable' mod='dhldp'}</td>
-				<td>{l s='Default DHL Product' mod='dhldp'}</td>
+				<td>{l s='Default PAPERFLY Product' mod='dhldp'}</td>
 			<tr>
 			{foreach $carriers as $carrier}
 			<tr>

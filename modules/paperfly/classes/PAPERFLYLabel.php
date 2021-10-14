@@ -11,7 +11,7 @@
  * @link      http://www.silbersaiten.de
  */
 
-class DHLDPLabel extends ObjectModel
+class PAPERFLYLabel extends ObjectModel
 {
     public $id_order_carrier;
     public $product_code;
@@ -37,8 +37,8 @@ class DHLDPLabel extends ObjectModel
     public $int_idc_type;
 
     public static $definition = array(
-        'table' => 'dhldp_label',
-        'primary' => 'id_dhldp_label',
+        'table' => 'paperfly_label',
+        'primary' => 'id_paperfly_label',
         'fields' => array(
             'id_order_carrier' => array('type' => self::TYPE_INT, 'validate' => 'isUnsignedId', 'required' => true),
             'product_code' => array('type' => self::TYPE_STRING, 'validate' => 'isMessage', 'required' => true, 'size' => 30),
@@ -66,13 +66,13 @@ class DHLDPLabel extends ObjectModel
 
     public static function getPackages($id_dhldp_label)
     {
-        return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT * FROM `'._DB_PREFIX_.'dhldp_package` dp
-        WHERE dp.`id_dhldp_label` = '.(int)$id_dhldp_label);
+        return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT * FROM `'._DB_PREFIX_.'paperfly_package` dp
+        WHERE dp.`id_paperfly_label` = '.(int)$id_dhldp_label);
     }
 
     public static function getLabelIDByShipmentNumber($shipment_number)
     {
-        return Db::getInstance()->getValue('SELECT id_dhldp_label FROM `'._DB_PREFIX_.'dhldp_label` WHERE shipment_number=\''.pSql($shipment_number).'\'');
+        return Db::getInstance()->getValue('SELECT id_paperfly_label FROM `'._DB_PREFIX_.'paperfly_label` WHERE shipment_number=\''.pSql($shipment_number).'\'');
     }
 
     public function delete()
@@ -89,8 +89,8 @@ class DHLDPLabel extends ObjectModel
     public function deletePackages()
     {
         return Db::getInstance()->execute(
-            'DELETE FROM `'._DB_PREFIX_.'dhldp_package`
-			WHERE `id_dhldp_label` = '.(int)$this->id
+            'DELETE FROM `'._DB_PREFIX_.'paperfly_package`
+			WHERE `id_paperfly_label` = '.(int)$this->id
         );
     }
 }
