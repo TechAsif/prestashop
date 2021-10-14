@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:var3bl="https://amsel.dpwn.net/abholportal/gw/lp/schema/1.0/var3bl" targetNamespace="https://amsel.dpwn.net/abholportal/gw/lp/schema/1.0/var3bl" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<element name="BookLabelRequest" type="var3bl:BookLabelRequestType"/>
+	<element name="BookLabelResponse" type="var3bl:BookLabelResponseType"/>
+
+
+	<complexType name="BookLabelRequestType">
+		<annotation>
+			<documentation>Books a Label.</documentation>
+		</annotation>
+		<complexContent>
+			<extension base="var3bl:WsRequestType">
+				<attribute name="portalId" type="string" use="required">
+				</attribute>
+
+				<attribute name="deliveryName" type="string" use="required">
+				</attribute>
+				<attribute name="customerReference">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="40"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="shipmentReference">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="50"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="labelFormat">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="10"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderName1">
+					<simpleType>
+						<restriction base="string">
+
+							<maxLength value="50"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderName2">
+					<simpleType>
+						<restriction base="string">
+
+							<maxLength value="50"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderCareOfName">
+					<simpleType>
+						<restriction base="string">
+
+							<maxLength value="50"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderContactPhone">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="20"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderContactEmail">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="50"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderStreet">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="50"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderStreetNumber">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="7"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderHouseName" use="optional">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderBoxNumber">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="8"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderPostalCode">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="8"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderCity">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="50"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderDistrict" use="optional">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="50"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="senderCounty" use="optional">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="itemWeight" use="optional">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="10"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="itemWorth" use="optional">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="50"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="custom1" use="optional">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="custom2" use="optional">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="custom3" use="optional">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="custom4" use="optional">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="custom5" use="optional">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				
+				<!-- Zollinhaltsfelder -->
+				<attribute name="dutyContent1" use="optional">
+                    <annotation>
+                    	<documentation>Zoll-Inhaltsbeschreibung</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyAmount1" use="optional">
+                    <annotation>
+                    	<documentation>Zollmenge</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyWeight1" use="optional">
+                    <annotation>
+                    	<documentation>Nettogewicht</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyWorth1" use="optional">
+                    <annotation>
+                    	<documentation>Wert</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyCurrency1" use="optional">
+                    <annotation>
+                    	<documentation>Währung</documentation>
+                    </annotation>
+                    <simpleType>
+                    	<restriction base="string">
+                    		<enumeration value="EUR"/>
+                    		<enumeration value="SFR"/>
+                    	</restriction>
+                    </simpleType>
+				</attribute>
+				<attribute name="dutyContent2" use="optional">
+                    <annotation>
+                    	<documentation>Zoll-Inhaltsbeschreibung</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyAmount2" use="optional">
+                    <annotation>
+                    	<documentation>Zollmenge</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyWeight2" use="optional">
+                    <annotation>
+                    	<documentation>Nettogewicht</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyWorth2" use="optional">
+                    <annotation>
+                    	<documentation>Wert</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyCurrency2" use="optional">
+                    <annotation>
+                    	<documentation>Währung</documentation>
+                    </annotation>
+                    <simpleType>
+                    	<restriction base="string">
+                    		<enumeration value="EUR"/>
+                    		<enumeration value="SFR"/>
+                    	</restriction>
+                    </simpleType>
+				</attribute>
+				<attribute name="dutyContent3" use="optional">
+                    <annotation>
+                    	<documentation>Zoll-Inhaltsbeschreibung</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyAmount3" use="optional">
+                    <annotation>
+                    	<documentation>Zollmenge</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyWeight3" use="optional">
+                    <annotation>
+                    	<documentation>Nettogewicht</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyWorth3" use="optional">
+                    <annotation>
+                    	<documentation>Wert</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyCurrency3" use="optional">
+                    <annotation>
+                    	<documentation>Währung</documentation>
+                    </annotation>
+                    <simpleType>
+                    	<restriction base="string">
+                    		<enumeration value="EUR"/>
+                    		<enumeration value="SFR"/>
+                    	</restriction>
+                    </simpleType>
+				</attribute>
+				<attribute name="dutyContent4" use="optional">
+                    <annotation>
+                    	<documentation>Zoll-Inhaltsbeschreibung</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyAmount4" use="optional">
+                    <annotation>
+                    	<documentation>Zollmenge</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyWeight4" use="optional">
+                    <annotation>
+                    	<documentation>Nettogewicht</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyWorth4" use="optional">
+                    <annotation>
+                    	<documentation>Wert</documentation>
+                    </annotation>
+                    <simpleType>
+						<restriction base="string">
+							<maxLength value="255"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+				<attribute name="dutyCurrency4" use="optional">
+                    <annotation>
+                    	<documentation>Währung</documentation>
+                    </annotation>
+                    <simpleType>
+                    	<restriction base="string">
+                    		<enumeration value="EUR"/>
+                    		<enumeration value="SFR"/>
+                    	</restriction>
+                    </simpleType>
+				</attribute>
+				
+			</extension>
+		</complexContent>
+	</complexType>
+	<complexType name="BookLabelResponseType">
+		<annotation>
+			<documentation>Books a Label.</documentation>
+		</annotation>
+		<complexContent>
+			<extension base="var3bl:WsResponseType">
+				<sequence minOccurs="0" maxOccurs="1">
+					<element name="label" minOccurs="0" maxOccurs="1" type="string"/>
+				</sequence>
+				<attribute name="issueDate">
+					<simpleType>
+						<restriction base="string">
+							<maxLength value="29"/>
+						</restriction>
+					</simpleType>
+				</attribute>
+
+				<attribute name="routingCode" type="string"/>
+				<attribute name="idc" type="string"/>
+				<attribute name="idcType" type="string"/>
+				<attribute name="intIdc" type="string"/>
+				<attribute name="intIdcType" type="string"/>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="WsRequestType"/>
+
+	<complexType name="WsResponseType"/>
+
+
+	<simpleType name="FaultcodeEnum">
+		<restriction base="QName">
+			<enumeration value="var3bl:InternalError"/>
+			<enumeration value="var3bl:InvalidXML"/>
+		</restriction>
+	</simpleType>
+
+</schema>
