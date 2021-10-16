@@ -5442,6 +5442,9 @@ class PaperFly extends Module
             $tracking_api_response = self::paperflyOrderTrackingApiCronProcess($ref);
             $tracking_response_data = (json_decode($tracking_api_response)->response_code == '200') ? json_decode($tracking_api_response)->success->trackingStatus : '';
             $tracking_api_response_code = "'" . json_decode($tracking_api_response)->response_code . "'";
+            $tracking_api_response_message = (json_decode($tracking_api_response)->response_code == '200') ? 
+                json_decode($tracking_api_response)->success->message
+                : json_decode($tracking_api_response)->error->message;
             $res='';
             if(!is_array($tracking_response_data))
                 $tracking_response_data = [[]];
@@ -5459,7 +5462,7 @@ class PaperFly extends Module
              ' . $this_key . ',
              ' . $this_val . ',
              ' . $tracking_api_response_code . ',
-             ' . $tracking_api_response_code . '
+             "' . $tracking_api_response_message . '"
             )';
               $res=Db::getInstance()->execute($sql_tracking);
             }

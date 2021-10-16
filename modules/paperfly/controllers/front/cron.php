@@ -33,7 +33,7 @@ class  paperflycronModuleFrontController extends ModuleFrontControllerCore
         $order_query = Db::getInstance()->executeS(
             'SELECT po.reference
             FROM '._DB_PREFIX_.'paperfly_order po 
-            INNER JOIN '._DB_PREFIX_.'paperfly_order_tracking pot ON (po.id_paperfly_order=pot.id_paperfly_order)group by po.reference'
+            LEFT JOIN '._DB_PREFIX_.'paperfly_order_tracking pot ON (po.id_paperfly_order=pot.id_paperfly_order)group by po.reference'
         );
 
 
