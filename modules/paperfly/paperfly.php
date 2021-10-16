@@ -5366,10 +5366,22 @@ class PaperFly extends Module
 
     }
 
+    /*******sent to shipping via paperfly***********/
+
+    public static function paperflyOrderTrackingApiCronProcess($order){
+
+        $post_data = new stdClass();
+        $post_data->ReferenceNumber = $order;
+        $post_data_obj = json_encode($post_data);
+        $apiJsonResponse = self::callPaperFlyAPI("POST","https://sandbox.paperflybd.com/API-Order-Tracking",$post_data_obj,'Paperfly_~La?Rj73FcLm');
+        return $apiJsonResponse;
+
+    }
+
 
     /********API call response********/
 
-    public function callPaperFlyAPI($method, $url, $data = false,$headers = false)
+    public static function callPaperFlyAPI($method, $url, $data = false,$headers = false)
     {
         $curl = curl_init();
         switch ($method)
@@ -5400,4 +5412,67 @@ class PaperFly extends Module
         curl_close($curl);
         return $result;
     }
+
+    // http://localhost/ps174/modules/paperfly/cron.php?token=f4247629b6&return_message=1&run=1
+    public static function cronProcess($value, $time)
+    {
+
+        $time = pSQL(Tools::getValue('time', microtime(true)));
+
+        $order_query = Db::getInstance()->executeS(
+            'SELECT po.reference
+            FROM '._DB_PREFIX_.'paperfly_order po 
+            left JOIN '._DB_PREFIX_.'paperfly_order_tracking pot 
+            ON (po.id_paperfly_order=pot.id_paperfly_order)group by po.reference'
+        );
+
+        foreach (array_column($order_query,'reference') as $key=>$ref){
+            $thi_ref="'".$ref."'";
+            $del_sql='DELETE FROM `'._DB_PREFIX_.'paperfly_order_tracking`
+                        where `reference` = '.$thi_ref;
+            $del_res=Db::getInstance()->execute($del_sql);
+
+            $query = Db::getInstance()->getRow(
+                'SELECT po.reference,po.id_paperfly_order,po.tracking_number,po.id_order
+            FROM '._DB_PREFIX_.'paperfly_order po 
+            where `reference` = '.$thi_ref);
+            $paperfly_order_id=$query['id_paperfly_order'];
+            $paperfly_traking_number="'" .$query['tracking_number']."'";
+
+            $tracking_api_response = self::paperflyOrderTrackingApiCronProcess($ref);
+            $tracking_response_data = (json_decode($tracking_api_response)->response_code == '200') ? json_decode($tracking_api_response)->success->trackingStatus : '';
+            $tracking_api_response_code = "'" . json_decode($tracking_api_response)->response_code . "'";
+            $res='';
+            if(!is_array($tracking_response_data))
+                $tracking_response_data = [[]];
+            foreach ((array)($tracking_response_data[0]) as $key => $value) {
+                $this_key = "'" . $key . "'";
+                $this_val = "'" . $value . "'";
+                $sql_tracking = 'INSERT INTO ' . _DB_PREFIX_ . 'paperfly_order_tracking
+            (`id_order`,`reference`, `id_paperfly_order`, `tracking_number`,`tracking_event_key`,`tracking_event_value`,
+            `api_response_status_code`,`api_response_status_message`)
+            values(
+             ' . (int)$query['id_order'] . ',
+             ' . $thi_ref . ',
+             ' . $paperfly_order_id . ',
+             ' . $paperfly_traking_number . ',
+             ' . $this_key . ',
+             ' . $this_val . ',
+             ' . $tracking_api_response_code . ',
+             ' . $tracking_api_response_code . '
+            )';
+              $res=Db::getInstance()->execute($sql_tracking);
+            }
+
+        }
+        if($res){
+            echo 'job complete '.'processing time: '.Tools::ps_round((microtime(true) - $time), 2).' seconds';
+        }else{
+            echo 'something is wrong';
+        }
+    }
 }
+
+
+
+
