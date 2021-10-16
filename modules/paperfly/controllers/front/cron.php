@@ -1,12 +1,14 @@
 <?php
-require_once dirname(__FILE__) . '/../../index.php';
-class  DHLDPCronModuleFrontController extends ModuleFrontControllerCore
+// url: http://localhost/ps174/index.php?fc=module&module=paperfly&controller=cron
+// require_once dirname(__FILE__) . '/../../index.php';
+class  paperflycronModuleFrontController extends ModuleFrontControllerCore
 {
     public function initContent()
     {
-        $this->module->defineSettings();
+        // var_dump($this);
+        // $this->module->defineSettings();
         $token = Tools::getValue('token');
-        if ($token == $this->module->getCronToken()) {
+        // if ($token == $this->module->getCronToken()) {
 //            $id_shop = (int)Tools::getValue('id_shop');
             $action = pSQL(Tools::getValue('action'));
             $total_indexed = (int)Tools::getValue('total_indexed');
@@ -19,7 +21,7 @@ class  DHLDPCronModuleFrontController extends ModuleFrontControllerCore
 //                $this->indexProducts($action,  $total_indexed, $time);
                 $this->indexOrders($action, $total_indexed,$time);
             }
-        }
+        // }
         exit();
     }
 
@@ -36,35 +38,40 @@ class  DHLDPCronModuleFrontController extends ModuleFrontControllerCore
 
 
         foreach ($order_query as $key=>$value){
-            $thi_ref="'".$value."'";
-            Db::getInstance()->execute('
-                        DELETE FROM `'._DB_PREFIX_.'paperfly_order_tracking`
-                        AND `reference` = '.$thi_ref);
+            $thi_ref=$value['reference'];
 
-            $query = Db::getInstance()->executeS(
-                'SELECT po.reference,po.id_paperfly_order,po.tracking_number
-            FROM '._DB_PREFIX_.'paperfly_order po 
-            where `reference` = '.$thi_ref);
+            $_the_sql = 'DELETE FROM `'._DB_PREFIX_.'paperfly_order_tracking` WHERE `reference` = "'.$thi_ref.'"';
+
+            Db::getInstance()->execute($_the_sql);
+
+            $_SQL = 'SELECT po.reference, po.id_paperfly_order, po.tracking_number FROM '._DB_PREFIX_.'paperfly_order po where `reference` = "'.$thi_ref.'"';
+
+            $query = Db::getInstance()->executeS($_SQL)[0];
 
             $tracking_api_response = self::sentToPaperflyOrderTrackingApi($thi_ref);
             $tracking_response_data = (json_decode($tracking_api_response)->response_code == '200') ? json_decode($tracking_api_response)->success->trackingStatus : '';
-            $tracking_api_response_code = "'" . json_decode($tracking_api_response)->response_code . "'";
+            $tracking_api_response_code = json_decode($tracking_api_response)->response_code;
+            $tracking_api_response_message = ($tracking_api_response_code == '200') ? 
+                json_decode($tracking_api_response)->success->message
+                : json_decode($tracking_api_response)->error->message;
 
             foreach ((array)$tracking_response_data[0] as $key => $value) {
-                $this_key = "'" . $key . "'";
-                $this_val = "'" . $value . "'";
+                $this_key = $key;
+                $this_val = $value;
+                $sts =  '';
                 $sql_tracking = 'INSERT INTO ' . _DB_PREFIX_ . 'paperfly_order_tracking
             (`reference`, `id_paperfly_order`, `tracking_number`,`tracking_event_key`,`tracking_event_value`,
             `api_response_status_code`,`api_response_status_message`)
             values(
-             ' . $thi_ref . ',
-             ' . $query->id_paperfly_order . ',
-             ' . $query->tracking_number . ',
-             ' . $this_key . ',
-             ' . $this_val . ',
-             ' . $tracking_api_response_code . ',
-             ' . $tracking_api_response_code . '
+             "' . $thi_ref . '",
+             ' . $query['id_paperfly_order'] . ',
+             "' . $query['tracking_number'] . '",
+             "' . $this_key . '",
+             "' . $this_val . '",
+             "' . $tracking_api_response_code . '",
+             "' . $tracking_api_response_message . '"
             )';
+            
                 Db::getInstance()->execute($sql_tracking);
             }
         }

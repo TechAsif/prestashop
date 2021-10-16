@@ -908,29 +908,35 @@ class PaperFly extends Module
 
         $order = $params['order'];
         $api_response = self::sentToPaperFlyOrder($order);
+
+        // if paper fly is not accept the order
+        if( json_decode($api_response)->response_code != '200' ) {
+            // return;
+        }
+
         $tracking_api_response = self::sentToPaperflyOrderTrackingApi($order);
         $tracking_response_data = (json_decode($tracking_api_response)->response_code == '200') ? json_decode($tracking_api_response)->success->trackingStatus : '';
 
 
-        $traking_number = "'" . json_decode($api_response)->success->tracking_number . "'";
-        $order_api_response_code = "'" . json_decode($api_response)->response_code . "'";
+        $traking_number =  (json_decode($tracking_api_response)->response_code == '200') ?json_decode($api_response)->success->tracking_number : '';
+        $order_api_response_code =  json_decode($api_response)->response_code;
         $order_api_response_message = ($order_api_response_code == '200') ? json_decode($api_response)->success->message :
             json_decode($api_response)->error->message;
 
-        $tracking_api_response_code = "'" . json_decode($tracking_api_response)->response_code . "'";
-        $tracking_api_response_message = "'" . ($tracking_api_response_code == '200') ? json_decode($tracking_api_response)->success->message :
-            json_decode($tracking_api_response)->error->message . "'";
-        $reference = "'" . $order->reference . "'";
+        $tracking_api_response_code = json_decode($tracking_api_response)->response_code;
+        $tracking_api_response_message = ($tracking_api_response_code == '200') ? json_decode($tracking_api_response)->success->message :
+            json_decode($tracking_api_response)->error->message;
+        $reference = $order->reference;
         $sql = 'INSERT INTO ' . _DB_PREFIX_ . 'paperfly_order
             (`id_cart`, `id_order`, `id_customer`,`tracking_number`, `reference`,`api_response_status_code`,`api_response_status_message`)
             values(
              ' . (int)$order->id_cart . ',
              ' . (int)$order->id . ',
              ' . (int)$order->id_customer . ',
-             ' . $traking_number . ',
-             ' . $reference . ',
-             ' . $order_api_response_code . ',
-             ' . $order_api_response_code . '
+             "' . $traking_number . '",
+             "' . $reference . '",
+             "' . $order_api_response_code . '",
+             "' . $order_api_response_message . '"
             
                )';
 
@@ -945,13 +951,13 @@ class PaperFly extends Module
             `api_response_status_code`,`api_response_status_message`)
             values(
              ' . (int)$order->id . ',
-             ' . $reference . ',
-             ' . $id_paperfly_order . ',
-             ' . $traking_number . ',
-             ' . $this_key . ',
-             ' . $this_val . ',
-             ' . $tracking_api_response_code . ',
-             ' . $tracking_api_response_code . '
+             "' . $reference . '",
+             ' . (int)$id_paperfly_order . ',
+             "' . $traking_number . '",
+             "' . $this_key . '",
+             "' . $this_val . '",
+             "' . $tracking_api_response_code . '",
+             "' . $tracking_api_response_message . '"
             )';
             Db::getInstance()->execute($sql_tracking);
         }
@@ -2487,17 +2493,17 @@ class PaperFly extends Module
 
     public static function logToFile($service, $msg, $key = '')
     {
-        if (in_array($service, array('DP', 'DHL'))) {
-            if (self::getConfig($service.'_LOG')) {
-                if ($service == 'DP') {
-                    $key = 'dp_'.$key;
-                }
+        // if (in_array($service, array('DP', 'DHL'))) {
+        //     if (self::getConfig($service.'_LOG')) {
+        //         if ($service == 'DP') {
+        //             $key = 'dp_'.$key;
+        //         }
                 $filename = dirname(__FILE__).'/logs/log_'.$key.'.txt';
                 $fd = fopen($filename, 'a');
                 fwrite($fd, "\n".date('Y-m-d H:i:s').' '.$msg);
                 fclose($fd);
-            }
-        }
+        //     }
+        // }
     }
 
     public function getContent()
