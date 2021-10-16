@@ -13,11 +13,11 @@
 
 
 {foreach $orders as $order}
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+<div class="panel-group" id="accordion" >
     <div class="panel">
-        <div class="panel-heading" role="tab">
+        <div class="panel-heading">
             <h4>
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#{$order['reference']|escape:'htmlall':'UTF-8'}" >{$order['product_name']|escape:'htmlall':'UTF-8'}</a>
+                <a role="button" data-toggle="collapse" href="#{$order['reference']|escape:'htmlall':'UTF-8'}" >{$order['product_name']|escape:'htmlall':'UTF-8'}</a>
             </h4>
         </div>
         <div class="panel-body">
@@ -30,7 +30,7 @@
                 <div class="col-md-6"></div>
             </div>
         </div>
-        <div id="{$order['reference']|escape:'htmlall':'UTF-8'}" class="panel-collapse collapse" role="tabpanel">
+        <div id="{$order['reference']|escape:'htmlall':'UTF-8'}" class="panel-collapse collapse">
         {if count($order['tracking_data']) > 0 } 
             <!-- Table -->
             <table class="table">
