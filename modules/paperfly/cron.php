@@ -7,6 +7,8 @@ include dirname(__FILE__).'/paperfly.php';
 /****
  * token:995a4e28ea
  */
+// var_dump( substr(Tools::encrypt('paperfly'), 0, 10)    );
+// die();
 
 if (substr(Tools::encrypt('paperfly'), 0, 10) != Tools::getValue('token') || !Module::isInstalled('paperfly')) {
     die('Bad token');
