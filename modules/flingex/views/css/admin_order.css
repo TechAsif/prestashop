@@ -1,0 +1,49 @@
+.dhldp_dhl_order_panel { border-left: 5px solid #FECC00!important; }
+#dhldp_dhl_params {padding: 10px 0px;}
+#dhldp_dhl_params label {padding: 7px}
+#dhldp_dhl_params .help-block {text-align: right; clear: both;}
+.param-footer {padding: 5px 0px;}
+#dhldp_dhl_update_address .form-group {display: block; margin-bottom: 5px;}
+#dhldp_dhl_update_address .dhl_delivery_address .form-group {margin-bottom: 0px!important;}
+#dhldp_dhl_update_address .dhl_delivery_address .form-group label {padding-top: 0px;}
+
+#dhldp_dhl_addit_services .form-group {display: block; margin-bottom: 5px;}
+#dhldp_hl_export_documents .form-group {display: block; margin-bottom: 5px;}
+#dhldp_dhl_addit_services .help-block {
+	float: none;
+    clear: both;}
+#dhldp_dhl_addit_services .form-group {display: none;}
+.dhldp_dp_order_panel { border-left: 5px solid #FECC00!important; }
+
+.form-group.form_group177 label {
+	justify-content: start;
+}
+#dhldp_dhl_update_address .form-group {
+	display: flex!important;
+}
+#dhldp_dhl_update_address .form-group label {
+	justify-content: end!important;
+}
+
+#dhldp_dhl_export_documents .form-group label {
+	justify-content: flex-end!important;
+}
+#dhldp_dhl_update_address .form-group input[type=radio] {
+	margin-left: 10px;
+}
+#dhldp_dhl_export_documents .card-body .form-group {
+    margin-bottom: 20px;	
+}
+
+.cust_check {
+    top: -10px;
+}
+
+#dhldp_dhl_export_documents table tr td input.form-control {
+    margin: auto;
+    display: block;	
+}
+
+#generateDHLDPDpLabels, #generateDHLDPDhlLabels {
+	margin-left: 15px;
+}.dhldp_dp_order_panel .table label {	display: inline-block!important;}

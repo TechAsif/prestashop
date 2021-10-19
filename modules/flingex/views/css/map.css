@@ -1,0 +1,61 @@
+.dhl_map {
+    margin: 0;
+}
+.dhl_map_title {
+    font-weight: bold;
+    display: none;
+}
+
+.dhl_map #errors {
+    display: none;
+    /*color: red;*/
+}
+
+.dhl_map .dhl_list {
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #fff;
+}
+
+.dhl_map .dhl_list .dhl_item {
+    border: 2px solid #ffffff;
+    border-bottom: 2px solid #e6e7e7;
+    margin-left: 10px;
+    margin-right: 20px;
+    padding: 10px 0 10px 12px;
+}
+
+.dhl_item .item {
+    font-weight: bold;
+}
+
+.dhl_item .address {
+    font-size: 0.8em;
+}
+
+.dhl_item .action
+{
+    margin-top: 3px;
+}
+
+.dhl_item .action button{
+    float: right;
+    cursor: pointer;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+
+.dhl_item_highlight {
+    border-left: 2px solid #afe799 !important;
+}
+
+.dhl_item_selected {
+    border: 2px solid #ffc343 !important;
+}
+
+#dhl_map #map {
+    display: block;
+    width: 100px;
+    height: 100px;
+}

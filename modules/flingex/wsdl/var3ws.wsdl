@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="var3ws" 
+	targetNamespace="https://amsel.dpwn.net/abholportal/gw/lp/schema/1.0/var3ws"
+ 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+ xmlns:var3bl="https://amsel.dpwn.net/abholportal/gw/lp/schema/1.0/var3bl"
+ xmlns:var3ws="https://amsel.dpwn.net/abholportal/gw/lp/schema/1.0/var3ws">
+
+ <wsdl:import namespace="https://amsel.dpwn.net/abholportal/gw/lp/schema/1.0/var3bl" location="var3bl.xsd" />
+
+ <wsdl:message name="BookLabelRequestMsg">
+  <wsdl:part name="parameters" element="var3bl:BookLabelRequest"></wsdl:part>
+ </wsdl:message>
+ <wsdl:message name="BookLabelResponseMsg">
+  <wsdl:part name="parameters" element="var3bl:BookLabelResponse"></wsdl:part>
+ </wsdl:message>
+
+
+ <wsdl:portType name="RpPartnerType">
+  <wsdl:operation name="BookLabel">
+   <wsdl:input message="var3ws:BookLabelRequestMsg"></wsdl:input>
+   <wsdl:output message="var3ws:BookLabelResponseMsg"></wsdl:output>
+  </wsdl:operation>
+  
+ </wsdl:portType>
+
+
+ <wsdl:binding name="RpPartnerBinding" type="var3ws:RpPartnerType">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+  <wsdl:operation name="BookLabel">
+   <soap:operation soapAction="" style="document" />
+   <wsdl:input>
+    <soap:body use="literal" />
+   </wsdl:input>
+   <wsdl:output>
+    <soap:body use="literal" />
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+
+ <wsdl:service name="RpPartnerService">
+  <wsdl:port name="RpPartnerPort" binding="var3ws:RpPartnerBinding">
+    <soap:address location="https://amsel.dpwn.net/abholportal/gw/lp/SoapConnector"/>
+  </wsdl:port>
+ </wsdl:service>
+</wsdl:definitions>
