@@ -34,7 +34,7 @@ class Flingex extends Module
     {
         $this->name = 'flingex';
         $this->tab = 'shipping_logistics';
-        $this->version = '1.0.11';
+        $this->version = '0.0.1';
         $this->author = 'Bozlur Rahman';
 //        $this->module_key = '96d5521c4c1259e8e87786597735aa4e';
         $this->need_instance = 0;

@@ -441,7 +441,7 @@ class FlingexApi
             $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
 
 
-            DHLDP::logToFile('DP', $msg, 'api_pl');
+            Flingex::logToFile('DP', $msg, 'api_pl');
 
             return $res;
         } catch (SoapFault $e) {
@@ -449,7 +449,7 @@ class FlingexApi
             $msg .= "\nREQUEST HEADERS:\n" . $soap_client->__getLastRequestHeaders() . "\n";
             $msg .= "\nRESPONSE:\n" . $soap_client->__getLastResponse() . "\n";
             $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
-            DHLDP::logToFile('DP', $msg, 'api_pl');
+            Flingex::logToFile('DP', $msg, 'api_pl');
             $this->errors[] = $e->getMessage();
         }
         return false;
@@ -491,7 +491,7 @@ class FlingexApi
             $msg .= "\nRESPONSE:\n" . $soap_client->__getLastResponse() . "\n";
             $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
 
-            DHLDP::logToFile('DP', $msg, 'api');
+            Flingex::logToFile('DP', $msg, 'api');
             //exit;
 
             return $res;
@@ -500,7 +500,7 @@ class FlingexApi
             $msg .= "\nREQUEST HEADERS:\n" . $soap_client->__getLastRequestHeaders() . "\n";
             $msg .= "\nRESPONSE:\n" . $soap_client->__getLastResponse() . "\n";
             $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
-            DHLDP::logToFile('DP', $msg, 'api');
+            Flingex::logToFile('DP', $msg, 'api');
 
             $this->errors[] = $e->getMessage();
 

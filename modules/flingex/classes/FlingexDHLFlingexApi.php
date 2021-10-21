@@ -559,7 +559,7 @@ class FlingexDHLFlingexApi
             $msg .= "\nREQUEST HEADERS:\n" . $soap_client->__getLastRequestHeaders() . "\n";
             $msg .= "\nRESPONSE:\n" . $soap_client->__getLastResponse() . "\n";
             $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
-            DHLDP::logToFile('DHL', $msg, 'dhl_api');
+            Flingex::logToFile('DHL', $msg, 'dhl_api');
 
             if (isset($res->Status)) {
                 $res->status = $res->Status;
@@ -636,7 +636,7 @@ class FlingexDHLFlingexApi
                 $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
                 $msg .= "\nRESPONSE:\n" . $soap_client->__getLastResponse() . "\n";
             }
-            DHLDP::logToFile('DHL', $msg, 'dhl_api');
+            Flingex::logToFile('DHL', $msg, 'dhl_api');
 
             return $this->getResponse($res);
         } catch (SoapFault $e) {
@@ -651,7 +651,7 @@ class FlingexDHLFlingexApi
                 $msg .= "\nRESPONSE HEADERS:\n".$soap_client->__getLastResponseHeaders()."\n";
                 $msg .= "\nRESPONSE:\n".$soap_client->__getLastResponse()."\n";
             }
-            DHLDP::logToFile('DHL', $msg, 'dhl_api');
+            Flingex::logToFile('DHL', $msg, 'dhl_api');
         }
         return false;
     }
@@ -698,7 +698,7 @@ class FlingexDHLFlingexApi
         $body = Tools::substr($res, $header_size);
         $msg = "\nREQUEST:\n" . $parameters_string . "\n";
         $msg .= "\nRESPONSE:\n" . $res . "\n";
-        DHLDP::logToFile('DHL', $msg, 'dhl_api');
+        Flingex::logToFile('DHL', $msg, 'dhl_api');
 
         return $this->getResponseRA($http_code, $body);
     }
@@ -800,7 +800,7 @@ class FlingexDHLFlingexApi
                 $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
                 $msg .= "\nRESPONSE:\n" . $soap_client->__getLastResponse() . "\n";
             }
-            DHLDP::logToFile('DHL', $msg, 'dhl_api');
+            Flingex::logToFile('DHL', $msg, 'dhl_api');
 
             return $res;
         } catch (SoapFault $e) {
@@ -811,7 +811,7 @@ class FlingexDHLFlingexApi
                 $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
                 $msg .= "\nRESPONSE:\n" . $soap_client->__getLastResponse() . "\n";
             }
-            DHLDP::logToFile('DHL', $msg, 'dhl_api');
+            Flingex::logToFile('DHL', $msg, 'dhl_api');
             $this->errors[] = $this->module->getTranslationPFApiMessage($e->getMessage());
         }
         return false;
