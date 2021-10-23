@@ -34,8 +34,5 @@ ul.dhl-tabs li {
     display: none;
 }
 
-.dhl_authdata_live {display: none;}
-.dhl_authdata_sbx {display: none;}
-
 .menu-dhlintraship .navbar-nav.menu  li {text-transform: uppercase; font-weight: bold;}
 .bootstrap .menu-dhlintraship {background-color: #ffffff!important;}

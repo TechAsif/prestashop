@@ -3,530 +3,297 @@
  * DHL Deutschepost
  *
  * @author    silbersaiten <info@silbersaiten.de>
- * @copyright 2020 silbersaiten
+ * @copyright 2021 silbersaiten
  * @license   See joined file licence.txt
  * @category  Module
  * @support   silbersaiten <support@silbersaiten.de>
- * @version   1.0.2
+ * @version   1.0.6
  * @link      http://www.silbersaiten.de
  */
 
 class FlingexApi
 {
-    // public static $endpoint_sbx = 'https://internetmarke.deutschepost.de/OneClickForAppV3';
-    // public static $endpoint_live = 'https://internetmarke.deutschepost.de/OneClickForAppV3';
-    // public static $wsdl = 'https://internetmarke.deutschepost.de/OneClickForAppV3?wsdl';
-    // public static $prodws_wsdl = 'https://prodws.deutschepost.de:8443/ProdWSProvider_1_1/prodws?wsdl';
-    // public static $endpoint_prodws_sbx = 'https://prodws.deutschepost.de:8443/ProdWSProvider_1_1/prodws';
-    // public static $endpoint_prodws_live = 'https://prodws.deutschepost.de:8443/ProdWSProvider_1_1/prodws';
-    // public static $ppl_update_xml = 'https://www.deutschepost.de/content/dam/mlm.nf/dpag/technische_downloads/update_internetmarke/ppl_update.xml';
-    // public static $tracking_url = 'https://www.deutschepost.de/sendung/simpleQuery.html?form.sendungsnummer=[tracking_number]';
-
-    public static $products_filename = 'data/ppl.csv';
-    public $ppl = 0;
-    public $voucher_layout = 'AddressZone';
-
-    public static $partnerid = 'ASNPR';
-    public static $apikey = 'nVgwguea8TxFXw8B02GI6uTzY060xW9I';
-    public static $keyphase = '1';
-
-    public static $prodws_mandatid = 'silbersaiten';
-    public static $prodws_username = 'silbersaiten';
-    public static $prodws_password = 'vZ&xu$B7o0';
-
     public $errors;
-    public static $soap_client;
+    public $warnings;
     public $user_token = false;
+    public $module;
+    public $api_version;
+    
+    public static $conf_prefix = 'FLINGEX_';
 
-    public function __construct()
+    public function __construct($module, $api_version = '3.1')
     {
-        $this->getPPLVersion();
+        $this->module = $module;
     }
-
-    public function fileGetContents($url, $use_include_path = false, $stream_context = null, $curl_timeout = 5)
-    {
-        if ($stream_context == null && preg_match('/^https?:\/\//', $url)) {
-            $stream_context = @stream_context_create(array('http' => array('timeout' => $curl_timeout)));
-        }
-        if (in_array(ini_get('allow_url_fopen'), array('On', 'on', '1')) || !preg_match('/^https?:\/\//', $url)) {
-            return Tools::file_get_contents($url, $use_include_path, $stream_context);
-        } elseif (function_exists('curl_init')) {
-            $curl = curl_init();
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
-            curl_setopt($curl, CURLOPT_TIMEOUT, $curl_timeout);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-            if ($stream_context != null) {
-                $opts = stream_context_get_options($stream_context);
-                if (isset($opts['http']['method']) && Tools::strtolower($opts['http']['method']) == 'post') {
-                    curl_setopt($curl, CURLOPT_POST, true);
-                    if (isset($opts['http']['content'])) {
-                        parse_str($opts['http']['content'], $post_data);
-                        curl_setopt($curl, CURLOPT_POSTFIELDS, $post_data);
-                    }
-                }
-            }
-            $content = curl_exec($curl);
-            curl_close($curl);
-            return $content;
-        } else {
-            return false;
-        }
-    }
-
-    public function updatePPL()
-    {
-        return false;
-    }
-
-    public function getProductList()
-    {
-        $list = $this->callProdwsApi('getProductList', array('shortList' => true, 'mandantID' => self::$prodws_mandatid, 'dedicatedProducts' => 0, 'responseMode' => 0), Context::getContext()->shop->id);
-        if (isset($list->Response) && isset($list->Response->shortSalesProductList) && isset($list->Response->shortSalesProductList->ShortSalesProduct)) {
-            $ar = $list->Response->shortSalesProductList->ShortSalesProduct;
-            if (is_array($ar)) {
-                foreach ($ar as $product) {
-                    $p = array(
-                        'id' => $product->externIdentifier->id,
-                        'name' => $product->name,
-                        'price' => $product->priceDefinition->commercialGrossPrice->value,
-                        'date_add' => date('Y-m-d H:i:s'),
-                        'date_upd' => date('Y-m-d H:i:s')
-                    );
-                    $pt = Db::getInstance()->getRow('select id_flingex_lg_productlist, id, price from '._DB_PREFIX_.'flingex_lg_productlist where id='.(int)$p['id']);
-                    if ($pt) {
-                        if ($pt['price'] != $p['price']) {
-                            Db::getInstance()->update('flingex_lg_productlist', array('price' => $p['price'], 'date_upd' => date('Y-m-d H:i:s')), 'id=' . (int)$p['id']);
+    
+    public function phpCurlRequest($curlUrl, $method, $data,$headers) {
+        $req = '';
+        $curl = curl_init();
+    
+        switch ($method){
+            case "POST":
+                
+                if ($data) {
+                    if (is_array($data)) {
+    
+                        foreach ($data as $key => $value) {
+                            $value = (stripslashes($value));
+                            // $value = urlencode(stripslashes($value));
+                            $req .= "&$key=$value";
                         }
-                    } else {
-                        Db::getInstance()->insert('flingex_lg_productlist', $p);
-                    }
+                        $req =  substr($req, 1);
+                    } else 
+                        $req = $data;
                 }
-                return true;
-            }
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $req);
+                curl_setopt($curl, CURLOPT_POST, 1);
+    
+                break;
+            case "PUT":
+                curl_setopt($curl, CURLOPT_PUT, 1);
+                break;
+            case "DELETE":
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+                break;
+            default:
+                if ($data)
+                    $curlUrl = sprintf("%s?%s", $curlUrl, http_build_query($data));
         }
-        return false;
-    }
-
-    public function getPPLVersion()
-    {
-        $this->ppl = Configuration::getGlobalValue('DHLDP_DP_PPL_VERSION')?Configuration::getGlobalValue('DHLDP_DP_PPL_VERSION'):32;
-        return $this->ppl;
-    }
-
-    public function retrievePageFormats()
-    {
-        $response = $this->callApi(
-            'retrievePageFormats',
-            array(),
-            Context::getContext()->shop->id,
-            false
-        );
-        $page_formats = array();
-        if (isset($response->pageFormat) && is_array($response->pageFormat)) {
-            foreach ($response->pageFormat as $page_format) {
-                if ($page_format->isAddressPossible == 1) {
-                    $page_formats[(int)$page_format->id] = array(
-                        'name' => $page_format->name,
-                        'type' => $page_format->pageType,
-                        'orie' => $page_format->pageLayout->orientation,
-                        'col' =>  $page_format->pageLayout->labelCount->labelX,
-                        'row' =>  $page_format->pageLayout->labelCount->labelY,
-                    );
-                }
-            }
+        curl_setopt($curl, CURLOPT_URL, $curlUrl);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    
+        $res = curl_exec($curl);
+    
+        if (!$res) {
+            $errno = curl_errno($curl);
+            $errstr = curl_error($curl);
+            curl_close($curl);
+            throw new Exception("cURL error: [$errno] $errstr");
         }
-        if (count($page_formats) > 0) {
-            ksort($page_formats);
-            Configuration::updateGlobalValue('DHLDP_DP_PAGE_FORMATS', Tools::jsonEncode($page_formats));
-            return true;
-        }
-        return false;
-    }
-
-    public function retrieveContractProducts()
-    {
-        $response = $this->callApi(
-            'retrieveContractProducts',
-            array(),
-            Context::getContext()->shop->id,
-            true
-        );
-        if (is_object($response) && isset($response->products)) {
-            $pt = array();
-            foreach ($response->products as $p) {
-                $pt[$p->productCode] = array(
-                    'id' => $p->productCode,
-                    'price_contract' => $p->price/100
-                );
-                Db::getInstance()->update('flingex_lg_productlist', array('price_contract' => $pt[$p->productCode]['price_contract'], 'date_upd' => date('Y-m-d H:i:s')), 'id='.(int)$p->productCode);
-            }
-            if (count($pt)) {
-                Db::getInstance()->update('flingex_lg_productlist',
-                    array('price_contract' => 0, 'date_upd' => date('Y-m-d H:i:s')),
-                    'id not in ('.implode(',', array_keys($pt)).')');
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function getPageFormats($id = null)
-    {
-        $formats = Tools::jsonDecode(Configuration::getGlobalValue('DHLDP_DP_PAGE_FORMATS'), true);
-        if ($id != null) {
-            if (isset($formats[(int)$id])) {
-                return $formats[(int)$id];
-            }
-            return false;
-        }
-        return $formats;
-    }
-
-    public function prepareAddress(Address $address)
-    {
-        $country_and_state = Address::getCountryAndState($address->id);
-
-        if ($country_and_state) {
-            $country = new Country((int)$country_and_state['id_country']);
-            $state = $country_and_state['id_state'] ? new State((int)$country_and_state['id_state']) : false;
-
-            $matches = array();
-            preg_match(
-                '/^(?P<streetname>[^\d]+) (?P<streetnumber>([ \/0-9-])+.?)$/',
-                trim($address->address1),
-                $matches
-            );
-            if (!count($matches)) {
-                preg_match(
-                    '/^(?P<streetnumber>[ \/0-9-]+.?) (?P<streetname>[^\d]+.?)$/',
-                    trim($address->address1),
-                    $matches
-                );
-                if (!count($matches)) {
-                    preg_match(
-                        '/(?P<streetnumber>[ \/0-9-]+.?) (?P<streetname>[^\d]+.?)/',
-                        trim($address->address1),
-                        $matches
-                    );
-                    if (!count($matches)) {
-                        $street_name = $address->address1;
-                        $street_number = '';
-                    } else {
-                        $street_name = trim($matches['streetname']);
-                        $street_number = trim($matches['streetnumber']);
-                    }
-                } else {
-                    $street_name = trim($matches['streetname']);
-                    $street_number = trim($matches['streetnumber']);
-                }
-            } else {
-                $street_name = trim($matches['streetname']);
-                $street_number = trim($matches['streetnumber']);
-            }
-
-            //$customer = new Customer($address->id_customer);
-
-            $receiver = new stdClass();
-            $receiver->name = new stdClass();
-            if ($address->company != '') {
-                $receiver->name->companyName = new stdClass();
-                $receiver->name->companyName->company = $address->company; // max 50
-                $receiver->name->companyName->personName = new stdClass();
-                $receiver->name->companyName->personName->salutation = ''; //max 10
-                $receiver->name->companyName->personName->title = ''; //max 10
-                $receiver->name->companyName->personName->firstname = $address->firstname; //max 35
-                $receiver->name->companyName->personName->lastname = $address->lastname; //max 35
-            } else {
-                $receiver->name->personName = new stdClass();
-                $receiver->name->personName->salutation = ''; //max 10
-                $receiver->name->personName->title = ''; //max 10
-                $receiver->name->personName->firstname = $address->firstname; //max 35
-                $receiver->name->personName->lastname = $address->lastname; //max 35
-            }
-
-            $receiver->address = new stdClass();
-            $receiver->address->street = $street_name; // max 50
-            $receiver->address->houseNo = $street_number; //max 10
-            $receiver->address->additional = (($state != false)?$state->iso_code.' ':'').$address->address2;//max 50
-            $receiver->address->zip = $address->postcode; // max 10
-            $receiver->address->city = $address->city; // max 35 *
-            $receiver->address->country = $this->getCountries(Tools::strtoupper($country->iso_code)); //iso 3 letters *
-
-            return $receiver;
-        }
-
-        return false;
-    }
-
-    public function getSender($id_shop)
-    {
-        $sender = new stdClass();
-        $sender->name = new stdClass();
-        return $sender;
-    }
-
-    public function getSoapClient($mode)
-    {
-		return new SoapClient([]);
-    }
-
-    public function getProdwsSoapClient($mode)
-    {
-        $options = array(
-            'trace' => true,
-            'compression' => true,
-            'exceptions' => true,
-            'soap_version' => SOAP_1_1,
-        );
-        return new SoapClient([], $options);
-    }
-
-    public function getHeadersCurl($url)
-    {
-        if (function_exists('curl_init')) {
-            $ch = curl_init();
-
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_HEADER, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 15);
-			//curl_setopt($ch, CURLOPT_POST, true);
-
-            $r = curl_exec($ch);
-            $r = explode("\n", $r);
-		
-            return $r;
-        } else {
-            return get_headers($url);
-        }
-    }
-
-    public function getSoapHeaders($partner_id, $key_phase, $api_key)
-    {
-        $headers = array();
-
-        $request_timestamp = date('dmY-His');
-        $partner_signature = Tools::substr(md5($partner_id.'::'.$request_timestamp.'::'.$key_phase.'::'.$api_key), 0, 8);
-
-        $headers[] = new SoapHeader('NAMESPACE', 'PARTNER_ID', $partner_id);
-        $headers[] = new SoapHeader('NAMESPACE', 'REQUEST_TIMESTAMP', date('dmY-His'));
-        $headers[] = new SoapHeader('NAMESPACE', 'KEY_PHASE', $key_phase);
-        $headers[] = new SoapHeader('NAMESPACE', 'PARTNER_SIGNATURE', $partner_signature);
-        $headers[] = new SoapHeader('NAMESPACE', 'SIGNATURE_ALGORITHM', 'md5');
-
-        return $headers;
-    }
-
-    public function authenticateUser($mode, $partner_id, $key_phase, $api_key, $username, $password)
-    {
-        if ($this->user_token != false) {
-            return $this->user_token;
-        }
-
-        $this->errors = array();
-        try {
-            $soap_client = $this->getSoapClient($mode);
-
-            $soap_client->__setSoapHeaders($this->getSoapHeaders($partner_id, $key_phase, $api_key));
-
-            $login = new stdClass();
-            $login->username = $username;
-            $login->password = $password;
-            $res = $soap_client->authenticateUser($login);
-
-            $this->user_token = $res->userToken;
-
-            return isset($res->userToken) ? $res : false;
-        } catch (Exception $e) {
-            $this->errors[] = $e->getMessage();
-            if (isset($e->detail->ServiceException)) {
-                if (is_object($e->detail->ServiceException->exceptionItems)) {
-                    $this->errors[] = $e->detail->ServiceException->exceptionItems->errorMessage;
-                } elseif (is_array($e->detail->ServiceException->exceptionItems)) {
-                    foreach ($e->detail->ServiceException->exceptionItems as $item) {
-                        $this->errors[] = $item->errorMessage;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    public function callProdwsApi($function, $params, $id_shop)
-    {
-        $this->errors = array();
-        try {
-            $soap_client = $this->getProdwsSoapClient(Configuration::get('DHLDP_DP_MODE', null, null, $id_shop));
-            $headers = array();
-            $soap_client->__setSoapHeaders($headers);
-
-
-            $res = $soap_client->$function($params);
-
-            $msg = "\nREQUEST:\n" . $soap_client->__getLastRequest() . "\n";
-            $msg .= "\nREQUEST HEADERS:\n" . $soap_client->__getLastRequestHeaders() . "\n";
-            $msg .= "\nRESPONSE:\n" . $soap_client->__getLastResponse() . "\n";
-            $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
-
-
-            Flingex::logToFile('DP', $msg, 'api_pl');
-
+    
+        $info = curl_getinfo($curl);
+    
+        // Check the http response
+        $httpCode = $info['http_code'];
+        if ($httpCode >= 200 && $httpCode < 300) {
+            curl_close($curl);
             return $res;
-        } catch (SoapFault $e) {
-            $msg = "\nREQUEST:\n" . $soap_client->__getLastRequest() . "\n";
-            $msg .= "\nREQUEST HEADERS:\n" . $soap_client->__getLastRequestHeaders() . "\n";
-            $msg .= "\nRESPONSE:\n" . $soap_client->__getLastResponse() . "\n";
-            $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
-            Flingex::logToFile('DP', $msg, 'api_pl');
-            $this->errors[] = $e->getMessage();
+        } else {
+           return $httpCode;
         }
+    }
+    
+
+
+    public function checkAccount($username, $password)
+    {
+        $curlUrl = 'https://flingex.com/api/merchant/login?username='.$username.'&password='. $password;
+        $formData = array();
+        $headers = array();
+        // $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+
+        $response = $this->phpCurlRequest($curlUrl, 'POST', $formData, $headers);
+
+        Flingex::logToFile('Response',$response, 'account');
+
+        return $response;
+    }
+
+
+    public function callPFApi($function, $params, $id_shop = null)
+    {
+        $this->errors = array();
+        $msg = "\n-----------------------------------------";
+        Flingex::logToFile('DHL', $msg, 'dhl_api');
         return false;
     }
 
-    public function callApi($function, $params, $id_shop, $user_token = false)
-    {
-        return false;
+    
+    /*******sent to shipping via flingex***********/
+
+    public function sentOrderToFlingex($order) {
+
+        $token = Configuration::get(self::$conf_prefix.'LIVE_TOKEN');
+
+        $delivery_address_id=$order->id_address_delivery;
+        $address= Db::getInstance()->executeS(
+            'SELECT *
+            FROM `'._DB_PREFIX_.'address`
+            WHERE id_address ='.$delivery_address_id
+        );
+        $bestService = $this->getBestServiceType($address);
+
+        if(count($address)) {
+            
+            $post_data = [
+                'token' => $token,
+                'choose_service_type_id' => $bestService ? $bestService['id'] : 1,
+                'reciveZone' => "7", // sub-dhaka
+                'cod' => ($order->total_paid + (int)$bestService['deliverycharge']), // collected amount of price
+                'name' => $address[0]["firstname"] .' '. $address[0]["lastname"], // customer name
+                'weight' => 1,
+                'address' => $address[0]["address1"]. $address[0]["address2"],
+                'phonenumber' => $address[0]["phone"],
+                'invoiceNo' => $order->reference,
+                'note' => '',
+            ];
+    
+            $curlUrl = 'https://flingex.com/api/merchant/create?'. http_build_query($post_data);
+            $formData = array();
+            $headers = array();
+            // $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+    
+            $apiJsonResponse = $this->phpCurlRequest($curlUrl, 'POST', $formData, $headers);
+    
+            return json_decode($apiJsonResponse, true);
+        }
+        return ["status"=> "error","msg"=> "Address Not Found"];
+
     }
 
-    public function getProducts($product_code = '')
-    {
-        /*
-        $res = array();
-        $row = 0;
-        $filepath = dirname(__FILE__).'/../'.self::$products_filename;
-        if (file_exists($filepath) && ($handle = fopen($filepath, "r")) !== false) {
-            while (($data = fgetcsv($handle, 0, ";")) !== false) {
-                $res[$row] = array(
-                    'code' => $data[2],
-                    'international' => $data[3],
-                    'name' => $data[4],
-                    'price' => $data[5],
-                    'price_numeric' => (float)str_replace(',', '.', $data[5]),
-                    'descr' => $data[41],
-                    'link' => $data[42]
-                );
 
-                if (((int)$product_code > 0) && $data[2] == $product_code) {
-                    return $res[$row];
+    public function getBestServiceType($address)
+    {
+        $disticts = $this->getBDDistricts();
+             
+        $token = Configuration::get(self::$conf_prefix.'LIVE_TOKEN');
+        $curlUrl = 'https://flingex.com/api/merchant/choose-service';
+        $formData = array('token' => $token);
+        $headers = array();
+        // $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+
+        $apiJsonResponse = json_decode($this->phpCurlRequest($curlUrl, 'GET', $formData, $headers), true);
+
+        if($apiJsonResponse['code'] != 200)
+            return false;
+
+        $services = isset($apiJsonResponse['data']['pricing']) ? $apiJsonResponse['data']['pricing']: [['deliverycharge'=> 0]];
+
+        usort($services, function($a, $b) {
+            return $a['deliverycharge'] > $b['deliverycharge'];
+        });
+        $bestService = null;
+        $userAddress = $address[0];
+        $marchantAddress = 'Dhaka'; // initally let consider all vendor marchandizer address inside dhaka
+
+
+        foreach ($disticts as $key => $distict) {
+            foreach ($services as $service_key => $service) {
+                if(
+                    preg_match("/inside-dhaka/i", $service['slug'])
+                    && preg_match("/dhaka/i", $userAddress['city'])
+                    && preg_match("/dhaka/i", strtolower($marchantAddress))
+                ) {
+                    $bestService = $service;
+                    break;break;
+                } else if( 
+                    preg_match("/own.*city/i", $service['slug'])
+                    && strtolower($userAddress['city'])==strtolower($distict) 
+                    && strtolower($userAddress['city'])==strtolower($marchantAddress) 
+                ) {
+                    $bestService = $service;
+                    break;break;
+                } else if(
+                    preg_match("/sub.*dhaka/i", $service['slug'])
+                    && preg_match("/savar|tongi/i", $userAddress['city'])
+                    && preg_match("/savar|tongi/i", strtolower($marchantAddress))
+                ) {
+                    $bestService = $service;
+                    break;break;
                 }
-
-                $row++;
+                
             }
-            fclose($handle);
         }
-        return $res;
-        */
-        $list = Db::getInstance()->executes('select * from '._DB_PREFIX_.'flingex_lg_productlist'.(($product_code != '')?' where id='.(int)$product_code :'').' order by id');
-        $res = array();
-        foreach ($list as $p) {
-            $r = array(
-                'code' => $p['id'],
-                'name' => $p['name'],
-                'price' => ($p['price_contract'] > 0)?$p['price_contract']:$p['price'],
-                'price_orig' => $p['price'],
-            );
-            if (((int)$product_code > 0) && $p['id'] == $product_code) {
-                return $r;
+        if($bestService != null) {
+            return $bestService;
+        } else {
+            foreach ($services as $service_key => $service) {
+                if (preg_match("/outside.*dhaka/i", $service['slug']))
+                    return $service;
+                
             }
-            $res[] = $r;
+            return null;
         }
-        return $res;
     }
 
-    public function getCountries($iso_code = '')
+    /*******sent to shipping via flingex***********/
+
+    public function sentOrderToFlingexTrackingApi($tracking_id){
+
+        if( !$tracking_id )
+            return ["status"=> "error","msg"=> "Tracking ID not found"]; 
+
+        $token = Configuration::get(self::$conf_prefix.'LIVE_TOKEN');
+
+        $post_data = ['token' => $token];
+        $curlUrl = 'https://flingex.com/api/merchant/parcel/track/'.$tracking_id.'?'. http_build_query($post_data);
+        $formData = array();
+        $headers = array();
+        // $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+
+        $trackingResponse = $this->phpCurlRequest($curlUrl, 'GET', $formData, $headers);
+
+        return json_decode($trackingResponse, true);
+
+    }
+
+
+    // http://localhost/ps174/modules/flingex/cron.php?token=f4247629b6&return_message=1&run=1
+    public function cronProcess($value, $time)
     {
-        $countries = array(
-            'AU' => 'AUS', 'AT' => 'AUT', 'AZ' => 'AZE',
-            'AX' => 'ALA', 'AL' => 'ALB', 'DZ' => 'DZA',
-            'VI' => 'VIR', 'AS' => 'ASM', 'AI' => 'AIA',
-            'AO' => 'AGO', 'AD' => 'AND', 'AQ' => 'ATA',
-            'AG' => 'ATG', 'AR' => 'ARG', 'AM' => 'ARM',
-            'AW' => 'ABW', 'AF' => 'AFG', 'BS' => 'BHS',
-            'BD' => 'BGD', 'BB' => 'BRB', 'BH' => 'BHR',
-            'BZ' => 'BLZ', 'BY' => 'BLR', 'BE' => 'BEL',
-            'BJ' => 'BEN', 'BM' => 'BMU', 'BG' => 'BGR',
-            'BO' => 'BOL', 'BQ' => 'BES', 'BA' => 'BIH',
-            'BW' => 'BWA', 'BR' => 'BRA', 'IO' => 'IOT',
-            'VG' => 'VGB', 'BN' => 'BRN', 'BF' => 'BFA',
-            'BI' => 'BDI', 'BT' => 'BTN', 'VU' => 'VUT',
-            'VA' => 'VAT', 'GB' => 'GBR', 'HU' => 'HUN',
-            'VE' => 'VEN', 'UM' => 'UMI', 'TL' => 'TLS',
-            'VN' => 'VNM', 'GA' => 'GAB', 'HT' => 'HTI',
-            'GY' => 'GUY', 'GM' => 'GMB', 'GH' => 'GHA',
-            'GP' => 'GLP', 'GT' => 'GTM', 'GF' => 'GUF',
-            'GN' => 'GIN', 'GW' => 'GNB', 'DE' => 'DEU',
-            'GG' => 'GGY', 'GI' => 'GIB', 'HN' => 'HND',
-            'HK' => 'HKG', 'GD' => 'GRD', 'GL' => 'GRL',
-            'GR' => 'GRC', 'GE' => 'GEO', 'GU' => 'GUM',
-            'DK' => 'DNK', 'JE' => 'JEY', 'DJ' => 'DJI',
-            'DM' => 'DMA', 'DO' => 'DOM', 'CD' => 'COD',
-            'EG' => 'EGY', 'ZM' => 'ZMB', 'EH' => 'ESH',
-            'ZW' => 'ZWE', 'IL' => 'ISR', 'IN' => 'IND',
-            'ID' => 'IDN', 'JO' => 'JOR', 'IQ' => 'IRQ',
-            'IR' => 'IRN', 'IE' => 'IRL', 'IS' => 'ISL',
-            'ES' => 'ESP', 'IT' => 'ITA', 'YE' => 'YEM',
-            'CV' => 'CPV', 'KZ' => 'KAZ', 'KY' => 'CYM',
-            'KH' => 'KHM', 'CM' => 'CMR', 'CA' => 'CAN',
-            'QA' => 'QAT', 'KE' => 'KEN', 'CY' => 'CYP',
-            'KG' => 'KGZ', 'KI' => 'KIR', 'TW' => 'TWN',
-            'KP' => 'PRK', 'CN' => 'CHN', 'CC' => 'CCK',
-            'CO' => 'COL', 'KM' => 'COM', 'CR' => 'CRI',
-            'CI' => 'CIV', 'CU' => 'CUB', 'KW' => 'KWT',
-            'CW' => 'CUW', 'LA' => 'LAO', 'LV' => 'LVA',
-            'LS' => 'LSO', 'LR' => 'LBR', 'LB' => 'LBN',
-            'LY' => 'LBY', 'LT' => 'LTU', 'LI' => 'LIE',
-            'LU' => 'LUX', 'MU' => 'MUS', 'MR' => 'MRT',
-            'MG' => 'MDG', 'YT' => 'MYT', 'MO' => 'MAC',
-            'MK' => 'MKD', 'MW' => 'MWI', 'MY' => 'MYS',
-            'ML' => 'MLI', 'MV' => 'MDV', 'MT' => 'MLT',
-            'MA' => 'MAR', 'MQ' => 'MTQ', 'MH' => 'MHL',
-            'MX' => 'MEX', 'FM' => 'FSM', 'MZ' => 'MOZ',
-            'MD' => 'MDA', 'MC' => 'MCO', 'MN' => 'MNG',
-            'MS' => 'MSR', 'MM' => 'MMR', 'NA' => 'NAM',
-            'NR' => 'NRU', 'NP' => 'NPL', 'NE' => 'NER',
-            'NG' => 'NGA', 'NL' => 'NLD', 'NI' => 'NIC',
-            'NU' => 'NIU', 'NZ' => 'NZL', 'NC' => 'NCL',
-            'NO' => 'NOR', 'AE' => 'ARE', 'OM' => 'OMN',
-            'BV' => 'BVT', 'IM' => 'IMN', 'CK' => 'COK ',
-            'NF' => 'NFK', 'CX' => 'CXR', 'PN' => 'PCN',
-            'SH' => 'SHN', 'PK' => 'PAK', 'PW' => 'PLW',
-            'PS' => 'PSE', 'PA' => 'PAN', 'PG' => 'PNG',
-            'PY' => 'PRY', 'PE' => 'PER', 'PL' => 'POL',
-            'PT' => 'PRT', 'PR' => 'PRI', 'CG' => 'COG',
-            'KR' => 'KOR', 'RE' => 'REU ', 'RU' => 'RUS',
-            'RW' => 'RWA', 'RO' => 'ROU', 'SV' => 'SLV',
-            'WS' => 'WSM', 'SM' => 'SMR', 'ST' => 'STP',
-            'SA' => 'SAU', 'SZ' => 'SWZ', 'MP' => 'MNP',
-            'SC' => 'SYC', 'BL' => 'BLM', 'MF' => 'MAF',
-            'PM' => 'SPM', 'SN' => 'SEN', 'VC' => 'VCT',
-            'KN' => 'KNA', 'LC' => 'LCA', 'RS' => 'SRB',
-            'SG' => 'SGP', 'SX' => 'SXM', 'SY' => 'SYR',
-            'SK' => 'SVK', 'SI' => 'SVN', 'SB' => 'SLB',
-            'SO' => 'SOM', 'SD' => 'SDN', 'SU' => 'SUN',
-            'SR' => 'SUR', 'US' => 'USA', 'SL' => 'SLE',
-            'TJ' => 'TJK', 'TH' => 'THA', 'TZ' => 'TZA',
-            'TC' => 'TCA', 'TG' => 'TGO', 'TK' => 'TKL',
-            'TO' => 'TON', 'TT' => 'TTO', 'TV' => 'TUV',
-            'TN' => 'TUN', 'TM' => 'TKM', 'TR' => 'TUR',
-            'UG' => 'UGA', 'UZ' => 'UZB', 'UA' => 'UKR',
-            'WF' => 'WLF', 'UY' => 'URY', 'FO' => 'FRO',
-            'FJ' => 'FJI', 'PH' => 'PHL', 'FI' => 'FIN',
-            'FK' => 'FLK', 'FR' => 'FRA', 'PF' => 'PYF',
-            'TF' => 'ATF', 'HM' => 'HMD', 'HR' => 'HRV',
-            'CF' => 'CAF', 'TD' => 'TCD', 'ME' => 'MNE',
-            'CZ' => 'CZE', 'CL' => 'CHL', 'CH' => 'CHE',
-            'SE' => 'SWE', 'SJ' => 'SJM', 'LK' => 'LKA',
-            'EC' => 'ECU', 'GQ' => 'GNQ', 'ER' => 'ERI',
-            'EE' => 'EST', 'ET' => 'ETH', 'ZA' => 'ZAF',
-            'GS' => 'SGS', 'SS' => 'SSD', 'JM' => 'JAM',
-            'JP' => 'JPN');
-        if ($iso_code != '') {
-            return $countries[$iso_code];
+
+        $time = pSQL(Tools::getValue('time', microtime(true)));
+
+        $order_query = Db::getInstance()->executeS(
+            'SELECT fo.reference,fo.id_flingex_order,fo.tracking_number,fo.id_order
+            FROM '._DB_PREFIX_.'flingex_order fo 
+            left JOIN '._DB_PREFIX_.'flingex_order_tracking fot 
+            ON (fo.id_flingex_order=fot.id_flingex_order)group by fo.reference'
+        );
+
+        foreach ($order_query as $key=>$flingex_order){
+
+            $del_sql='DELETE FROM `'._DB_PREFIX_.'flingex_order_tracking`
+                where `reference` = "'.$flingex_order['reference'].'"';
+
+            $del_res=Db::getInstance()->execute($del_sql);
+            
+            $tracking_response = $this->sentOrderToFlingexTrackingApi($flingex_order["tracking_number"]);
+
+            $tracking_response_data = (isset($tracking_response['data']) && isset($tracking_response['data']['trackInfos']) && $tracking_response['data']['trackInfos']) ? $tracking_response['data']['trackInfos'] : [];
+
+            foreach ($tracking_response_data as $key => $value) {
+                $sql_tracking = 'INSERT INTO ' . _DB_PREFIX_ . 'flingex_order_tracking
+                (`id_order`,`reference`, `id_flingex_order`, `tracking_number`,`parcel_status`,
+                `api_response_status`,`api_response_message`)
+                values(
+                ' . (int)$flingex_order['id_order'] . ',
+                "' . $flingex_order['reference'] . '",
+                ' . (int)$flingex_order['id_flingex_order'] . ',
+                "' . $flingex_order['tracking_number'] . '",
+                "' . $value['parcelStatus'] . '",
+                "' . $tracking_response['code']. '",
+                "' . $tracking_response['msg'] . '"
+                )';
+                $res=Db::getInstance()->execute($sql_tracking);
+            }
         }
 
-        return $countries;
+        if($res){
+            echo 'job complete processing time: '.Tools::ps_round((microtime(true) - $time), 2).' seconds';
+        }else{
+            echo 'something is wrong';
+        }
     }
+
+    public function getBDDistricts()
+    {
+        return ["Bagerhat","Bandarban","Barguna","Barisal","Bhola","Bogra","Brahmanbaria","Chandpur","Chapainawabganj","Chittagong","Chuadanga","Comilla","Cox's Bazar","Dhaka","Dinajpur","Faridpur","Feni","Gaibandha","Gazipur","Gopalganj","Habiganj","Jamalpur","Jessore","Jhalokati","Jhenaidah","Joypurhat","Khagrachhari","Khulna","Kishoreganj","Kurigram","Kushtia","Lakshmipur","Lalmonirhat","Madaripur","Magura","Manikganj","Meherpur","Moulvibazar","Munshiganj","Mymensingh","Naogaon","Narail","Narayanganj","Narsingdi","Natore","Netrokona","Nilphamari","Noakhali","Pabna","Panchagarh","Patuakhali","Pirojpur","Rajbari","Rajshahi","Rangamati","Rangpur","Satkhira","Shariatpur","Sherpur","Sirajganj","Sunamganj","Sylhet","Tangail","Thakurgaon"];
+    }
+
 }

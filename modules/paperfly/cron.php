@@ -4,14 +4,8 @@
 include dirname(__FILE__).'/../../config/config.inc.php';
 include dirname(__FILE__).'/paperfly.php';
 
-/****
- * token:995a4e28ea
- */
-// var_dump( substr(Tools::encrypt('paperfly'), 0, 10)    );
-// die();
-
-if (substr(Tools::encrypt('paperfly'), 0, 10) != Tools::getValue('token') || !Module::isInstalled('paperfly')) {
-    die('Bad token');
+if (!Module::isInstalled('paperfly')) {
+    die('PaperFly Module is not installed');
 }
 if (Tools::getValue('ajax')) {
     // Case of nothing to do but showing a message (1)
@@ -31,5 +25,6 @@ if (Tools::getValue('ajax')) {
 }
 
 if (Tools::getValue('run')) {
-    echo PaperFly::cronProcess((int) Tools::getValue('run'), true);
+    $PaperflyAPI = new PaperFly();
+    echo $PaperflyAPI->paperfly_api->cronProcess((int) Tools::getValue('run'), true);
 }

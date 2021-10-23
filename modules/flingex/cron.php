@@ -1,17 +1,12 @@
 <?php
-// http://localhost/ps174/modules/flingex/cron.php?token=f4247629b6&return_message=1&run=1
+// http://localhost/ps174/modules/flingex/cron.php?return_message=1&run=1
 
 include dirname(__FILE__).'/../../config/config.inc.php';
 include dirname(__FILE__).'/flingex.php';
 
-/****
- * token:995a4e28ea
- */
-// var_dump( substr(Tools::encrypt('flingex'), 0, 10)    );
-// die();
 
-if (substr(Tools::encrypt('flingex'), 0, 10) != Tools::getValue('token') || !Module::isInstalled('flingex')) {
-    die('Bad token');
+if (!Module::isInstalled('flingex')) {
+    die('Flingex Module is not Installed');
 }
 if (Tools::getValue('ajax')) {
     // Case of nothing to do but showing a message (1)
@@ -31,5 +26,6 @@ if (Tools::getValue('ajax')) {
 }
 
 if (Tools::getValue('run')) {
-    echo Flingex::cronProcess((int) Tools::getValue('run'), true);
+    $flingsexAPI = new Flingex();
+    echo $flingsexAPI->flingex_api->cronProcess((int) Tools::getValue('run'), true);
 }

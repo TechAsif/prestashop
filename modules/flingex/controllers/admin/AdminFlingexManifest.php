@@ -11,7 +11,7 @@
  * @link      http://www.silbersaiten.de
  */
 
-class AdminDhldpManifestController extends ModuleAdminController
+class AdminFlingexManifestController extends ModuleAdminController
 {
     public function __construct()
     {
@@ -49,33 +49,33 @@ class AdminDhldpManifestController extends ModuleAdminController
 
     public function postProcess()
     {
-        parent::postProcess();
+        parent::postProcess();    
     }
 
     public function renderManifest()
     {
-        $paperfly_orders = Db::getInstance()->executeS(
-            'SELECT * FROM '._DB_PREFIX_.'paperfly_order po 
+        $flingex_orders = Db::getInstance()->executeS(
+            'SELECT * FROM '._DB_PREFIX_.'flingex_order po 
             INNER JOIN '._DB_PREFIX_.'orders odr ON (po.id_order=odr.id_order)
             INNER JOIN '._DB_PREFIX_.'order_detail od ON (po.id_order=od.id_order) ORDER BY \'po.date_add\' DESC LIMIT 20
             
             '
-            // LEFT JOIN '._DB_PREFIX_.'paperfly_order_tracking pot ON (po.id_paperfly_order=pot.id_paperfly_order)group by po.reference'
+            // LEFT JOIN '._DB_PREFIX_.'flingex_order_tracking pot ON (po.id_flingex_order=pot.id_flingex_order)group by po.reference'
         );
-        // var_dump($paperfly_orders);
+        // var_dump($flingex_orders);
 
-        foreach ($paperfly_orders as $key=>$order){
+        foreach ($flingex_orders as $key=>$order){
             $thi_ref=$order['id_order'];
 
-            $_SQL = 'SELECT * FROM '._DB_PREFIX_.'paperfly_order_tracking where id_order ='.$order['id_order'];
+            $_SQL = 'SELECT * FROM '._DB_PREFIX_.'flingex_order_tracking where id_order ='.$order['id_order'];
 
-            $paperfly_orders[$key]['tracking_data'] = Db::getInstance()->executeS($_SQL);
+            $flingex_orders[$key]['tracking_data'] = Db::getInstance()->executeS($_SQL);
 
         }
 
         $this->context->smarty->assign([
             'manifestDate' => Tools::getValue('manifestDate', date('Y-m-d')),
-            'orders' => $paperfly_orders,
+            'orders' => $flingex_orders,
         ]);
         $this->setTemplate('manifest.tpl');
     }
