@@ -13,14 +13,14 @@
 
 class FlingexApi
 {
-    public static $endpoint_sbx = 'https://internetmarke.deutschepost.de/OneClickForAppV3';
-    public static $endpoint_live = 'https://internetmarke.deutschepost.de/OneClickForAppV3';
-    public static $wsdl = 'https://internetmarke.deutschepost.de/OneClickForAppV3?wsdl';
-    public static $prodws_wsdl = 'https://prodws.deutschepost.de:8443/ProdWSProvider_1_1/prodws?wsdl';
-    public static $endpoint_prodws_sbx = 'https://prodws.deutschepost.de:8443/ProdWSProvider_1_1/prodws';
-    public static $endpoint_prodws_live = 'https://prodws.deutschepost.de:8443/ProdWSProvider_1_1/prodws';
-    public static $ppl_update_xml = 'https://www.deutschepost.de/content/dam/mlm.nf/dpag/technische_downloads/update_internetmarke/ppl_update.xml';
-    public static $tracking_url = 'https://www.deutschepost.de/sendung/simpleQuery.html?form.sendungsnummer=[tracking_number]';
+    // public static $endpoint_sbx = 'https://internetmarke.deutschepost.de/OneClickForAppV3';
+    // public static $endpoint_live = 'https://internetmarke.deutschepost.de/OneClickForAppV3';
+    // public static $wsdl = 'https://internetmarke.deutschepost.de/OneClickForAppV3?wsdl';
+    // public static $prodws_wsdl = 'https://prodws.deutschepost.de:8443/ProdWSProvider_1_1/prodws?wsdl';
+    // public static $endpoint_prodws_sbx = 'https://prodws.deutschepost.de:8443/ProdWSProvider_1_1/prodws';
+    // public static $endpoint_prodws_live = 'https://prodws.deutschepost.de:8443/ProdWSProvider_1_1/prodws';
+    // public static $ppl_update_xml = 'https://www.deutschepost.de/content/dam/mlm.nf/dpag/technische_downloads/update_internetmarke/ppl_update.xml';
+    // public static $tracking_url = 'https://www.deutschepost.de/sendung/simpleQuery.html?form.sendungsnummer=[tracking_number]';
 
     public static $products_filename = 'data/ppl.csv';
     public $ppl = 0;
@@ -78,30 +78,6 @@ class FlingexApi
 
     public function updatePPL()
     {
-        $opts = array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false
-            )
-        );
-        $stream_context = stream_context_create($opts);
-		
-        $xml_content = $this->fileGetContents(self::$ppl_update_xml, false, $stream_context);
-
-		$match = preg_match("'<updateLink>(.*?)</updateLink>'si", $xml_content, $matches);
-        if ($match && isset($matches[1])) {
-			$v_match = preg_match('/ppl_v(?P<version>\d+)\.csv/i', $matches[1], $v_matches);
-			if ($v_match && isset($v_matches['version'])) {
-				
-				$ppl_content = $this->fileGetContents($matches[1], false, $stream_context);
-				if ($ppl_content) {
-					file_put_contents(dirname(__FILE__).'/../'.self::$products_filename, mb_convert_encoding($ppl_content, 'UTF-8', 'ISO-8859-1'));
-
-					Configuration::updateGlobalValue('DHLDP_DP_PPL_VERSION', /*32*/$v_matches['version']/10);
-					return true;
-				}
-			}
-        }
         return false;
     }
 
@@ -289,68 +265,23 @@ class FlingexApi
     {
         $sender = new stdClass();
         $sender->name = new stdClass();
-        if ((int)Configuration::get('DHLDP_DP_NAME') == 1) {
-            $sender->name->companyName = new stdClass();
-            $sender->name->companyName->company = Configuration::get('DHLDP_DP_COMPANY', null, null, $id_shop); // max 50
-            $sender->name->companyName->personName = new stdClass();
-            $sender->name->companyName->personName->salutation = Configuration::get('DHLDP_DP_SALUTATION', null, null, $id_shop); //max 10
-            $sender->name->companyName->personName->title = Configuration::get('DHLDP_DP_TITLE', null, null, $id_shop); //max 10
-            $sender->name->companyName->personName->firstname = Configuration::get('DHLDP_DP_FIRSTNAME', null, null, $id_shop); //max 35
-            $sender->name->companyName->personName->lastname = Configuration::get('DHLDP_DP_LASTNAME', null, null, $id_shop); //max 35
-        } else {
-            $sender->name->personName = new stdClass();
-            $sender->name->personName->salutation = Configuration::get('DHLDP_DP_SALUTATION', null, null, $id_shop); //max 10
-            $sender->name->personName->title = Configuration::get('DHLDP_DP_TITLE', null, null, $id_shop); //max 10
-            $sender->name->personName->firstname = Configuration::get('DHLDP_DP_FIRSTNAME', null, null, $id_shop); //max 35
-            $sender->name->personName->lastname = Configuration::get('DHLDP_DP_LASTNAME', null, null, $id_shop); //max 35
-        }
-
-        $sender->address = new stdClass();
-        $sender->address->street = Configuration::get('DHLDP_DP_STREET', null, null, $id_shop); // max 50
-        $sender->address->houseNo = Configuration::get('DHLDP_DP_HOUSENO', null, null, $id_shop); //max 10
-        $sender->address->additional = Configuration::get('DHLDP_DP_ADDITIONAL', null, null, $id_shop);//max 50
-        $sender->address->zip = Configuration::get('DHLDP_DP_ZIP', null, null, $id_shop); // max 10
-        $sender->address->city = Configuration::get('DHLDP_DP_CITY', null, null, $id_shop); // max 35 *
-        $country = new Country((int)Configuration::get('DHLDP_DP_COUNTRY', null, null, $id_shop));
-        $sender->address->country = $this->getCountries(Tools::strtoupper($country->iso_code)); //iso 3 letters *
-
         return $sender;
     }
 
     public function getSoapClient($mode)
     {
-        if (self::$soap_client) {
-            return self::$soap_client;
-        }
-
-        $location = ($mode == 1) ? self::$endpoint_live : self::$endpoint_sbx;
-
-        $options = array(
-            'trace' => true,
-            'compression' => true,
-            'exceptions' => true,
-            'location' => $location,
-            'soap_version' => SOAP_1_1
-        );
-		return new SoapClient(self::$wsdl, $options);
+		return new SoapClient([]);
     }
 
     public function getProdwsSoapClient($mode)
     {
-        if (self::$soap_client) {
-            return self::$soap_client;
-        }
-
-        $location = ($mode == 1) ? self::$endpoint_prodws_live : self::$endpoint_prodws_sbx;
-
         $options = array(
             'trace' => true,
             'compression' => true,
             'exceptions' => true,
-            'location' => $location,
             'soap_version' => SOAP_1_1,
         );
-        return new SoapClient(self::$prodws_wsdl, $options);
+        return new SoapClient([], $options);
     }
 
     public function getHeadersCurl($url)
@@ -457,74 +388,6 @@ class FlingexApi
 
     public function callApi($function, $params, $id_shop, $user_token = false)
     {
-        $this->errors = array();
-        try {
-            if ($user_token == true) {
-                $this->authenticateUser(
-                    Configuration::get('DHLDP_DP_MODE', null, null, $id_shop),
-                    self::$partnerid,
-                    self::$keyphase,
-                    self::$apikey,
-                    (Configuration::get('DHLDP_DP_MODE', null, null, $id_shop) == 1) ? Configuration::get('DHLDP_DP_LIVE_USERNAME', null, null, $id_shop) : Configuration::get('DHLDP_DP_SBX_USERNAME', null, null, $id_shop),
-                    (Configuration::get('DHLDP_DP_MODE', null, null, $id_shop) == 1) ? Configuration::get('DHLDP_DP_LIVE_PASSWORD', null, null, $id_shop) : Configuration::get('DHLDP_DP_SBX_PASSWORD', null, null, $id_shop)
-                );
-                //echo Configuration::get('DHLDP_DP_MODE').', '.self::$partnerid.', '.self::$keyphase.', '.self::$apikey.', '.((Configuration::get('DHLDP_DP_MODE') == 1) ? Configuration::get('DHLDP_DP_LIVE_USERNAME') : Configuration::get('DHLDP_DP_SBX_USERNAME')).', '.((Configuration::get('DHLDP_DP_MODE') == 1) ? Configuration::get('DHLDP_DP_LIVE_PASSWORD') : Configuration::get('DHLDP_DP_SBX_PASSWORD')).'<br>';
-                $params['userToken'] = $this->user_token;
-            }
-
-            $soap_client = $this->getSoapClient(Configuration::get('DHLDP_DP_MODE'));
-
-            $soap_client->__setSoapHeaders(
-                $this->getSoapHeaders(
-                    self::$partnerid,
-                    self::$keyphase,
-                    self::$apikey
-                )
-            );
-
-            //echo '<pre>'.print_r($params, true).'</pre>'; exit;
-
-            $res = $soap_client->$function($params);
-
-            $msg = "\nREQUEST:\n" . $soap_client->__getLastRequest() . "\n";
-            $msg .= "\nREQUEST HEADERS:\n" . $soap_client->__getLastRequestHeaders() . "\n";
-            $msg .= "\nRESPONSE:\n" . $soap_client->__getLastResponse() . "\n";
-            $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
-
-            Flingex::logToFile('DP', $msg, 'api');
-            //exit;
-
-            return $res;
-        } catch (SoapFault $e) {
-            $msg = "\nREQUEST:\n" . $soap_client->__getLastRequest() . "\n";
-            $msg .= "\nREQUEST HEADERS:\n" . $soap_client->__getLastRequestHeaders() . "\n";
-            $msg .= "\nRESPONSE:\n" . $soap_client->__getLastResponse() . "\n";
-            $msg .= "\nRESPONSE HEADERS:\n" . $soap_client->__getLastResponseHeaders() . "\n";
-            Flingex::logToFile('DP', $msg, 'api');
-
-            $this->errors[] = $e->getMessage();
-
-            if (isset($e->detail->ShoppingCartValidationException)) {
-                $exceptions = $e->detail->ShoppingCartValidationException;
-                if (is_object($exceptions->errors)) {
-                    $this->errors[] = $exceptions->errors->message;
-
-                    // auto update PPL
-                    //if ($exceptions->errors->id == 'invalidPplId') {
-                    //    $this->updatePPL();
-                    //}
-                } elseif (is_array($exceptions->errors)) {
-                    foreach ($exceptions->errors as $item) {
-                        $this->errors[] = $item->message;
-
-                        // auto update PPL
-                        //if ($item->id == 'invalidPplId') {
-                        //    $this->updatePPL();
-                        //}
-                    }
-                }
-            }
-        }
         return false;
     }
 

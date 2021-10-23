@@ -179,13 +179,6 @@
                 {$order_line.carrier_name|escape:'html':'UTF-8'}
                 </div>
                 <div class="row">
-                <select id="dhl_product_code" name="carrier[{$order_line.id_order_carrier|escape:'html':'UTF-8'}][dhl_product_code]" class="fixed-width-lg" style="display: inline-block;">
-                    {foreach from=$order_line.dhl_products key=product_index item=product_data}
-                        <option value="{$product_data.fullcode|escape:'html':'UTF-8'}"{if (isset($smarty.post.carrier[{$order_line.id_order_carrier|escape:'html':'UTF-8'}]['dhl_product_code'])) && ($smarty.post.carrier[{$order_line.id_order_carrier|escape:'html':'UTF-8'}]['dhl_product_code'] == $product_data.fullcode)} selected="selected"{elseif (isset($order_line.default_dhl_product_code) && $order_line.default_dhl_product_code == $product_data.fullcode)} selected="selected"{/if}>{$product_data.fullname|escape:'html':'UTF-8'}</option>
-                    {/foreach}
-                </select>
-                </div>
-                <div class="row">
                     <input class="form-control datepicker" type="text" name="carrier[{$order_line.id_order_carrier|escape:'html':'UTF-8'}][dhl_shipment_date]"
                            value="{if isset($smarty.post.carrier[{$order_line.id_order_carrier|escape:'html':'UTF-8'}]['dhl_shipment_date'])}{$smarty.post.carrier[{$order_line.id_order_carrier|escape:'html':'UTF-8'}]['dhl_shipment_date']|escape:'htmlall':'UTF-8'}{else}{$shipment_date|escape:'htmlall':'UTF-8'}{/if}" maxlength="10"/>
                     <span class="help-block">{l s='yyyy-mm-dd' mod='dhldp'}</span>

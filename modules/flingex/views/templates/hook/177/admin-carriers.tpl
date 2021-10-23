@@ -168,13 +168,7 @@
 								<td>{$carrier.carrier_name|escape:'htmlall':'UTF-8'}
 								</td>
 								<td>
-									<div class="{if !$is177}row{/if}">
-										<select id="dhldp_dhl_product_code" name="dhl_product_code" class="fixed-width-lg{if $is177} custom-select{/if}" style="display: inline-block;">
-										{foreach from=$dhl_products key=dhl_product_index item=dhl_product}
-											<option value="{$dhl_product.fullcode|escape:'htmlall':'UTF-8'}"{if isset($smarty.post.dhl_product_code) && $dhl_product.fullcode == $smarty.post.dhl_product_code} selected="selected"{elseif ((isset($carrier.default_dhl_product_code) && $dhl_product.fullcode == $carrier.default_dhl_product_code))} selected="selected"{elseif ((isset($last_label.product_code) && $dhl_product.fullcode == $last_label.product_code))} selected="selected"{/if}>{$dhl_product.fullname|escape:'htmlall':'UTF-8'}</option>
-										{/foreach}
-										</select>
-									</div>
+									
 									<div class="{if !$is177}row{/if}">
 										<div class="input-group datepicker">
 										<input class="form-control datepicker" type="text" data-format="YYYY-MM-DD" name="dhl_shipment_date"

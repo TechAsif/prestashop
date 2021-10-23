@@ -158,7 +158,7 @@ class DHLDPReturnModuleFrontController extends ModuleFrontController
             Tools::redirect('index.php');
         }
 
-        $this->context->smarty->assign('countries', $this->module->getCountriesForRA($this->context->language->id, explode(',', Configuration::get('DHLDP_DHL_RA_COUNTRIES'))));
+        $this->context->smarty->assign('countries', $this->module->getCountriesForRA($this->context->language->id, explode(',', 'bd')));
 
         parent::initContent();
         $this->setTemplate('module:dhldp/views/templates/front/return.tpl');

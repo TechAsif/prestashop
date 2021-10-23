@@ -30,21 +30,6 @@ var dhldp_admin_configure = {
             self.showAuthdataSbx();
         });
 
-        if ($('input[id="DHLDP_DHL_RETURNS_EXTEND_on"]:checked').length) {
-            $('.dhldp_dhl_ra').removeClass('hide');
-        } else {
-            $('.dhldp_dhl_ra').addClass('hide');
-        }
-
-
-        $('input[name="DHLDP_DHL_RETURNS_EXTEND"]').on('click change', function(e){
-            if ($('#DHLDP_DHL_RETURNS_EXTEND_on').is(':checked')) {
-                $('.dhldp_dhl_ra').removeClass('hide');
-            } else {
-                $('.dhldp_dhl_ra').addClass('hide');
-            }
-        });
-
         self.validateForm();
 
         // init dhl products
