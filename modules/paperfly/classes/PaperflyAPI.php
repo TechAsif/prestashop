@@ -88,7 +88,9 @@ class PaperflyAPI
         }
     }
 
-    public function sentToPaperFlyOrder($order){
+    public function sentToPaperFlyOrder($order, $cart){
+
+        $products = $cart->getProducts(true);
 
         $delivery_address_id=$order->id_address_delivery;
         $address= Db::getInstance()->executeS(
@@ -105,18 +107,20 @@ class PaperflyAPI
         $post_data->pickMerchantDistrict = "Dhaka";
         $post_data->pickupMerchantPhone = "01829331461";
         $post_data->productSizeWeight = "standard";
-        $post_data->productBrief = "USB Fan";
-        $post_data->packagePrice = "1500";
+        $post_data->productBrief = $products[0]['name'];
+        $post_data->packagePrice = $order->total_paid;
         $post_data->deliveryOption = "regular";
         $post_data->custname = $address[0]['firstname'].' '.$address[0]['lastname'];
-        $post_data->custaddress = $address[0]['address1'];
+        $post_data->custaddress = $address[0]["address1"]. $address[0]["address2"];
         $post_data->customerThana = 'Badda';
         $post_data->customerDistrict = $address[0]['city'];
         $post_data->custPhone =$address[0]['phone'];
         $post_data->max_weight = "10";
         $post_data_obj = json_encode($post_data);
 
-        $apiJsonResponse = self::callPaperFlyAPI("POST","https://sandbox.paperflybd.com/OrderPlacement",$post_data_obj,'Paperfly_~La?Rj73FcLm');
+        $mode = Configuration::get(self::$conf_prefix.'SANDBOX');
+        $url = (int)$mode == 1  ? 'https://paperflybd.com/OrderPlacement' : 'https://sandbox.paperflybd.com/OrderPlacement';
+        $apiJsonResponse = self::callPaperFlyAPI("POST",$url,$post_data_obj,'Paperfly_~La?Rj73FcLm');
 //       print_r($apiJsonResponse);
 //       die('here');
         return $apiJsonResponse;
@@ -130,7 +134,11 @@ class PaperflyAPI
         $post_data = new stdClass();
         $post_data->ReferenceNumber = $order->reference;
         $post_data_obj = json_encode($post_data);
-        $apiJsonResponse = self::callPaperFlyAPI("POST","https://sandbox.paperflybd.com/API-Order-Tracking",$post_data_obj,'Paperfly_~La?Rj73FcLm');
+        
+        $mode = Configuration::get(self::$conf_prefix.'SANDBOX');
+        $url = (int)$mode == 1  ? 'https://paperflybd.com/API-Order-Tracking' : 'https://sandbox.paperflybd.com/API-Order-Tracking';
+
+        $apiJsonResponse = self::callPaperFlyAPI("POST",$url ,$post_data_obj,'Paperfly_~La?Rj73FcLm');
         return $apiJsonResponse;
 
     }
@@ -138,11 +146,12 @@ class PaperflyAPI
     /*******sent to shipping via paperfly***********/
 
     public static function paperflyOrderTrackingApiCronProcess($order){
-
         $post_data = new stdClass();
         $post_data->ReferenceNumber = $order;
         $post_data_obj = json_encode($post_data);
-        $apiJsonResponse = self::callPaperFlyAPI("POST","https://sandbox.paperflybd.com/API-Order-Tracking",$post_data_obj,'Paperfly_~La?Rj73FcLm');
+        $mode = Configuration::get(self::$conf_prefix.'SANDBOX');
+        $url = (int)$mode == 1  ? 'https://paperflybd.com/API-Order-Tracking' : 'https://sandbox.paperflybd.com/API-Order-Tracking';
+        $apiJsonResponse = self::callPaperFlyAPI("POST",$url,$post_data_obj,'Paperfly_~La?Rj73FcLm');
         return $apiJsonResponse;
 
     }
@@ -150,8 +159,13 @@ class PaperflyAPI
 
     /********API call response********/
 
-    public static function callPaperFlyAPI($method, $url, $data = false,$headers = false)
+    public static function callPaperFlyAPI($method, $url, $data = [],$headers = false)
     {
+        
+        $user = Configuration::get(self::$conf_prefix.'LIVE_USER');
+        $password = Configuration::get(self::$conf_prefix.'LIVE_PWD');
+        $mode = Configuration::get(self::$conf_prefix.'SANDBOX');
+
         $curl = curl_init();
         switch ($method)
         {
@@ -169,7 +183,7 @@ class PaperflyAPI
         }
 
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_USERPWD, "c116552:1234");
+        curl_setopt($curl, CURLOPT_USERPWD, $user.":".$password);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             'paperflykey: Paperfly_~La?Rj73FcLm',
             'Authorization: Basic YzExNjU1MjoxMjM0',

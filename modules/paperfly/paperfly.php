@@ -161,12 +161,13 @@ class PaperFly extends Module
          */
 
         $order = $params['order'];
-        $api_response = $this->paperfly_api->sentToPaperFlyOrder($order);
+        $api_response = $this->paperfly_api->sentToPaperFlyOrder($order, $params['cart']);
 
         // if paper fly is not accept the order
         if( json_decode($api_response)->response_code != '200' ) {
             // return;
         }
+        
 
         $tracking_api_response = $this->paperfly_api->sentToPaperflyOrderTrackingApi($order);
         $tracking_response_data = (json_decode($tracking_api_response)->response_code == '200') ? json_decode($tracking_api_response)->success->trackingStatus : '';
@@ -526,7 +527,7 @@ class PaperFly extends Module
             $helper->title = $this->displayName;
         }
 
-        $fields_value_keys = array('LIVE_USER','LIVE_PWD','LOG','REF_NUMBER');
+        $fields_value_keys = array('LIVE_USER','LIVE_PWD','SANDBOX','REF_NUMBER');
 
         $this->setFormFieldsValue($helper, $fields_value_keys);
 
@@ -563,6 +564,25 @@ class PaperFly extends Module
                     ),
                     'description' => $this->l('Please select mode and fill form with all relevant information regarding authentication in modes.'),
                     'input'       => array(
+                        array(
+                            'name'   => self::$conf_prefix.'SANDBOX',
+                            'type'   => 'radio',
+                            'label'  => $this->l('Mode'),
+                            'desc'   => $this->l('Select "Sandbox" for testing'),
+                            'class'  => 't',
+                            'values' => array(
+                                array(
+                                    'id'    => 'mode_live',
+                                    'value' => 1,
+                                    'label' => $this->l('Live')
+                                ),
+                                array(
+                                    'id'    => 'mode_sbx',
+                                    'value' => 0,
+                                    'label' => $this->l('Sandbox')
+                                ),
+                            ),
+                        ),
                         array(
                             'name'             => self::$conf_prefix.'LIVE_USER',
                             'type'             => 'text',
@@ -620,6 +640,7 @@ class PaperFly extends Module
 
             $dhl_live_user = Tools::getValue(self::$conf_prefix.'LIVE_USER');
             $dhl_live_sign = Tools::getValue(self::$conf_prefix.'LIVE_PWD');
+            $dhl_mode = Tools::getValue(self::$conf_prefix.'SANDBOX');
 
             if ( $dhl_live_user == '') {
                 $form_errors[] = $this->_errors[] = $this->l('Please fill username');
@@ -647,7 +668,8 @@ class PaperFly extends Module
 
             if (count($form_errors) == 0) {
                 $result_save = Configuration::updateValue(self::$conf_prefix.'LIVE_USER', Tools::getValue(self::$conf_prefix.'LIVE_USER')) &&
-                Configuration::updateValue(self::$conf_prefix.'LIVE_PWD', Tools::getValue(self::$conf_prefix.'LIVE_PWD'));
+                Configuration::updateValue(self::$conf_prefix.'LIVE_PWD', Tools::getValue(self::$conf_prefix.'LIVE_PWD')) &&
+                Configuration::updateValue(self::$conf_prefix.'SANDBOX', Tools::getValue(self::$conf_prefix.'SANDBOX'));
 
                 if ($result_save == true) {
                     $this->_confirmations[] = $this->l('Settings updated');
