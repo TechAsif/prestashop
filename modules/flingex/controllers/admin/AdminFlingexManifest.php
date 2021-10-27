@@ -57,20 +57,18 @@ class AdminFlingexManifestController extends ModuleAdminController
         $flingex_orders = Db::getInstance()->executeS(
             'SELECT * FROM '._DB_PREFIX_.'flingex_order po 
             INNER JOIN '._DB_PREFIX_.'orders odr ON (po.id_order=odr.id_order)
-            INNER JOIN '._DB_PREFIX_.'order_detail od ON (po.id_order=od.id_order) ORDER BY \'po.date_add\' DESC LIMIT 20
-            
+            ORDER BY \'po.date_add\' DESC LIMIT 20
             '
+            // INNER JOIN '._DB_PREFIX_.'order_detail od ON (po.id_order=od.id_order)
             // LEFT JOIN '._DB_PREFIX_.'flingex_order_tracking pot ON (po.id_flingex_order=pot.id_flingex_order)group by po.reference'
         );
         // var_dump($flingex_orders);
 
         foreach ($flingex_orders as $key=>$order){
-            $thi_ref=$order['id_order'];
-
             $_SQL = 'SELECT * FROM '._DB_PREFIX_.'flingex_order_tracking where id_order ='.$order['id_order'];
-
             $flingex_orders[$key]['tracking_data'] = Db::getInstance()->executeS($_SQL);
-
+            $ORDER_DETAILS_SQL = 'SELECT * FROM '._DB_PREFIX_.'order_detail where id_order ='.$order['id_order'];
+            $flingex_orders[$key]['products'] = Db::getInstance()->executeS($ORDER_DETAILS_SQL);
         }
 
         $this->context->smarty->assign([

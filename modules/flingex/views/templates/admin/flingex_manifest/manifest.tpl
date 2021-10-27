@@ -17,7 +17,10 @@
     <div class="panel">
         <div class="panel-heading">
             <h4>
-                <a role="button" data-toggle="collapse" href="#{$order['reference']|escape:'htmlall':'UTF-8'}" >{$order['product_name']|escape:'htmlall':'UTF-8'}</a>
+                <a role="button" data-toggle="collapse" href="#{$order['reference']|escape:'htmlall':'UTF-8'}" >
+                    Order ID: {$order['id_order']|escape:'htmlall':'UTF-8'}
+                    &nbsp;&nbsp;&nbsp;&nbsp; Reference: {$order['reference']|escape:'htmlall':'UTF-8'}
+                </a>
             </h4>
         </div>
         <div class="panel-body">
@@ -26,8 +29,31 @@
                     <p><b>Order Reference: </b> {$order['reference']|escape:'htmlall':'UTF-8'}</p>
                     <p><b>Payment: </b> {$order['payment']|escape:'htmlall':'UTF-8'}</p>
                     <p><b>Amount: </b> {$order['total_paid']|escape:'htmlall':'UTF-8'}</p>
+                    <p>
+                        <b>Products: </b>
+                        
+                        <table class="table">                        
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach $order['products'] as $product}
+                            <tr>
+                                <td>{$product['product_id']|escape:'htmlall':'UTF-8'}</td>
+                                <td>{$product['product_name']|escape:'htmlall':'UTF-8'}</td>
+                                <td>{$product['product_quantity']|escape:'htmlall':'UTF-8'}</td>
+                                <td>{$product['product_price']|escape:'htmlall':'UTF-8'}</td>
+                            </tr>
+                            {/foreach}
+                        </tbody>
+                        </table>
+                    </p>
                 </div>
-                <div class="col-md-6"></div>
             </div>
         </div>
         <div id="{$order['reference']|escape:'htmlall':'UTF-8'}" class="panel-collapse collapse">

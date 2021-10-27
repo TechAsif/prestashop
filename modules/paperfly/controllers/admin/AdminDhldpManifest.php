@@ -57,20 +57,16 @@ class AdminDhldpManifestController extends ModuleAdminController
         $paperfly_orders = Db::getInstance()->executeS(
             'SELECT * FROM '._DB_PREFIX_.'paperfly_order po 
             INNER JOIN '._DB_PREFIX_.'orders odr ON (po.id_order=odr.id_order)
-            INNER JOIN '._DB_PREFIX_.'order_detail od ON (po.id_order=od.id_order) ORDER BY \'po.date_add\' DESC LIMIT 20
-            
+            ORDER BY \'po.date_add\' DESC LIMIT 20            
             '
             // LEFT JOIN '._DB_PREFIX_.'paperfly_order_tracking pot ON (po.id_paperfly_order=pot.id_paperfly_order)group by po.reference'
         );
-        // var_dump($paperfly_orders);
 
         foreach ($paperfly_orders as $key=>$order){
-            $thi_ref=$order['id_order'];
-
             $_SQL = 'SELECT * FROM '._DB_PREFIX_.'paperfly_order_tracking where id_order ='.$order['id_order'];
-
             $paperfly_orders[$key]['tracking_data'] = Db::getInstance()->executeS($_SQL);
-
+            $ORDER_DETAILS_SQL = 'SELECT * FROM '._DB_PREFIX_.'order_detail where id_order ='.$order['id_order'];
+            $paperfly_orders[$key]['products'] = Db::getInstance()->executeS($ORDER_DETAILS_SQL);
         }
 
         $this->context->smarty->assign([
