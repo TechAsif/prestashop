@@ -224,49 +224,35 @@ class FlingexApi
         if($apiJsonResponse['code'] != 200)
             return false;
 
-        $services = isset($apiJsonResponse['data']['pricing']) ? $apiJsonResponse['data']['pricing']: [['deliverycharge'=> 0]];
+        $zones = isset($apiJsonResponse['data']['nearestzones']) ? $apiJsonResponse['data']['nearestzones']: [['id'=> 6]];
 
-        usort($services, function($a, $b) {
-            return $a['deliverycharge'] > $b['deliverycharge'];
-        });
-        $bestService = null;
+        $nearestZone = null;
         $userAddress = $address[0];
-        $marchantAddress = 'Dhaka'; // initally let consider all vendor marchandizer address inside dhaka
+        $addKeywords = preg_split("/[\s,]+/", $userAddress['address1'].$userAddress['address2']);
 
-
-        foreach ($disticts as $key => $distict) {
-            foreach ($services as $service_key => $service) {
-                if(
-                    preg_match("/inside-dhaka/i", $service['slug'])
-                    && preg_match("/dhaka/i", $userAddress['city'])
-                    && preg_match("/dhaka/i", strtolower($marchantAddress))
-                ) {
-                    $bestService = $service;
-                    break;break;
-                } else if( 
-                    preg_match("/own.*city/i", $service['slug'])
-                    && strtolower($userAddress['city'])==strtolower($distict) 
-                    && strtolower($userAddress['city'])==strtolower($marchantAddress) 
-                ) {
-                    $bestService = $service;
-                    break;break;
-                } else if(
-                    preg_match("/sub.*dhaka/i", $service['slug'])
-                    && preg_match("/savar|tongi/i", $userAddress['city'])
-                    && preg_match("/savar|tongi/i", strtolower($marchantAddress))
-                ) {
-                    $bestService = $service;
+        foreach ($zones as $zone_key => $zone) {
+            foreach ($addKeywords as $addKeyword) {
+                if( strtolower($zone['zonename']) == strtolower($addKeyword)) {
+                    $nearestZone = $zone;
                     break;break;
                 }
-                
+                if(
+                    preg_match("/sub.*dhaka/i", $zone['zonename'])
+                    && preg_match("/savar|tongi/i", $userAddress['city'])
+                ) {
+                    $nearestZone = $zone;
+                    break;break;
+                }
             }
+            
         }
-        if($bestService != null) {
-            return $bestService;
+    
+        if($nearestZone != null) {
+            return $nearestZone;
         } else {
-            foreach ($services as $service_key => $service) {
-                if (preg_match("/outside.*dhaka/i", $service['slug']))
-                    return $service;
+            foreach ($zones as $zone_key => $zone) {
+                if (preg_match("/outside.*dhaka/i", $zone['zonename']))
+                    return $zone;
                 
             }
             return null;

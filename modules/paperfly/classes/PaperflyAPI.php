@@ -112,7 +112,7 @@ class PaperflyAPI
         $post_data->deliveryOption = "regular";
         $post_data->custname = $address[0]['firstname'].' '.$address[0]['lastname'];
         $post_data->custaddress = $address[0]["address1"]. $address[0]["address2"];
-        $post_data->customerThana = $address[0]['city'];
+        $post_data->customerThana = 'Badda';// $address[0]['city'];
         $post_data->customerDistrict = $address[0]['city'];
         $post_data->custPhone =$address[0]['phone'];
         $post_data->max_weight = "10";
@@ -121,7 +121,7 @@ class PaperflyAPI
         $mode = Configuration::get(self::$conf_prefix.'SANDBOX');
         $url = (int)$mode == 1  ? 'https://paperflybd.com/OrderPlacement' : 'https://sandbox.paperflybd.com/OrderPlacement';
         $apiJsonResponse = self::callPaperFlyAPI("POST",$url,$post_data_obj);
-        return $apiJsonResponse;
+        return json_decode($apiJsonResponse, true);
 
     }
 
@@ -137,7 +137,7 @@ class PaperflyAPI
         $url = (int)$mode == 1  ? 'https://paperflybd.com/API-Order-Tracking' : 'https://sandbox.paperflybd.com/API-Order-Tracking';
 
         $apiJsonResponse = self::callPaperFlyAPI("POST",$url ,$post_data_obj);
-        return $apiJsonResponse;
+        return json_decode($apiJsonResponse, true);
 
     }
 
