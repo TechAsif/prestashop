@@ -82,8 +82,8 @@
                 </tbody>
             </table>
             {else}
-                {l s='No tracking data found' mod='dhldp'}
-                <p><b>Paperfly Status: </b> {$order['api_response_status_message']|escape:'htmlall':'UTF-8'}</p>
+                {l s='No tracking data found' mod='paperfly'}
+                <p><b>Paperfly Status: </b> {$order['api_response_message']|escape:'htmlall':'UTF-8'}</p>
             {/if}
         </div>
     </div>

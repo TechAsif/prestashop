@@ -11,20 +11,20 @@
 *}
 <div class="row" id="dhldp_dhl_export_documents" style="{if !isset($export_docs.show_dhl_export_documents) || (isset($export_docs.show_dhl_export_documents) && $export_docs.show_dhl_export_documents != 1)}display: none;{/if}">
     <div class="panel">
-        <div class="panel-heading">{l s='Export documents' mod='dhldp'}</div>
+        <div class="panel-heading">{l s='Export documents' mod='paperfly'}</div>
         <div class="row">
             <div class="col-lg-6">
                 <div class="panel">
                     <div class="row form-wrapper form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-lg-4">{l s='Invoice number' mod='dhldp'}</label>
+                            <label class="control-label col-lg-4">{l s='Invoice number' mod='paperfly'}</label>
                             <div class="col-lg-8">
                                 <input class="form-control" type="text" name="export_docs[{$export_docs.id_order_carrier|escape:'html':'UTF-8'}][invoiceNumber]"
                                    value="{$export_docs.invoiceNumber|escape:'htmlall':'UTF-8'}" maxlength="35"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-lg-4 required">{l s='Export type' mod='dhldp'}</label>
+                            <label class="control-label col-lg-4 required">{l s='Export type' mod='paperfly'}</label>
                             <div class="col-lg-8">
                                 <select name="export_docs[{$export_docs.id_order_carrier|escape:'html':'UTF-8'}][exportType]" class="form-control" >
                                     {foreach from=$export_docs.exporttype_options key=option_key item=option_value}
@@ -32,18 +32,18 @@
                                     {/foreach}
                                 </select>
                                 <span class="help-block">
-                                    {l s='If you selected OTHER, then please fill "Description of export type"' mod='dhldp'}
+                                    {l s='If you selected OTHER, then please fill "Description of export type"' mod='paperfly'}
                                 </span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-lg-4 required">{l s='Description of export type' mod='dhldp'}</label>
+                            <label class="control-label col-lg-4 required">{l s='Description of export type' mod='paperfly'}</label>
                             <div class="col-lg-8">
                                 <textarea class="textarea-autosize" style="width: 100%;word-wrap: break-word; resize: none; height: 85px;" name="export_docs[{$export_docs.id_order_carrier|escape:'html':'UTF-8'}][exportTypeDescription]" maxlength="256">{$export_docs.exportTypeDescription|escape:'htmlall':'UTF-8'}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-lg-4">{l s='Terms of trade' mod='dhldp'}</label>
+                            <label class="control-label col-lg-4">{l s='Terms of trade' mod='paperfly'}</label>
                             <div class="col-lg-8">
                                 <select name="export_docs[{$export_docs.id_order_carrier|escape:'html':'UTF-8'}][termsOfTrade]" class="form-control" >
                                     <option value="">-</option>
@@ -61,38 +61,38 @@
                 <div class="panel">
                     <div class="row form-wrapper form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-lg-4 required">{l s='Place of commital' mod='dhldp'}</label>
+                            <label class="control-label col-lg-4 required">{l s='Place of commital' mod='paperfly'}</label>
                             <div class="col-lg-8">
                                 <input class="form-control" type="text" name="export_docs[{$export_docs.id_order_carrier|escape:'html':'UTF-8'}][placeOfCommital]"
                                        value="{$export_docs.placeOfCommital|escape:'htmlall':'UTF-8'}" maxlength="35"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-lg-4 required">{l s='Additional custom fees' mod='dhldp'}</label>
+                            <label class="control-label col-lg-4 required">{l s='Additional custom fees' mod='paperfly'}</label>
                             <div class="col-lg-8">
                                 <div class="input-group fixed-width-x2">
                                     <input class="form-control" type="text" name="export_docs[{$export_docs.id_order_carrier|escape:'html':'UTF-8'}][additionalFee]"
                                            value="{$export_docs.additionalFee|escape:'htmlall':'UTF-8'}" maxlength="10"/>
-                                    <div class="input-group-addon">{l s='euro' mod='dhldp'} </div>
+                                    <div class="input-group-addon">{l s='euro' mod='paperfly'} </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-lg-4">{l s='Permit number' mod='dhldp'}</label>
+                            <label class="control-label col-lg-4">{l s='Permit number' mod='paperfly'}</label>
                             <div class="col-lg-8">
                                 <input class="form-control" type="text" name="export_docs[{$export_docs.id_order_carrier|escape:'html':'UTF-8'}][permitNumber]"
                                        value="{$export_docs.permitNumber|escape:'htmlall':'UTF-8'}" maxlength="10"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-lg-4">{l s='Attestation number' mod='dhldp'}</label>
+                            <label class="control-label col-lg-4">{l s='Attestation number' mod='paperfly'}</label>
                             <div class="col-lg-8">
                                 <input class="form-control" type="text" name="export_docs[{$export_docs.id_order_carrier|escape:'html':'UTF-8'}][attestationNumber]"
                                        value="{$export_docs.attestationNumber|escape:'htmlall':'UTF-8'}" maxlength="35"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-lg-4">{l s='Electronic export notification' mod='dhldp'}</label>
+                            <label class="control-label col-lg-4">{l s='Electronic export notification' mod='paperfly'}</label>
                             <div class="col-lg-8">
                                 <input class="form-control" type="checkbox" value="1" name="export_docs[{$export_docs.id_order_carrier|escape:'html':'UTF-8'}][WithElectronicExportNtfctn]"{if $export_docs.WithElectronicExportNtfctn == 1} checked="checked"{/if}/>
                             </div>
@@ -103,27 +103,27 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                {if $export_docs.exportdoc_positions_limit_exceed == true}<div class="alert alert-warning">{l s='Maximum quantity of positions is exceed. You see first 99 positions of order' mod='dhldp'}</div>{/if}
-                <div class="alert alert-info">{l s='Sum of weights of positions must be equal to weight of package' mod='dhldp'}</div>
+                {if $export_docs.exportdoc_positions_limit_exceed == true}<div class="alert alert-warning">{l s='Maximum quantity of positions is exceed. You see first 99 positions of order' mod='paperfly'}</div>{/if}
+                <div class="alert alert-info">{l s='Sum of weights of positions must be equal to weight of package' mod='paperfly'}</div>
                 <table class="table">
                     <thead>
                         <th>
-                            <label class="required">{l s='Description' mod='dhldp'}</label>
+                            <label class="required">{l s='Description' mod='paperfly'}</label>
                         </th>
                         <th>
-                            <label class="required">{l s='Country code origin' mod='dhldp'}</label>
+                            <label class="required">{l s='Country code origin' mod='paperfly'}</label>
                         </th>
                         <th>
-                            <label class="required">{l s='Customs tariff number' mod='dhldp'}</label>
+                            <label class="required">{l s='Customs tariff number' mod='paperfly'}</label>
                         </th>
                         <th>
-                            <label class="required">{l s='Amount' mod='dhldp'}</label>
+                            <label class="required">{l s='Amount' mod='paperfly'}</label>
                         </th>
                         <th>
-                            <label class="required">{l s='Net weight' mod='dhldp'}</label>
+                            <label class="required">{l s='Net weight' mod='paperfly'}</label>
                         </th>
                         <th>
-                            <label class="required">{l s='Customs value' mod='dhldp'}</label>
+                            <label class="required">{l s='Customs value' mod='paperfly'}</label>
                         </th>
                     </thead>
                     <tbody>

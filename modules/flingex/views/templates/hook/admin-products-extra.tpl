@@ -11,11 +11,11 @@
 *}
 <div id="dhldp" class="panel">
     {if ! $allow_to_use}
-        <div class="warn">{l s='You must save this product before using it' mod='dhldp'}</div>
+        <div class="warn">{l s='You must save this product before using it' mod='paperfly'}</div>
     {else}
         <div class="form-group">
             <label class="control-label col-lg-3">
-                {l s='Customs tarif number' mod='dhldp'}
+                {l s='Customs tarif number' mod='paperfly'}
             </label>
             <div class="col-lg-5">
                 <input type="text" name="dhldp_ctn" class="form-control" value="{$ctn|escape:'html':'UTF-8'}" maxlength="10"/>
@@ -23,12 +23,12 @@
         </div>
         <div class="form-group">
             <label class="control-label col-lg-3">
-                {l s='Country of origin' mod='dhldp'}
+                {l s='Country of origin' mod='paperfly'}
             </label>
             <div class="col-lg-5">
                 <input type="text" name="dhldp_coo" class="form-control" value="{$coo|escape:'html':'UTF-8'}" maxlength="2"/>
                 <span class="help-block">
-                    {l s='ISO code of country' mod='dhldp'}
+                    {l s='ISO code of country' mod='paperfly'}
                 </span>
             </div>
         </div>
@@ -37,10 +37,10 @@
                 <table class="table table-striped table-no-bordered">
                     <thead>
                     <tr>
-                        <th>{l s='Id attribute' mod='dhldp'}</th>
-                        <th>{l s='Combination name' mod='dhldp'}</th>
-                        <th>{l s='Combination reference' mod='dhldp'}</th>
-                        <th>{l s='Customs tariff number' mod='dhldp'}</th>
+                        <th>{l s='Id attribute' mod='paperfly'}</th>
+                        <th>{l s='Combination name' mod='paperfly'}</th>
+                        <th>{l s='Combination reference' mod='paperfly'}</th>
+                        <th>{l s='Customs tariff number' mod='paperfly'}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -70,9 +70,9 @@
         {/if}
         {if $show_buttons}
         <div class="panel-footer">
-            <a href="{$link->getAdminLink('AdminProducts')|escape:'quotes':'UTF-8'}" class="btn btn-default"><i class="process-icon-cancel"></i> {l s='Cancel' mod='dhldp'}</a>
-            <button type="submit" name="submitAddproduct" class="btn btn-default pull-right"><i class="process-icon-save"></i> {l s='Save' mod='dhldp'}</button>
-            <button type="submit" name="submitAddproductAndStay" class="btn btn-default pull-right"><i class="process-icon-save"></i> {l s='Save and stay' mod='dhldp'}</button>
+            <a href="{$link->getAdminLink('AdminProducts')|escape:'quotes':'UTF-8'}" class="btn btn-default"><i class="process-icon-cancel"></i> {l s='Cancel' mod='paperfly'}</a>
+            <button type="submit" name="submitAddproduct" class="btn btn-default pull-right"><i class="process-icon-save"></i> {l s='Save' mod='paperfly'}</button>
+            <button type="submit" name="submitAddproductAndStay" class="btn btn-default pull-right"><i class="process-icon-save"></i> {l s='Save and stay' mod='paperfly'}</button>
         </div>
         {/if}
     {/if}
