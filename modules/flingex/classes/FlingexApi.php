@@ -26,7 +26,7 @@ class FlingexApi
         $this->module = $module;
     }
     
-    public function phpCurlRequest($curlUrl, $method, $data,$headers) {
+    public function phpCurlRequest($curlUrl, $method, $data=array(),$headers=array()) {
         $req = '';
         $curl = curl_init();
     
@@ -93,11 +93,7 @@ class FlingexApi
     public function checkAccount($username, $password)
     {
         $curlUrl = 'https://flingex.com/api/merchant/login?username='.$username.'&password='. $password;
-        $formData = array();
-        $headers = array();
-        // $headers[] = 'Content-Type: application/x-www-form-urlencoded';
-
-        $response = $this->phpCurlRequest($curlUrl, 'POST', $formData, $headers);
+        $response = $this->phpCurlRequest($curlUrl, 'POST');
 
         Flingex::logToFile('Response',$response, 'account');
 
@@ -127,13 +123,14 @@ class FlingexApi
             WHERE id_address ='.$delivery_address_id
         );
         $bestService = $this->getBestServiceType($address);
+        $reciveZone = $this->getReciveZone($address);
 
         if(count($address)) {
             
             $post_data = [
                 'token' => $token,
                 'choose_service_type_id' => $bestService ? $bestService['id'] : 1,
-                'reciveZone' => "7", // sub-dhaka
+                'reciveZone' => $reciveZone ? $reciveZone['id'] : '7', // default sub-dhaka
                 'cod' => ($order->total_paid + (int)$bestService['deliverycharge']), // collected amount of price
                 'name' => $address[0]["firstname"] .' '. $address[0]["lastname"], // customer name
                 'weight' => 1,
@@ -144,11 +141,8 @@ class FlingexApi
             ];
     
             $curlUrl = 'https://flingex.com/api/merchant/create?'. http_build_query($post_data);
-            $formData = array();
-            $headers = array();
-            // $headers[] = 'Content-Type: application/x-www-form-urlencoded';
-    
-            $apiJsonResponse = $this->phpCurlRequest($curlUrl, 'POST', $formData, $headers);
+
+            $apiJsonResponse = $this->phpCurlRequest($curlUrl, 'POST');
     
             return json_decode($apiJsonResponse, true);
         }
@@ -164,10 +158,7 @@ class FlingexApi
         $token = Configuration::get(self::$conf_prefix.'LIVE_TOKEN');
         $curlUrl = 'https://flingex.com/api/merchant/choose-service';
         $formData = array('token' => $token);
-        $headers = array();
-        // $headers[] = 'Content-Type: application/x-www-form-urlencoded';
-
-        $apiJsonResponse = json_decode($this->phpCurlRequest($curlUrl, 'GET', $formData, $headers), true);
+        $apiJsonResponse = json_decode($this->phpCurlRequest($curlUrl, 'GET', $formData), true);
 
         if($apiJsonResponse['code'] != 200)
             return false;
@@ -221,6 +212,53 @@ class FlingexApi
         }
     }
 
+    public function getReciveZone($address)
+    {
+        $disticts = $this->getBDDistricts();
+             
+        $token = Configuration::get(self::$conf_prefix.'LIVE_TOKEN');
+        $curlUrl = 'https://flingex.com/api/merchant/zone';
+        $formData = array('token' => $token);
+        $apiJsonResponse = json_decode($this->phpCurlRequest($curlUrl, 'GET', $formData), true);
+
+        if($apiJsonResponse['code'] != 200)
+            return false;
+
+        $zones = isset($apiJsonResponse['data']['nearestzones']) ? $apiJsonResponse['data']['nearestzones']: [['id'=> 6]];
+
+        $nearestZone = null;
+        $userAddress = $address[0];
+        $addKeywords = preg_split("/[\s,]+/", $userAddress['address1'].$userAddress['address2']);
+
+        foreach ($zones as $zone_key => $zone) {
+            foreach ($addKeywords as $addKeyword) {
+                if( strtolower($zone['zonename']) == strtolower($addKeyword)) {
+                    $nearestZone = $zone;
+                    break;break;
+                }
+                if(
+                    preg_match("/sub.*dhaka/i", $zone['zonename'])
+                    && preg_match("/savar|tongi/i", $userAddress['city'])
+                ) {
+                    $nearestZone = $zone;
+                    break;break;
+                }
+            }
+            
+        }
+    
+        if($nearestZone != null) {
+            return $nearestZone;
+        } else {
+            foreach ($zones as $zone_key => $zone) {
+                if (preg_match("/outside.*dhaka/i", $zone['zonename']))
+                    return $zone;
+                
+            }
+            return null;
+        }
+    }
+
     /*******sent to shipping via flingex***********/
 
     public function sentOrderToFlingexTrackingApi($tracking_id){
@@ -232,11 +270,7 @@ class FlingexApi
 
         $post_data = ['token' => $token];
         $curlUrl = 'https://flingex.com/api/merchant/parcel/track/'.$tracking_id.'?'. http_build_query($post_data);
-        $formData = array();
-        $headers = array();
-        // $headers[] = 'Content-Type: application/x-www-form-urlencoded';
-
-        $trackingResponse = $this->phpCurlRequest($curlUrl, 'GET', $formData, $headers);
+        $trackingResponse = $this->phpCurlRequest($curlUrl, 'GET');
 
         return json_decode($trackingResponse, true);
 
