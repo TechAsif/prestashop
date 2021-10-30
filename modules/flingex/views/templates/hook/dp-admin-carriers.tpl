@@ -13,7 +13,7 @@
 	<div class="col-lg-12">
 		<div class="panel dhldp_dp_order_panel {if $is177}card card-body{/if}">
 			<div class="panel-heading">
-				<i class="icon-truck"></i> {l s='Deutschepost delivery labels' mod='dhldp'} <span class="pull-right">{$module_name|escape:'htmlall':'UTF-8'} v.{$module_version|escape:'htmlall':'UTF-8'}</span>
+				<i class="icon-truck"></i> {l s='Deutschepost delivery labels' mod='paperfly'} <span class="pull-right">{$module_name|escape:'htmlall':'UTF-8'} v.{$module_version|escape:'htmlall':'UTF-8'}</span>
 			</div>
 		
 			{if isset($deutschepost_errors) && $deutschepost_errors|@count}
@@ -23,17 +23,17 @@
 			{/if}
 
 			{if isset($labels) && is_array($labels) && count($labels)}
-			<button class="btn btn-default" name="showAllDPLabels" id="showAllDPLabels"><i class="icon-history"></i> {l s='Show all labels' mod='dhldp'} ({count($labels)|escape:'htmlall':'UTF-8'})</button>
+			<button class="btn btn-default" name="showAllDPLabels" id="showAllDPLabels"><i class="icon-history"></i> {l s='Show all labels' mod='paperfly'} ({count($labels)|escape:'htmlall':'UTF-8'})</button>
 			<div id="allDPLabels" style="display:none;">
 				<div class="table-responsive">
 					<table class="table std" cellspacing="0" cellpadding="0">
 						<thead>
 							<tr>
-								<th>{l s='ID' mod='dhldp'}</th>
-								<th>{l s='Date' mod='dhldp'}</th>
-								<th>{l s='Product' mod='dhldp'}</th>
-								<th>{l s='Information' mod='dhldp'}</th>
-								<th>{l s='Action' mod='dhldp'}</th>
+								<th>{l s='ID' mod='paperfly'}</th>
+								<th>{l s='Date' mod='paperfly'}</th>
+								<th>{l s='Product' mod='paperfly'}</th>
+								<th>{l s='Information' mod='paperfly'}</th>
+								<th>{l s='Action' mod='paperfly'}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -45,22 +45,22 @@
 									{$label.product_name|escape:'htmlall':'UTF-8'}<br>
 								</td>
 								<td>
-									<label>{l s='Voucher ID' mod='dhldp'}</label>: {$label.dp_voucher_id|escape:'htmlall':'UTF-8'}<br>
-                                    {if $label.dp_track_id != ''}<label>{l s='Track ID' mod='dhldp'}</label>: {$label.dp_track_id|escape:'htmlall':'UTF-8'}<br>{/if}
-									<label>{l s='Order ID' mod='dhldp'}</label>: {$label.dp_order_id|escape:'htmlall':'UTF-8'}<br>
-									<label>{l s='Total' mod='dhldp'}</label>: {displayPrice price=$label.total}<br>
-									<label>{l s='Remained wallet ballance' mod='dhldp'}</label>: {displayPrice price=$label.wallet_ballance}<br>
-									<label>{l s='Note' mod='dhldp'}</label>: {$label.additional_info|escape:'htmlall':'UTF-8'}<br>
-                                    <label>{l s='Label format' mod='dhldp'}</label>: {$label.label_format|escape:'htmlall':'UTF-8'}<br>
+									<label>{l s='Voucher ID' mod='paperfly'}</label>: {$label.dp_voucher_id|escape:'htmlall':'UTF-8'}<br>
+                                    {if $label.dp_track_id != ''}<label>{l s='Track ID' mod='paperfly'}</label>: {$label.dp_track_id|escape:'htmlall':'UTF-8'}<br>{/if}
+									<label>{l s='Order ID' mod='paperfly'}</label>: {$label.dp_order_id|escape:'htmlall':'UTF-8'}<br>
+									<label>{l s='Total' mod='paperfly'}</label>: {displayPrice price=$label.total}<br>
+									<label>{l s='Remained wallet ballance' mod='paperfly'}</label>: {displayPrice price=$label.wallet_ballance}<br>
+									<label>{l s='Note' mod='paperfly'}</label>: {$label.additional_info|escape:'htmlall':'UTF-8'}<br>
+                                    <label>{l s='Label format' mod='paperfly'}</label>: {$label.label_format|escape:'htmlall':'UTF-8'}<br>
                                     {if $label.label_format == 'pdf'}
-                                        <label>{l s='Page format' mod='dhldp'}</label>: {$label.page_format_name|escape:'htmlall':'UTF-8'}<br>
-                                        <label>{l s='Label position' mod='dhldp'}</label>: {$label.label_position_name|escape:'htmlall':'UTF-8'}<br>
+                                        <label>{l s='Page format' mod='paperfly'}</label>: {$label.page_format_name|escape:'htmlall':'UTF-8'}<br>
+                                        <label>{l s='Label position' mod='paperfly'}</label>: {$label.label_position_name|escape:'htmlall':'UTF-8'}<br>
                                     {/if}
 								</td>
 								<td>
-									<a class="btn btn-primary" href="{$label.dp_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-print"></i> {l s='Print label' mod='dhldp'}</a>
-                                    {if $label.manifest_link != ''}<a class="btn btn-primary" href="{$label.manifest_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-info"></i> {l s='Manifest / Shipping list' mod='dhldp'}</a>{/if}
-									{if $label.dp_track_link != ''}<a class="btn btn-primary" href="{$label.dp_track_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-info"></i> {l s='Tracking' mod='dhldp'}</a>{/if}
+									<a class="btn btn-primary" href="{$label.dp_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-print"></i> {l s='Print label' mod='paperfly'}</a>
+                                    {if $label.manifest_link != ''}<a class="btn btn-primary" href="{$label.manifest_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-info"></i> {l s='Manifest / Shipping list' mod='paperfly'}</a>{/if}
+									{if $label.dp_track_link != ''}<a class="btn btn-primary" href="{$label.dp_track_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-info"></i> {l s='Tracking' mod='paperfly'}</a>{/if}
 								</td>
 							</tr>
 							{/foreach}
@@ -79,11 +79,11 @@
 					<table class="table std" cellspacing="0" cellpadding="0">
 						<thead>
 							<tr>
-								<th>{l s='Carrier' mod='dhldp'}</th>
-								<th>{l s='Product' mod='dhldp'}</th>
-								<th>{l s='Note' mod='dhldp'}</th>
-                                <th>{l s='Label print options' mod='dhldp'}</th>
-								<th>{l s='Actions' mod='dhldp'}</th>
+								<th>{l s='Carrier' mod='paperfly'}</th>
+								<th>{l s='Product' mod='paperfly'}</th>
+								<th>{l s='Note' mod='paperfly'}</th>
+                                <th>{l s='Label print options' mod='paperfly'}</th>
+								<th>{l s='Actions' mod='paperfly'}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -100,14 +100,14 @@
 								</td>
 								<td>
 									<div class="input-group fixed-width-x2">
-										<textarea name="additional_info">{if isset($last_label.additional_info)}{$last_label.additional_info|escape:'htmlall':'UTF-8'}{/if}</textarea> {l s='Max. 80 characters' mod='dhldp'}
+										<textarea name="additional_info">{if isset($last_label.additional_info)}{$last_label.additional_info|escape:'htmlall':'UTF-8'}{/if}</textarea> {l s='Max. 80 characters' mod='paperfly'}
 									</div>
 								</td>
                                 <td>
-                                    <label class="control-label">{l s='Label format' mod='dhldp'}</label> : {$def_label_format|escape:'htmlall':'UTF-8'}<br>
+                                    <label class="control-label">{l s='Label format' mod='paperfly'}</label> : {$def_label_format|escape:'htmlall':'UTF-8'}<br>
                                     {if $def_label_format == 'pdf'}
-                                        <label class="control-label">{l s='Page format' mod='dhldp'}</label> : {$def_page_format_name|escape:'htmlall':'UTF-8'}<br>
-                                        <label class="control-label">{l s='Label position' mod='dhldp'}</label> :<br>
+                                        <label class="control-label">{l s='Page format' mod='paperfly'}</label> : {$def_page_format_name|escape:'htmlall':'UTF-8'}<br>
+                                        <label class="control-label">{l s='Label position' mod='paperfly'}</label> :<br>
                                                 {if isset($smarty.post.label_position_page)}
                                                     {assign var=sel_label_format_page value=$smarty.post.label_position_page}
                                                     {assign var=sel_label_format_col value=$smarty.post.label_position_col}
@@ -123,15 +123,15 @@
                                                 {/if}
                                                 <table  class="table std" cellspacing="0" cellpadding="0">
                                                     <tr>
-                                                        <td>{l s='Page' mod='dhldp'}</td>
+                                                        <td>{l s='Page' mod='paperfly'}</td>
                                                         <td><input type="text" name="label_position_page" class="fixed-width-xs" value="{$sel_label_format_page|escape:'htmlall':'UTF-8'}"></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>{l s='Column' mod='dhldp'}</td>
+                                                        <td>{l s='Column' mod='paperfly'}</td>
                                                         <td><input type="text" name="label_position_col" class="fixed-width-xs" value="{$sel_label_format_col|escape:'htmlall':'UTF-8'}"></td>
                                                     </tr>
                                                     <tr>
-                                                        <td>{l s='Row' mod='dhldp'}</td>
+                                                        <td>{l s='Row' mod='paperfly'}</td>
                                                         <td><input type="text" name="label_position_row" class="fixed-width-xs" value="{$sel_label_format_row|escape:'htmlall':'UTF-8'}"></td>
                                                     </tr>
                                                 </table>
@@ -139,20 +139,20 @@
                                 </td>
 								<td>
 									{if isset($last_label['id_dhldp_dp_label'])}
-										<label>{l s='Voucher ID' mod='dhldp'}</label>: {$last_label.dp_voucher_id|escape:'htmlall':'UTF-8'}<br>
-                                        {if $last_label.dp_track_id != ''}<label>{l s='Track ID' mod='dhldp'}</label>: {$last_label.dp_track_id|escape:'htmlall':'UTF-8'}<br>{/if}
-										<label>{l s='Order ID' mod='dhldp'}</label>: {$last_label.dp_order_id|escape:'htmlall':'UTF-8'}<br>
-										<label>{l s='Total' mod='dhldp'}</label>: {displayPrice price=$last_label.total}<br>
-										<label>{l s='Remained wallet ballance' mod='dhldp'}</label>: {displayPrice price=$last_label.wallet_ballance}<br>
-										<label>{l s='Note' mod='dhldp'}</label>: {$last_label.additional_info|escape:'htmlall':'UTF-8'}<br>
+										<label>{l s='Voucher ID' mod='paperfly'}</label>: {$last_label.dp_voucher_id|escape:'htmlall':'UTF-8'}<br>
+                                        {if $last_label.dp_track_id != ''}<label>{l s='Track ID' mod='paperfly'}</label>: {$last_label.dp_track_id|escape:'htmlall':'UTF-8'}<br>{/if}
+										<label>{l s='Order ID' mod='paperfly'}</label>: {$last_label.dp_order_id|escape:'htmlall':'UTF-8'}<br>
+										<label>{l s='Total' mod='paperfly'}</label>: {displayPrice price=$last_label.total}<br>
+										<label>{l s='Remained wallet ballance' mod='paperfly'}</label>: {displayPrice price=$last_label.wallet_ballance}<br>
+										<label>{l s='Note' mod='paperfly'}</label>: {$last_label.additional_info|escape:'htmlall':'UTF-8'}<br>
 
-										<a class="btn btn-primary" href="{$last_label.dp_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-print"></i> {l s='Print label' mod='dhldp'}</a>
-                                        {if $last_label.manifest_link != ''}<a class="btn btn-primary" href="{$last_label.manifest_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-info"></i> {l s='Manifest / Shipping list' mod='dhldp'}</a>{/if}
-										{if $last_label.dp_track_link != ''}<a class="btn btn-primary" href="{$last_label.dp_track_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-info"></i> {l s='Tracking' mod='dhldp'}</a>{/if}
-										<input type="submit" class="btn btn-success" name="submitDPLabelRequest" value="{l s='Generate new label' mod='dhldp'}" />
-										{*<button type="submit" class="btn btn-danger" name="submitDeutschepostLabelReturnRequest"><i class="icon-reply"></i> {l s='Return label' mod='dhldp'}</button>*}
+										<a class="btn btn-primary" href="{$last_label.dp_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-print"></i> {l s='Print label' mod='paperfly'}</a>
+                                        {if $last_label.manifest_link != ''}<a class="btn btn-primary" href="{$last_label.manifest_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-info"></i> {l s='Manifest / Shipping list' mod='paperfly'}</a>{/if}
+										{if $last_label.dp_track_link != ''}<a class="btn btn-primary" href="{$last_label.dp_track_link|escape:'htmlall':'UTF-8'}" target="_blank"><i class="icon-info"></i> {l s='Tracking' mod='paperfly'}</a>{/if}
+										<input type="submit" class="btn btn-success" name="submitDPLabelRequest" value="{l s='Generate new label' mod='paperfly'}" />
+										{*<button type="submit" class="btn btn-danger" name="submitDeutschepostLabelReturnRequest"><i class="icon-reply"></i> {l s='Return label' mod='paperfly'}</button>*}
 									{else}
-										<input type="submit" class="btn btn-success" name="submitDPLabelRequest" value="{l s='Generate label' mod='dhldp'}" />
+										<input type="submit" class="btn btn-success" name="submitDPLabelRequest" value="{l s='Generate label' mod='paperfly'}" />
 									{/if}
 								</td>
 							</tr>

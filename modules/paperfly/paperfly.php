@@ -164,23 +164,21 @@ class PaperFly extends Module
         $api_response = $this->paperfly_api->sentToPaperFlyOrder($order, $params['cart']);
 
         // if paper fly is not accept the order
-        if( json_decode($api_response)->response_code != '200' ) {
+        if( $api_response['response_code'] != '200' ) {
             // return;
         }
         
 
-        $tracking_api_response = $this->paperfly_api->sentToPaperflyOrderTrackingApi($order);
-        $tracking_response_data = (json_decode($tracking_api_response)->response_code == '200') ? json_decode($tracking_api_response)->success->trackingStatus : '';
+        $tracking_resp = $this->paperfly_api->sentToPaperflyOrderTrackingApi($order);
+        $tracking_response_data = (($tracking_resp['response_code']) == '200') ? $tracking_resp['success']['trackingStatus'] : '';
 
 
-        $traking_number =  (json_decode($tracking_api_response)->response_code == '200') ?json_decode($api_response)->success->tracking_number : '';
-        $order_api_response_code =  json_decode($api_response)->response_code;
-        $order_api_response_message = ($order_api_response_code == '200') ? json_decode($api_response)->success->message :
-            json_decode($api_response)->error->message;
+        $traking_number =  (($tracking_resp['response_code']) == '200') ?($api_response['success']['tracking_number']) : '';
+        $order_api_response_code =  $api_response['response_code'];
+        $order_api_response_message = ($order_api_response_code == '200') ? ($api_response['success']['message']) : $api_response['error']['message'];
 
-        $tracking_api_response_code = json_decode($tracking_api_response)->response_code;
-        $tracking_api_response_message = ($tracking_api_response_code == '200') ? json_decode($tracking_api_response)->success->message :
-            json_decode($tracking_api_response)->error->message;
+        $tracking_resp_code = ($tracking_resp['response_code']);
+        $tracking_resp_message = ($tracking_resp_code == '200') ? $tracking_resp['success']['message'] : $tracking_resp['error']['message'];
         $reference = $order->reference;
         $sql = 'INSERT INTO ' . _DB_PREFIX_ . 'paperfly_order
             (`id_cart`, `id_order`, `id_customer`,`tracking_number`, `reference`,`api_response_status_code`,`api_response_status_message`)
@@ -211,8 +209,8 @@ class PaperFly extends Module
              "' . $traking_number . '",
              "' . $this_key . '",
              "' . $this_val . '",
-             "' . $tracking_api_response_code . '",
-             "' . $tracking_api_response_message . '"
+             "' . $tracking_resp_code . '",
+             "' . $tracking_resp_message . '"
             )';
             Db::getInstance()->execute($sql_tracking);
         }
