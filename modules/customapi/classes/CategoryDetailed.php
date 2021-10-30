@@ -28,38 +28,18 @@ class CategoryDetailed extends ObjectModel
         Json::generate(200, "success", "Product Category information fetched successfully.", $catDetailResponse);
     }
 
-    private function getCategoryMessage($catId)
-    {
-        $sql = "SELECT * FROM `"._DB_PREFIX_."message` WHERE id = $catId AND private=0";
-        $result = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS($sql);
-
-
-        return $result;
-    }
 
     private function getCategoryProductPriceInfo($catId)
     {
 
         $product_query = Db::getInstance()->getRow(
             'SELECT max(price)max_price,min(price)min_price
-            FROM '._DB_PREFIX_.'product 
-            where `id_category_default` = '.$catId);
-
-        $catMessages = array();
-        $messages = $this->getCategoryMessage($catId);
-
-        if (!empty($messages)) {
-            foreach ($messages as $message) {
-                $catMessages[] = array(
-                    'message' => $message['message']
-                );
-            }
-        }
+            FROM ' . _DB_PREFIX_ . 'product 
+            where `id_category_default` = ' . $catId);
 
         $resultResponse = array(
-            'max_price'   => $product_query['max_price'],
-            'min_price' => $product_query['min_price'],
-            'message' => $catMessages[0]['message']
+            'max_price' => $product_query['max_price'],
+            'min_price' => $product_query['min_price']
         );
 
         return $resultResponse;
