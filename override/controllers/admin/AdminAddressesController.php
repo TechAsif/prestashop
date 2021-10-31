@@ -27,86 +27,11 @@
 /**
  * @property Address $object
  */
-class AdminAddressesController extends AdminController
+class AdminAddressesController extends AdminAddressesControllerCore
 {
-    /** @var array countries list */
-    protected $countries_array = array();
-
     public function __construct()
     {
-        $this->bootstrap = true;
-        $this->required_database = true;
-        $this->required_fields = array('company','address2', 'postcode', 'other', 'phone', 'phone_mobile', 'vat_number', 'dni');
-        $this->table = 'address';
-        $this->className = 'CustomerAddress';
-        $this->lang = false;
-        $this->addressType = 'customer';
-        $this->explicitSelect = true;
-
         parent::__construct();
-
-        $this->addRowAction('edit');
-        $this->addRowAction('delete');
-        $this->bulk_actions = array(
-            'delete' => array(
-                'text' => $this->trans('Delete selected', array(), 'Admin.Notifications.Info'),
-                'confirm' => $this->trans('Delete selected items?', array(), 'Admin.Notifications.Info'),
-                'icon' => 'icon-trash'
-            )
-        );
-
-        $this->allow_export = true;
-
-        if (!Tools::getValue('realedit')) {
-            $this->deleted = true;
-        }
-
-        $countries = Country::getCountries($this->context->language->id);
-        foreach ($countries as $country) {
-            $this->countries_array[$country['id_country']] = $country['name'];
-        }
-
-        $this->fields_list = array(
-            'id_address' => array('title' => $this->trans('ID', array(), 'Admin.Global'), 'align' => 'center', 'class' => 'fixed-width-xs'),
-            'firstname' => array('title' => $this->trans('First Name', array(), 'Admin.Global'), 'filter_key' => 'a!firstname'),
-            'lastname' => array('title' => $this->trans('Last Name', array(), 'Admin.Global'), 'filter_key' => 'a!lastname'),
-            'address1' => array('title' => $this->trans('Address', array(), 'Admin.Global')),
-            'postcode' => array('title' => $this->trans('Zip/postal code', array(), 'Admin.Global'), 'align' => 'right'),
-            'city' => array('title' => $this->trans('City', array(), 'Admin.Global')),
-            'country' => array('title' => $this->trans('Country', array(), 'Admin.Global'), 'type' => 'select', 'list' => $this->countries_array, 'filter_key' => 'cl!id_country'));
-
-        $this->_select = 'cl.`name` as country';
-        $this->_join = '
-			LEFT JOIN `'._DB_PREFIX_.'country_lang` cl ON (cl.`id_country` = a.`id_country` AND cl.`id_lang` = '.(int)$this->context->language->id.')
-			LEFT JOIN `'._DB_PREFIX_.'customer` c ON a.id_customer = c.id_customer
-		';
-        $this->_where = 'AND a.id_customer != 0 '.Shop::addSqlRestriction(Shop::SHARE_CUSTOMER, 'c');
-        $this->_use_found_rows = false;
-    }
-
-    public function initToolbar()
-    {
-        parent::initToolbar();
-
-        if (!$this->display && $this->can_import) {
-            $this->toolbar_btn['import'] = array(
-                'href' => $this->context->link->getAdminLink('AdminImport', true).'&import_type=addresses',
-                'desc' => $this->trans('Import', array(), 'Admin.Actions')
-            );
-        }
-    }
-
-    public function initPageHeaderToolbar()
-    {
-        if (empty($this->display)) {
-            $this->page_header_toolbar_btn['new_address'] = array(
-                'href' => self::$currentIndex.'&addaddress&token='.$this->token,
-                'desc' => $this->trans('Add new address', array(), 'Admin.Orderscustomers.Feature'),
-                'icon' => 'process-icon-new'
-            );
-        }
-
-        parent::initPageHeaderToolbar();
     }
 
     public function renderForm()
@@ -133,12 +58,20 @@ class AdminAddressesController extends AdminController
                 ),
                 array(
                     'type' => 'text',
+                    'label' => $this->l('My custom field'),
+                    'name' => 'my_custom_field',
+                    'required' => false,
+                    'col' => '4',
+                    'hint' => $this->l('Just a custom field!')
+                ), 
+                array(
+                    'type' => 'text',
                     'label' => $this->trans('Address alias', array(), 'Admin.Orderscustomers.Feature'),
                     'name' => 'alias',
                     'required' => true,
                     'col' => '4',
                     'hint' => $this->trans('Invalid characters:', array(), 'Admin.Notifications.Info').' &lt;&gt;;=#{}'
-                ),
+                ), 
                 array(
                     'type' => 'textarea',
                     'label' => $this->trans('Other', array(), 'Admin.Global'),
@@ -331,7 +264,8 @@ class AdminAddressesController extends AdminController
         // merge address format with the rest of the form
         array_splice($this->fields_form['input'], 3, 0, $temp_fields);
 
-        return parent::renderForm();
+        // return parent::renderForm();
+        return AdminController::renderForm();
     }
 
     public function processSave()
@@ -424,101 +358,4 @@ class AdminAddressesController extends AdminController
         return $return;
     }
 
-    public function processAdd()
-    {
-        if (Tools::getValue('submitFormAjax')) {
-            $this->redirect_after = false;
-        }
-
-        return parent::processAdd();
-    }
-
-    /**
-     * Get Address formats used by the country where the address id retrieved from POST/GET is.
-     *
-     * @return array address formats
-     */
-    protected function processAddressFormat()
-    {
-        $tmp_addr = new CustomerAddress((int)Tools::getValue('id_address'));
-
-        $selected_country = ($tmp_addr && $tmp_addr->id_country) ? $tmp_addr->id_country : (int)Configuration::get('PS_COUNTRY_DEFAULT');
-        $adr_fields = AddressFormat::getOrderedAddressFields($selected_country, false, true);
-
-        $all_fields = array();
-        $out = array();
-
-        foreach ($adr_fields as $fields_line) {
-            foreach (explode(' ', $fields_line) as $field_item) {
-                $all_fields[] = trim($field_item);
-            }
-        }
-
-        foreach (array('inv', 'dlv') as $adr_type) {
-            $out[$adr_type.'_adr_fields'] = $adr_fields;
-            $out[$adr_type.'_all_fields'] = $all_fields;
-        }
-
-        return $out;
-    }
-
-    /**
-     * Method called when an ajax request is made
-     * @see AdminController::postProcess()
-     */
-    public function ajaxProcess()
-    {
-        if (Tools::isSubmit('email')) {
-            $email = pSQL(Tools::getValue('email'));
-            $customer = Customer::searchByName($email);
-            if (!empty($customer)) {
-                $customer = $customer['0'];
-                echo json_encode(array('infos' => pSQL($customer['firstname']).'_'.pSQL($customer['lastname']).'_'.pSQL($customer['company'])));
-            }
-        }
-        die;
-    }
-
-    /**
-     * Object Delete
-     */
-    public function processDelete()
-    {
-        if (Validate::isLoadedObject($object = $this->loadObject())) {
-            /** @var Address $object */
-            if (!$object->isUsed()) {
-                $this->deleted = false;
-            }
-        }
-
-        $res = parent::processDelete();
-
-        if ($back = Tools::getValue('back')) {
-            $this->redirect_after = urldecode($back).'&conf=1';
-        }
-
-        return $res;
-    }
-
-    /**
-     * Delete multiple items
-     *
-     * @return bool true if succcess
-     */
-    protected function processBulkDelete()
-    {
-        if (is_array($this->boxes) && !empty($this->boxes)) {
-            $deleted = false;
-            foreach ($this->boxes as $id) {
-                $to_delete = new Address((int)$id);
-                if ($to_delete->isUsed()) {
-                    $deleted = true;
-                    break;
-                }
-            }
-            $this->deleted = $deleted;
-        }
-
-        return parent::processBulkDelete();
-    }
 }
