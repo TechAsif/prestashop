@@ -191,8 +191,8 @@ class ECourierApi
                     break;break;
                 } else if(
                     preg_match("/sub.*dhaka/i", $service['slug'])
-                    && preg_match("/savar|tongi/i", $userAddress['city'])
-                    && preg_match("/savar|tongi/i", strtolower($marchantAddress))
+                    && preg_match("/Savar|Gazipur|Kamrangirchar/i", $userAddress['city'])
+                    && preg_match("/Savar|Gazipur|Kamrangirchar/i", strtolower($marchantAddress))
                 ) {
                     $bestService = $service;
                     break;break;
@@ -238,7 +238,7 @@ class ECourierApi
                 }
                 if(
                     preg_match("/sub.*dhaka/i", $zone['zonename'])
-                    && preg_match("/savar|tongi/i", $userAddress['city'])
+                    && preg_match("/Savar|Gazipur|Kamrangirchar/i", $userAddress['city'])
                 ) {
                     $nearestZone = $zone;
                     break;break;
