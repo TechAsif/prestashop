@@ -282,6 +282,7 @@ class FlingexApi
     {
 
         $time = pSQL(Tools::getValue('time', microtime(true)));
+        $res = null;
 
         $order_query = Db::getInstance()->executeS(
             'SELECT fo.reference,fo.id_flingex_order,fo.tracking_number,fo.id_order
