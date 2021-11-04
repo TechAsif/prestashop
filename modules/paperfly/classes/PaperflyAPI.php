@@ -211,14 +211,16 @@ class PaperflyAPI
             $del_res=Db::getInstance()->execute($del_sql);
             
             $tracking_api_response = self::paperflyOrderTrackingApiCronProcess($paperfly_order['reference']);
-            $tracking_response_data = (isset($tracking_api_response['response_code']) == '200') ? $tracking_api_response['success']['trackingStatus'] : '';
+            $tracking_response_data = [];
+            if( $tracking_api_response['response_code'] == '200') {
+                if(isset( $tracking_api_response['success']['trackingStatus'] ))
+                    $tracking_response_data = $tracking_api_response['success']['trackingStatus'][0];
+            }
             $tracking_api_response_message = ($tracking_api_response['response_code'] == '200') ? 
                 $tracking_api_response['success']['message']
                 : $tracking_api_response['error']['message'];
-            $res='';
-            if(!is_array($tracking_response_data))
-                $tracking_response_data = [[]];
-            foreach ((array)($tracking_response_data[0]) as $key => $value) {
+            
+            foreach ((array)$tracking_response_data as $key => $value) {
                 $sql_tracking = 'INSERT INTO ' . _DB_PREFIX_ . 'paperfly_order_tracking
             (`id_order`,`reference`, `id_paperfly_order`, `tracking_number`,`tracking_event_key`,`tracking_event_value`,
             `api_response_status_code`,`api_response_status_message`)
