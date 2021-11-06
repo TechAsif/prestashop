@@ -7,6 +7,7 @@ if (!defined('_PS_VERSION_')) {
 include_once (_PS_MODULE_DIR_.'/customapi/classes/OrderDetailed.php');
 include_once (_PS_MODULE_DIR_.'/customapi/classes/CategoryDetailed.php');
 include_once (_PS_MODULE_DIR_.'/customapi/classes/UpdateStatus.php');
+include_once (_PS_MODULE_DIR_.'/customapi/classes/CreateCategory.php');
 
 class customapi extends Module
 {
@@ -50,6 +51,11 @@ class customapi extends Module
         $added_resources['custom_category_detailed'] = [
             'description' => 'Custom categories information',
             'class' => 'CategoryDetailed'
+        ];
+
+        $added_resources['custom_create_category'] = [
+            'description' => 'Create Category',
+            'class' => 'CreateCategory'
         ];
 
 
