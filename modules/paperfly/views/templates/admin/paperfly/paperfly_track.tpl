@@ -10,6 +10,20 @@
 * @link      http://www.silbersaiten.de
 *}
 
+<div class="panel-group" id="accordion" >
+    <div class="panel">
+        <div class="panel-heading">Update Paperfly Orders</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="trackPaperflyOrders">Track Paperfly Orders</button>
+                    <p><pre id="trackingOutput" style="display: none;"></pre></p>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 {foreach $orders as $order}
