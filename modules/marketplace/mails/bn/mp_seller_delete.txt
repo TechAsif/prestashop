@@ -1,0 +1,17 @@
+[{shop_url}]
+
+Hello {seller_name}
+
+Admin has deleted your seller account.
+
+Details
+
+Seller name: {seller_name}
+
+Shop name: {seller_shop}
+
+Phone: {seller_phone}
+
+Email: {seller_email_id}
+
+Go to shop by clicking on link below: [{shop_url}]

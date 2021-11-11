@@ -1,0 +1,18 @@
+[{shop_url}]
+
+Bonjour {seller_name}
+
+Votre demande pour vendeur de Marketplace {mp_shop_name} a été activé par l'administrateur
+
+Détails de votre boutique:
+
+Nom du Vendeur: {seller_name}
+
+Nom de la boutique: {mp_shop_name}
+
+Téléphone: {phone}
+
+Email: {business_email}
+
+Principal Nom de la boutique: {shop_name}
+

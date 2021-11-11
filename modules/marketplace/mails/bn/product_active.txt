@@ -1,0 +1,18 @@
+[{shop_url}]
+
+Hello {seller_name}
+
+Your request for {product_name} of your shop {mp_shop_name} has been {mail_reason} by admin
+
+Your Product details as below:
+
+Product name: {product_name}
+
+Category name: {category_name}
+
+Quantity: {quantity}
+
+Main shop name: {shop_name}
+
+Your shop name: {mp_shop_name}
+

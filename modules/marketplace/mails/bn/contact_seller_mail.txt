@@ -1,0 +1,12 @@
+Hello {seller_name}
+
+This mail is send by a customer regarding your shop.
+
+{query_subject}
+
+{query_description}
+
+Customer Details-
+Email-id : {customer_email}
+
+

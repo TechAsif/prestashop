@@ -1,0 +1,19 @@
+[{shop_url}]
+
+Bonjour Administrateur
+
+{seller_name} a ajouté un nouveau produit
+
+Détails
+
+Nom du produit: {product_name}
+
+Nom du vendeur: {seller_name}
+
+Nom de la boutique: {seller_shop}
+
+Téléphone: {seller_phone}
+
+Email: {seller_email_id}
+
+Allez à votre boutique en cliquant sur le lien ci-dessous : [{shop_url}]

@@ -1,0 +1,92 @@
+/**
+* 2010-2021 Webkul.
+*
+* NOTICE OF LICENSE
+*
+* All right is reserved,
+* Please go through LICENSE.txt file inside our module
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade this module to newer
+* versions in the future. If you wish to customize this module for your
+* needs please refer to CustomizationPolicy.txt file inside our module for more information.
+*
+* @author Webkul IN
+* @copyright 2010-2021 Webkul IN
+* @license LICENSE.txt
+*/
+
+.wk-mp-block .dashboard-options {
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    cursor: pointer;
+    margin: 0;
+    min-height: 70px;
+    padding: 10px;
+    text-align: center;
+}
+
+.wk-mp-block .dashboard-options .dash-item {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.wk-mp-block #wk-dashboad-graph-chart svg {
+    height: 350px;
+}
+
+.wk-mp-block .dashboard-date-content {
+    margin-bottom: 20px;
+}
+
+.wk-mp-block .dashboard-date-content button#submitDashboardDate {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    color: #555;
+    padding: 7px 12px;
+    top: -0.5px;
+}
+
+.wk-mp-block .daterangepicker select {
+    border: 1px solid #f5f5f5;
+}
+
+.wk-mp-block .setPreselectDateRange {
+    font-size: 15px;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.wk-loading-graph {
+    background: rgba(0, 0, 0, 0) url("../img/loading-small.gif") no-repeat scroll center center;
+}
+
+.daterangepicker select.monthselect,
+.daterangepicker select.yearselect {
+    font-size: 13px !important;
+    font-weight: normal;
+    padding: 4px !important;
+}
+
+.daterangepicker .calendar select {
+    border: 1px solid #ccc;
+}
+
+.daterangepicker .calendar th,
+.daterangepicker .calendar td {
+    min-width: 37px!important;
+    font-size: 13px;
+}
+
+.daterangepicker .next>.fa-chevron-right::before {
+    content: ">";
+}
+
+.daterangepicker .prev>.fa-chevron-left::before {
+    content: "<";
+}

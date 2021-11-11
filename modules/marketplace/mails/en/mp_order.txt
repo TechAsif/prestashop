@@ -1,0 +1,39 @@
+[{shop_url}]
+
+Hi {seller_name},
+
+New order created on your shop {shop_name}!
+
+Order Reference: {order_reference}
+
+Name: {customer_name}
+
+Email: {customer_email}
+
+PRODUCT
+
+UNIT PRICE (tax excluded)
+
+UNIT PRICE (tax included)
+
+QUANTITY
+
+TOTAL (tax included)
+
+{product_html}
+
+Products: {final_total_price}
+
+Tax: {final_total_price}
+
+{seller_shipping}
+
+TOTAL: {final_total_price}
+
+
+Delivery address
+
+{delivery_block_html}
+
+You can review order details in my order by log in to your
+seller account by clicking [{my_account_url}] "My account" on our shop.

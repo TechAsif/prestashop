@@ -1,0 +1,20 @@
+[{shop_url}]
+
+Bonjour {seller_name}
+
+Votre demande pour {product_name} de votre boutique {mp_shop_name} a été {mail_reason} par l'administrateur
+
+
+
+Détails de votre produit :
+
+Nom du produit: {product_name}
+
+Nom de la catégorie: {category_name}
+
+Quantité: {quantity}
+
+Principal Nom de la boutique: {shop_name}
+
+Nom de votre boutique: {mp_shop_name}
+

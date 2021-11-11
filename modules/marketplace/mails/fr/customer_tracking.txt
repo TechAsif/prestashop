@@ -1,0 +1,11 @@
+Bonjour {customer_name}
+
+Information de Suivi mis à jour-
+
+Détails d'ordre-
+
+Numéro de Référence : {reference_number}
+Numéro de Suivi : {tracking_number}
+URL de Suivi : {tracking_url}
+
+

@@ -1,0 +1,17 @@
+[{shop_url}]
+
+Bonjour {seller_name}
+
+Administrateur a supprimer votre compte.
+
+Détails
+
+Nom de Vendeur : {seller_name}
+
+Nom de la Boutique: {seller_shop}
+
+Téléphone: {seller_phone}
+
+Email: {seller_email_id}
+
+Visitez la boutique en cliquant ici:: [{shop_url}]

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <table class="table table-mail" style="width: 100%; margin-top: 10px;">
+        <tbody>
+            <tr>
+                <td class="space" style="width: 20px; padding: 7px 0;">&nbsp;</td>
+                <td align="center" style="padding: 7px 0;">
+                    <table class="table" bgcolor="#ffffff" style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" style="border-bottom: 4px solid #333333; padding: 7px 0;">
+                                    <a title="{shop_name}" href="{shop_url}" style="color: #337ff1;"> <img src="{shop_logo}" alt="{shop_name}" /></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" class="titleblock" style="padding: 7px 0;"><span size="2" face="Open-sans, sans-serif" color="#555454" style="color: #555454; font-family: Open-sans, sans-serif; font-size: small;"> <span class="title" style="font-weight: 500; font-size: 28px; text-transform: uppercase; line-height: 33px;">Bonjour {seller_name},</span><br
+                                    /> <span class="subtitle" style="font-weight: 500; font-size: 16px; text-transform: uppercase; line-height: 25px;">Un nouvel ordre a &eacute;t&eacute; cr&eacute;&eacute; pour votre boutique&nbsp;&nbsp;{shop_name}!</span>                                    <br /> <span class="subtitle" style="font-weight: 500; font-size: 16px; text-transform: uppercase; line-height: 25px;">R&eacute;f&eacute;rence d&#039;Ordre : {order_reference}</span> </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="space_footer" style="padding: 0;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td class="box" style="border: 1px solid #D6D4D4; background-color: #f8f8f8; padding: 7px 0;">
+                                    <table class="table" style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td width="10" style="padding: 7px 0;">&nbsp;</td>
+                                                <td style="padding: 7px 0;"><span style="color: #555454; font-family: &#039;Open-sans&#039;, sans-serif; font-size: small;"> </span>
+                                                    <p style="border-bottom: 1px solid #D6D4D4; margin: 3px 0 7px; text-transform: uppercase; font-weight: 500; font-size: 18px; padding-bottom: 10px;">d&eacute;tails du client</p>
+                                                    <span style="color: #777;"><span style="color: #333;"><strong>Nom:</strong></span> {customer_name}<br /><br /><span style="color: #333;"><strong>Email:</strong></span> {customer_email} </span>
+                                                </td>
+                                                <td width="10" style="padding: 7px 0;">&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 7px 0;"><span style="color: #555454; font-family: &#039;Open-sans&#039;, sans-serif; font-size: small;"> </span>
+                                    <table class="table table-recap" bgcolor="#ffffff" style="width: 100%; border-collapse: collapse;">
+                                        <!-- Title -->
+                                        <thead>
+                                            <tr>
+                                                <th style="border: 1px solid #D6D4D4; background-color: #fbfbfb; font-family: Arial; color: #333; font-size: 13px; padding: 10px;">Produit</th>
+                                                <th style="border: 1px solid #D6D4D4; background-color: #fbfbfb; font-family: Arial; color: #333; font-size: 13px; padding: 10px;">Prix Unit&eacute;<br /><small>(tax exclus)</small></th>
+                                                <th style="border: 1px solid #D6D4D4; background-color: #fbfbfb; font-family: Arial; color: #333; font-size: 13px; padding: 10px;"><span>Prix Unit&eacute;</span><br /><small>(tax inclus)</small></th>
+                                                <th style="border: 1px solid #D6D4D4; background-color: #fbfbfb; font-family: Arial; color: #333; font-size: 13px; padding: 10px;">Quantit&eacute;</th>
+                                                <th style="border: 1px solid #D6D4D4; background-color: #fbfbfb; font-family: Arial; color: #333; font-size: 13px; padding: 10px;">Total <br /><small>(tax inclus)</small></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="5" style="border: 1px solid #D6D4D4; color: #777; padding: 7px 0;">&nbsp;&nbsp;{product_html}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table class="table borderless" style="border-bottom:1px solid #D6D4D4;width:100%;font-size:14px;text-align: right;">
+                                        <tbody>
+                                            <tr>
+                                                <td width="75%">Products</td>
+                                                <td align="center">{seller_product_total}</td>
+                                            </tr>
+                                            {seller_shipping}
+                                            <tr>
+                                                <td width="75%">Total</td>
+                                                <td align="center" style="font-weight:600;">
+                                                    <font size="2" face="Open-sans, sans-serif">
+                                                        {final_total_price}
+                                                    </font>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="space_footer" style="padding: 0;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 7px 0;">
+                                    <table class="table" style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="box address" width="310" style="border: 1px solid #D6D4D4; background-color: #f8f8f8; padding: 7px 0;">
+                                                    <table class="table" style="width: 100%;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td width="10" style="padding: 7px 0;">&nbsp;</td>
+                                                                <td style="padding: 7px 0;"><span style="color: #555454; font-family: &#039;Open-sans&#039;, sans-serif; font-size: small;"> </span>
+                                                                    <p style="border-bottom: 1px solid #D6D4D4; margin: 3px 0 7px; text-transform: uppercase; font-weight: 500; font-size: 18px; padding-bottom: 10px;">adresse de livraison</p>
+                                                                    <span data-html-only="1" style="color:#777">
+                                                                        {delivery_block_html}
+                                                                    </span>
+                                                                </td>
+                                                                <td width="10" style="padding: 7px 0;">&nbsp;</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding:7px 0">
+                                    <font size="2" face="Open-sans, sans-serif" color="#555454">
+                                        {voucher_html}
+                                    </font>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="space_footer" style="padding: 0;">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td class="linkbelow" style="padding: 7px 0;">
+                                    <p></p>
+                                    <p><span style="color: #555454; font-family: &#039;Open-sans&#039;, sans-serif; font-size: small;"><span>Vous pour revoir les d&eacute;tails de votre ordre en s<span id="result_box" class="short_text" lang="fr" xml:lang="fr">e connectant de votre compte du vendeur en cliquent sur&nbsp;<a href="{my_account_url}">"Ma Boutique"</a></span></span>
+                                        </span>
+                                    </p>
+                                    <p></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
