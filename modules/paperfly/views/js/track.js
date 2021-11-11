@@ -44,8 +44,6 @@ $(document).ready(function(){
             },
             success: function(response){
 
-                console.log('dddd: ', response);
-
                 $('#trackingOutput').slideDown().append('Tracker running....\n');
                 var POrders = response.data;
 
