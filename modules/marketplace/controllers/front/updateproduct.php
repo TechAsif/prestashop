@@ -194,6 +194,8 @@ class MarketplaceUpdateProductModuleFrontController extends ModuleFrontControlle
                     }
                     // End of -- hasAttribute code ---
 
+                    $link = new Link();
+
                     $objDefaultCurrency = new Currency(Configuration::get('PS_CURRENCY_DEFAULT'));
                     $this->context->smarty->assign(array(
                         'id' => $mpIdProduct,
@@ -214,6 +216,12 @@ class MarketplaceUpdateProductModuleFrontController extends ModuleFrontControlle
                         'available_features' => Feature::getFeatures($this->context->language->id, (Shop::isFeatureActive() && Shop::getContext() == Shop::CONTEXT_SHOP)),
                         'add_permission' => $addPermission,
                         'permissionData' => $permissionData,
+                        'countries' => Country::getCountries((int)$this->context->language->id, false),
+                        'currencies' => Currency::getCurrencies(),
+                        'groupes' => Group::getGroups((int)$this->context->language->id),
+                        'admin_link'=> _PS_BASE_URL_.__PS_BASE_URI__."testadmin/".$link->getAdminLink('AdminTest', true),
+                        'admin_link2'=> Tools::getHttpHost(true)._PS_BASE_URL_,
+                        
                     ));
 
                     $this->setTemplate('module:marketplace/views/templates/front/product/updateproduct.tpl');
@@ -849,6 +857,11 @@ class MarketplaceUpdateProductModuleFrontController extends ModuleFrontControlle
 
         $this->registerJavascript('mp-mp_form_validation', 'modules/'.$this->module->name.'/views/js/mp_form_validation.js');
         $this->registerJavascript('mp-change_multilang', 'modules/'.$this->module->name.'/views/js/change_multilang.js');
+
+
+        $this->registerJavascript('mp-bloodhound', 'modules/'.$this->module->name.'/views/js/bloodhound.js');
+        $this->registerJavascript('mp-typeahead', 'modules/'.$this->module->name.'/views/js/typeahead.bundle.js');
+        $this->registerJavascript('mp-specific_price', 'modules/'.$this->module->name.'/views/js/specific_price.js');
 
         //for mp product combination list
         $this->registerJavascript('mp-managecombination-js', 'modules/'.$this->module->name.'/views/js/managecombination.js');
