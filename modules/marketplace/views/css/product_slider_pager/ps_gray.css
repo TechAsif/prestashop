@@ -1,0 +1,164 @@
+/**
+* 2010-2021 Webkul.
+*
+* NOTICE OF LICENSE
+*
+* All right is reserved,
+* Please go through LICENSE.txt file inside our module
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade this module to newer
+* versions in the future. If you wish to customize this module for your
+* needs please refer to CustomizationPolicy.txt file inside our module for more information.
+*
+* @author Webkul IN
+* @copyright 2010-2021 Webkul IN
+* @license LICENSE.txt
+*/
+
+#product-slider_block_center .bx-next {
+    position: absolute;
+    top: 40%;
+    right: -30px;
+    z-index: 999;
+    width: 30px;
+    height: 30px;
+    text-indent: -999999px;
+    background: url(gray_next.png) no-repeat 0 -30px;
+    display: block;
+    outline: none;
+}
+
+
+/*previous button*/
+
+#product-slider_block_center .bx-prev {
+    position: absolute;
+    top: 40%;
+    left: -30px;
+    z-index: 999;
+    width: 30px;
+    height: 30px;
+    text-indent: -999999px;
+    background: url(gray_prev.png) no-repeat 0 -30px;
+    display: block;
+    outline: none;
+}
+
+
+/*pager links*/
+
+#product-slider_block_center .bx-pager a {
+    margin-right: 5px;
+    color: #fff;
+    padding: 3px 8px 3px 6px;
+    font-size: 12px;
+    zoom: 1;
+    background: url(gray_pager.png) no-repeat 0 -20px;
+}
+
+
+/*auto start button*/
+
+#product-slider_block_center .bx-auto .start {
+    background: url(gray_auto.png) no-repeat 0 2px;
+    padding-left: 13px;
+}
+
+
+/*auto stop button*/
+
+#product-slider_block_center .bx-auto .stop {
+    background: url(gray_auto.png) no-repeat 0 -14px;
+    padding-left: 13px;
+}
+
+
+/*
+ * * End color scheme styles
+ * */
+
+
+/*next/prev button hover state*/
+
+#product-slider_block_center .bx-next:hover,
+#product-slider_block_center .bx-prev:hover {
+    background-position: 0 0;
+}
+
+
+/*pager links hover and active states*/
+
+#product-slider_block_center .bx-pager .pager-active,
+#product-slider_block_center .bx-pager a:hover {
+    background-position: 0 0;
+}
+
+
+/*pager wrapper*/
+
+#product-slider_block_center .bx-pager {
+    text-align: center;
+    padding-top: 7px;
+    font-size: 12px;
+    color: #666;
+}
+
+
+/*captions*/
+
+#product-slider_block_center .bx-captions {
+    text-align: center;
+    font-size: 12px;
+    padding: 7px 0;
+    color: #666;
+}
+
+
+/*auto controls*/
+
+#product-slider_block_center .bx-auto {
+    text-align: center;
+    padding-top: 15px;
+}
+
+#product-slider_block_center .bx-auto a {
+    color: #666;
+    font-size: 12px;
+}
+
+#product_slider span.price {
+    font-size: 1.5em;
+}
+
+#product_slider a.button,
+#product_slider a.exclusive {
+    margin: 0.5em auto;
+}
+
+#product_slider .product-price {
+    float: right;
+    width: 120px;
+}
+
+#product_slider a.product_image {}
+
+#product_slider .product-shop {
+    float: left;
+}
+
+#product_slider div.product_desc a,
+#product_slider ul li div.product_desc a:hover {
+    color: #3C3C3C;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.products_slider .bx-wrapper {
+    margin: 0 auto;
+}
+
+.products_slider h5 a {
+    font-size: 15px;
+}

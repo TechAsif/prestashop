@@ -1,0 +1,42 @@
+[{shop_url}]
+
+Bonjour {seller_name},
+
+Un nouvel ordre a créé sur votre boutique {shop_name}!
+
+Référence d'Ordre: {order_reference}
+
+Nom: {customer_name}
+
+Email: {customer_email}
+
+PRODUIT
+
+PRIX UNITÉ  (tax exclus)
+
+PRIX UNITÉ (tax inclus)
+
+QUANTITÉ
+
+TOTAL (tax incluS)
+
+{product_html}
+
+Products: {final_total_price}
+
+Tax: {final_total_price}
+
+{seller_shipping}
+
+TOTAL: {final_total_price}
+
+
+Address de livraison
+
+{delivery_block_html}
+
+Vous pour revoir les détails de votre ordre en se connectant de votre compte du vendeur en cliquent sur [{my_account_url}] "Mon Compte" sur votre boutique
+
+
+
+

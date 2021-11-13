@@ -1,0 +1,155 @@
+/**
+* 2010-2021 Webkul.
+*
+* NOTICE OF LICENSE
+*
+* All right is reserved,
+* Please go through LICENSE.txt file inside our module
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade this module to newer
+* versions in the future. If you wish to customize this module for your
+* needs please refer to CustomizationPolicy.txt file inside our module for more information.
+*
+* @author Webkul IN
+* @copyright 2010-2021 Webkul IN
+* @license LICENSE.txt
+*/
+
+#wk_review_rating_container {
+    width: 100%;
+    padding: 15px 0;
+}
+
+.wk-product-page-seller-rating {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 6px 0 rgba(123, 123, 123, 0.50);
+}
+
+.wk-profile-page-seller-rating {
+    width: 100%;
+    margin: auto;
+    background-color: #fff;
+    box-shadow: 0 0 6px 0 rgba(123, 123, 123, 0.50);
+    padding-right: 30%;
+}
+
+.wk-allreviews-page-seller-rating {
+    width: 100%;
+    margin-bottom: 30px;
+    background-color: #fff;
+    box-shadow: 0 0 6px 0 rgba(123, 123, 123, 0.50);
+    padding-right: 40%;
+}
+
+.wk-sold-by-box {
+    padding: 15px;
+    background: #F3F3F3;
+    text-align: left;
+}
+
+#seller_rating {
+    width: 100% !important;
+    text-align: center;
+}
+
+#seller_rating img {
+    width: 16px;
+}
+
+.wk_average_seller_rating_box {
+    padding: 25px;
+    background-image: linear-gradient(90deg, #345FFF 0%, #06CEFF 100%);
+    border-radius: 5px;
+    text-align: center;
+}
+
+.seller_rating_data {
+    font-size: 20px;
+    color: #FFFFFF;
+    text-align: center;
+    margin: 10px 0px 5px 0;
+}
+
+.wk_seller_rating_box_heading {
+    font-size: 14px;
+    color: #333333;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.seller_rating_box_content {
+    font-size: 14px;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 21px;
+}
+
+.wk_rating_level {
+    width: 30%;
+    float: left;
+}
+
+.wkseller_rating_table {
+    border-left: 1px solid #EFEFEF;
+}
+
+.wkseller_rating_table .table td,
+.wkseller_rating_table .table th {
+    padding: 0.35rem;
+    font-size: 14px;
+    color: #333333;
+    text-align: left;
+}
+
+.wkseller_rating_table .table th {
+    background-color: #EFEFEF;
+}
+
+#wk_review_rating_container .wk_progress {
+    height: 13px;
+    margin-bottom: 0px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    margin-top: 3px;
+}
+
+#wk_review_rating_container .wk_progress_bar {
+    float: left;
+    width: 0;
+    height: 100%;
+    font-size: 12px;
+    line-height: 20px;
+    color: #fff;
+    text-align: center;
+    background-color: #428bca;
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    -webkit-transition: width .6s ease;
+    -o-transition: width .6s ease;
+    transition: width .6s ease;
+    background-image: linear-gradient(90deg, #345FFF 0%, #06CEFF 100%);
+}
+
+#wk-profileconnect span {
+    font-size: 16px;
+    color: #333333;
+    font-weight: 600;
+    padding-left: 11px;
+}
+
+#wk-profileconnect span:hover {
+    color: #2fb5d2;
+}
+
+.wk-shop-default-icon {
+    width: 42px;
+    border-radius: 45px;
+    border: 1px solid #333;
+}

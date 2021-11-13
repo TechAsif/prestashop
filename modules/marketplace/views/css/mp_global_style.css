@@ -1,0 +1,253 @@
+/**
+* 2010-2021 Webkul.
+*
+* NOTICE OF LICENSE
+*
+* All right is reserved,
+* Please go through LICENSE.txt file inside our module
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade this module to newer
+* versions in the future. If you wish to customize this module for your
+* needs please refer to CustomizationPolicy.txt file inside our module for more information.
+*
+* @author Webkul IN
+* @copyright 2010-2021 Webkul IN
+* @license LICENSE.txt
+*/
+
+.wk_display_none {
+    display: none;
+}
+
+.wk_padding_none {
+    padding: 0px;
+}
+
+.wk_padding_right_none {
+    padding-right: 0px;
+}
+
+.wk_text_left {
+    text-align: left;
+}
+
+.wk_text_right {
+    text-align: right;
+}
+
+.wk_text_center {
+    text-align: center;
+}
+
+.wk_border_top_none {
+    border-top: none;
+}
+
+.wk_calender_icon {
+    padding: 0 5px !important;
+}
+
+.wk-error-msg {
+    color: #971414 !important;
+}
+
+.wk_combination_fields_head {
+    margin: 23px 0 13px;
+}
+
+.wk_combination_final_price {
+    background: rgb(242, 242, 242) none repeat scroll 0 0;
+    padding-bottom: 7px;
+    padding-left: 15px;
+    padding-top: 15px;
+    width: 65.5%;
+}
+
+.wk_combination_final_price span {
+    padding: 4px 7px;
+    background: #2fb5d2;
+    color: #fff;
+}
+
+#attribute_final_product_price {
+    padding: 0px;
+}
+
+#wk_add_attribute_button {
+    margin-top: 1.8rem;
+}
+
+.wk_each_group {
+    float: left;
+    background: #ebebeb;
+    padding: 10px;
+    margin-right: 10px !important;
+}
+
+.wk_delete_attribute_option {
+    cursor: pointer;
+    color: #2fb5d2;
+    font-weight: bold;
+}
+
+#attribute_error {
+    padding-bottom: 10px;
+}
+
+.wk_social_tabs {
+    padding-top: 10px;
+}
+
+.border_warning {
+    border: 1px solid red !important;
+}
+
+.wk_mp_disabled,
+.wk_mp_disabled:focus {
+    background: #ddd none repeat scroll 0 0;
+    border: medium none #ddd;
+    pointer-events: none;
+}
+
+.price_with_tax {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 4px 7px;
+}
+
+.all_lang_icon {
+    /* vertical-align: super !important; */
+}
+
+.wk-productlist-images {
+    max-height: 700px;
+    overflow: auto;
+}
+
+img[is_cover="0"].covered {
+    cursor: pointer;
+}
+
+.wk_formfield_required_notify {
+    color: #777;
+    font-size: 14px;
+    font-style: italic;
+    padding: 10px 0;
+    text-transform: none !important;
+}
+
+.wk_formfield_required_notify span {
+    color: red;
+}
+
+.wk_pricing_left_margin {
+    margin: 10px 12.5% 0;
+}
+
+
+/* TootTip Css */
+
+.wk_tooltip {
+    position: relative;
+    display: inline-block;
+    background-image: url(../img/icon/icon-help-circle.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+}
+
+.wk_tooltiptext {
+    background-color: #363a41;
+    border-bottom: medium none;
+    border-radius: 4px;
+    bottom: 130%;
+    color: #fff;
+    font-size: 0.7rem;
+    font-style: normal;
+    font-weight: 400;
+    left: 50%;
+    letter-spacing: normal;
+    line-height: 1.5;
+    margin-left: -127px;
+    padding: 4px 14px;
+    position: absolute;
+    text-align: center;
+    text-shadow: none;
+    text-transform: none;
+    visibility: hidden;
+    white-space: normal;
+    width: 255px;
+    word-break: normal;
+    word-spacing: normal;
+    word-wrap: normal;
+    z-index: 9;
+}
+
+.wk_tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #363a41 transparent transparent transparent;
+}
+
+.wk_tooltip:hover .wk_tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.wk_attr_selector {
+    margin-bottom: 25px;
+}
+
+.wk_attr_selector select#attribute_group {
+    float: left;
+    width: 100%;
+    height: 500px;
+    margin-bottom: 10px;
+}
+
+.wk_attr_selector .wk_attr_gp_btn {
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+.wk-combi-list-qty {
+    padding-left: 6px;
+    padding-right: 6px;
+    text-align: right;
+    width: 75px !important;
+}
+
+.wk-img-pos {
+    background: #ccc none repeat scroll 0 0;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px 7px;
+}
+
+
+/*For smaller screen*/
+
+@media only screen and (max-width:768px) {
+    .wk_formfield_required_notify {
+        font-size: 12px;
+        text-align: left;
+    }
+    .wk_combination_final_price {
+        width: 100%;
+    }
+    .wk_combination_final_price span {
+        line-height: 30px;
+    }
+}

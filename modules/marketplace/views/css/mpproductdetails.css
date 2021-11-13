@@ -1,0 +1,87 @@
+/**
+* 2010-2021 Webkul.
+*
+* NOTICE OF LICENSE
+*
+* All right is reserved,
+* Please go through LICENSE.txt file inside our module
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade this module to newer
+* versions in the future. If you wish to customize this module for your
+* needs please refer to CustomizationPolicy.txt file inside our module for more information.
+*
+* @author Webkul IN
+* @copyright 2010-2021 Webkul IN
+* @license LICENSE.txt
+*/
+
+@media only screen and (min-width:768px) {
+    .wk_product_details .wk_details {
+        float: left;
+        width: 60%;
+    }
+    .wk_product_details .wk_image {
+        float: left;
+        width: 40%;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width:768px) {
+    .wk_product_details .wk_details {
+        float: left;
+        width: 100%;
+    }
+    .wk_product_details .wk_image {
+        float: left;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+.wk_product_details {
+    margin-bottom: 15px;
+}
+
+.wk_details .wk_row {
+    float: left;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#image_details {
+    background-color: #ffffff;
+}
+
+#image_details table {
+    border: 0 none;
+    border-spacing: 0;
+    empty-cells: show;
+    font-size: 100%;
+    width: 100%;
+}
+
+#image_details table tr th {
+    background: -moz-linear-gradient(center top, #F9F9F9, #ECECEC) repeat-x scroll left top #ECECEC;
+    color: #333333;
+    font-size: 13px;
+    padding: 4px 6px;
+    text-align: center;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+#image_details table tr td {
+    border-bottom: 1px solid #CCCCCC;
+    color: #333333;
+    font-size: 12px;
+    padding: 4px 4px 4px 6px;
+    text-align: center;
+}
+
+.wk_head {
+    border-bottom: 1px solid #C4C1BC;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}

@@ -1,0 +1,19 @@
+[{shop_url}]
+
+Hello {to_mail_person}
+
+{from_mail_person} has deleted a product.
+
+Details
+
+Product name: {product_name}
+
+Seller name: {seller_name}
+
+Shop name: {seller_shop}
+
+Phone: {seller_phone}
+
+Email: {seller_email_id}
+
+Go to your shop by clicking on link below: [{shop_url}]

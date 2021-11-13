@@ -1,0 +1,12 @@
+Bonjour {seller_name}
+
+Ce mail a été envoyé par le client regardant votre boutique.
+
+{query_subject}
+
+{query_description}
+
+Détails du client-
+Email-id : {customer_email}
+
+

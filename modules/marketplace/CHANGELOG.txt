@@ -1,0 +1,1208 @@
+############################################################################################
+Change Log : Marketplace V5.3.0 to V5.3.1 | COMPATIBLE:: PRESTASHOP V1.7 |
+#############################################################################################
+
+Update Policy:
+- Minor change in database.
+
+Note : Need to follow this if already using marketplace -
+
+1. If current version is marketplace V5.2.x or above
+	Then admin needs to update only zip file of module new version V5.3.1 because while admin will update zip file then database will be updated automatically.
+
+2. If current version is below marketplace V5.2.0 -
+	Then admin needs to uninstall and DELETE previous version and then upload and install the new version module.
+
+Bug Fixed:
+- Fixed Product (If visibility is hidden) display issue on shop and seller profile page when seller price comparison 		module's configuration (display single product on Category Page among similar products) is enabled
+- Fixed space issue in mysql query containing limit
+- Fixed datatable sorting issue
+- Fixed issue in product reference & ISBN length
+- Fixed issue when admin deactivate seller default language
+- Fixed datatable design issue on flex theme
+- Fixed issue deactivated category showing on shop page
+- Fixed issue when voucher has fixed amount with tax incl. settings then getting some decimal amount difference.
+- Hide minimal quantity field in combination product on seller product add/edit page if modification in this
+	field not allowed 	by admin.
+- Fixed issue seller is not able to see order details page if customer is deleted
+- Fixed issue Seller is not able to add more than 20-25 carriers on his product
+- All seller's products are not showing on particular order in all seller's view transaction page issue fixed
+- Fixed date sorting issue on seller orders list page
+- Removed ps_round from quantity fields
+- Low stock alert field issue when assigning products from admin to seller fixed
+- Fixed translation issue in marketplace admin approval controller
+- Fixed seller Phone number digit validation issue
+
+Improvement:
+- Display shop logo display with shop name on product page even seller don't have rating
+- Removed extra update status hidden button from seller order detail page
+- 'Show' class added in the tab content
+- Code Improvement of Admin Seller Transactions Controller
+- Seller shipping column added in transaction page
+- Display disabled category on add/update product page in tree like prestashop catalog page.
+- Carrier id added before the carrier name on shipping tab of mp product page
+
+New Hook:
+- actionSellerProductQtyUpdateAfterOrder to make mp pack product module compatible with stock management
+
+Modified Hook:
+- Hook displayMpOrderDetailListRow remove from the mporderdetails-product.tpl file's shipping section
+- Type parameter passed in displayMpOrderDetailListRow hook on mporderdetails-product.tpl in
+	the ordered product list section.
+
+Table Structure:
+- Modify 1 column `ps_id_carrier_reference` in table `wk_mp_seller_product`
+
+############################################################################################
+Change Log : Marketplace V5.2.2 to V5.3.0 | COMPATIBLE:: PRESTASHOP V1.7 |
+Released On : 24 Aug 2020
+#############################################################################################
+
+Update Policy:
+- Major changed in database and file.
+
+Note : Need to follow this if already using marketplace -
+
+1. If current version is marketplace V5.2.x (V5.2.0 or V5.2.1 or V5.2.2)
+	Then admin needs to update only zip file of module new version V5.3.0 because while admin will update zip file then database will be updated automatically.
+
+2. If current version is below marketplace V5.2.0 -
+	Then admin needs to uninstall and DELETE previous version and then upload and install the new version module.
+
+
+Bug Fixed:
+- Remove 'tab-content' class section from mporder.tpl
+- Fixed Pending orders count on manage seller orders page in AdminSellerOrdersController.php
+- Code Improvement change the phone to wk_phone in the form field name
+- Rollback rewrite urls on module reset
+- Code Improvement change in the choose language on editprofile.tpl and change-product-language.tpl
+- On applying cart rule on order, corrected sales amount on seller dashboard.
+- Removed unused file google_jsapi.js
+- Fix order issue while free product will be purchased with voucher
+- Set mp_default_on value while assign catalog combination's product to seller
+- Fixed review deleting issue while single customer gives review on two or more sellers
+- Enabled add to cart button on shop page while stock management settings is disabled.
+- Fix render view issue on seller transactions page in backoffice while filter is already selected
+- Removed multiple images/videos selection option from tinymce filemanager
+- Removed create_function() while generating combination
+
+Improvement:
+- Make module compatible to our mp product customization module
+- Add Edit Product button on seller product details page
+- Remove unused parameter 'addressState' from sellersOrderMail function in marketplace.php
+- Improved code of seller order confirmation and seller order status change using this hookActionOrderStatusPostUpdate
+- Remove Google+ ID and added Youtube ID option for seller's social channel in edit profile page
+
+Added Features:
+- Add upgrade folder for updating database if admin is already using marketplace V5.2.x (V5.2.0 or above versions)
+- Admin can manage admin commission and admin tax in fixed amount and Both (Percentage and Fixed Amount). It will manage in marketplace transaction data and mp addons payment gateway split amount
+- Admin can set distribution from ps carriers list that shipping cost will go to admin, seller or both. He/she can distribute shipping amount of seller products only.
+- Admin can set enable/disable shipping distribution settings from Backoffice approval settings
+- Admin can set configuration that - If Admin product exists with any seller product in same order and that order carrier distribution is set as Seller/Both then Shipping will be distributed between admin and seller both or not.
+- Admin set set commission rate on shipping while order carrier distribution is set as Both
+- Sellers can add tracking number and tracking url for their orders according to admin configuration
+- Admin can set configuration in order settings of Backoffice default settings page whether seller can add tracking details or not.
+- Admin can configure that If order has products of single seller then tracking number will update on prestashop order's tracking number.
+- Admin can configure that tracking number will display in tracking url or not.
+- Admin can configure that tracking number and url will display to customer on order history page.
+- Admin can search and select feature the product on assign product to seller.
+
+New Hook:
+- actionAdminCarriersListingFieldsModifier to display distribution type of carriers page
+- actionAdminControllerSetMedia to loading js file on carriers page
+- displayOrderDetail to display tracking details on customer order history page
+
+Add 2 mails in mails/en directory and mails/fr directory
+- customer_tracking.html
+- customer_tracking.txt
+
+Table Structure:
+- Remove 1 column in table `wk_mp_seller`
+	- Remove column name `google_id`
+- Add 1 column in table `wk_mp_seller`
+	- Add column name `youtube_id` after `twitter_id`
+
+- Add 1 column in table `wk_mp_seller_product`
+	- Add new column `id_mp_duplicate_product_parent` after `id_ps_product`
+
+- Add new table `wk_mp_carrier_distributor_type` to manage carrier's distributor type
+- Add new table `wk_mp_shipping_commission` to manage admin commission rate on shipping according to sellers
+
+- Add 2 columns in table `wk_mp_seller_order_status`
+	- Add new column `tracking_number` after `current_state`
+	- Add new column `tracking_url` after `tracking_number`
+
+- Add 4 columns in table `wk_mp_commision`
+	- Add new column `id_seller` after `id_wk_mp_commision`
+	- Add new column `commision_type` after `id_seller`
+	- Add new column `commision_amt` after `commision_rate`
+	- Add new column `commision_tax_amt` after `commision_amt`
+
+- Add 3 columns in table `wk_mp_seller_order_detail`
+	- Add new column `id_customization` after `product_attribute_id`
+	- Add new column `commission_type` after `id_order`
+	- Add new column `commission_amt` after `commission_rate`
+	- Add new column `commission_tax_amt` after `commission_amt`
+
+- Save new configuration value of WK_MP_GLOBAL_COMMISSION_TYPE as percentage for global commission type
+	- Configuration::updateValue('WK_MP_GLOBAL_COMMISSION_TYPE', 'percentage')
+
+- Save new configuration value of WK_MP_GLOBAL_SHIPPING_COMMISSION as 10 for global shipping commission
+	- Configuration::updateValue('WK_MP_GLOBAL_SHIPPING_COMMISSION', 10)
+
+
+############################################################################################
+Change Log : Marketplace V5.2.1 to V5.2.2 | COMPATIBLE:: PRESTASHOP V1.7 |
+Released On : 10 April 2020
+#############################################################################################
+
+Update Policy:
+- Update only zip file of module new version
+
+Bug Fixed:
+- Fix issue to manage 'Price display method' and 'Show prices' settings for individual group on seller shop page and profile page.
+- Correct 'below' spelling in all mails
+- Add php validation on minimal quantity of product & combination for accepting only positive interger value
+- Change product details page cover image while change cover of product images
+- Display invalid shop name error message with langauge name
+- Fix Marketplace Rewrite URL Settings issue for seller profile page and shop page
+- Disable 'social profile links' option while no social profiles are enabled in Seller Profile Settings
+- Remove 'orderdetails_latest_id' unused index array while seller order create
+- Change cursor pointer on product cover image change
+
+Improvement:
+- Display 'Recommended Dimension' note on edit profile page for seller profile image & banner and shop logo & banner
+- Manage profile and shop banner in width:height 4:1 according to screen size
+- Manage seller product quantity and combination quantity in positive/negative value both i.e. prestashop do in catalog.
+- Display customer address in seller order mail using Prestashop address format
+- Removed seller tax amount data from seller order mail and add this amount in products amount i.e. we display in seller order detail page
+- Add Maximum size for product image as prestashop product image max size settings
+- Add 'show' class in class tab-content's child for making first tab active (Compatibility with other theme)
+
+Added Features:
+- Seller can duplicate his/her product according to admin configuration
+- Admin can manage prefix title for duplicate product in configuration
+- Admin can set configuration whether duplicate product will be create with Zero quantity or original product's quantity
+- Admin can duplicate seller product on behalf of seller
+- Admin can add rewrite URL for seller all reviews page also i.e. seller profile and shop page
+- Admin can set number of reviews in customer settings that will display on seller profile page
+
+
+############################################################################################
+Change Log : Marketplace V5.2.0 to V5.2.1 | COMPATIBLE:: PRESTASHOP V1.7 |
+Released On : 13 December 2019
+#############################################################################################
+
+Update Policy:
+- Update only zip file of module new version
+
+Bug Fixed:
+- Fixed Edit and Delete button design issue on payment detail page at seller end
+- Use svg class with parent class .wk-mp-block in css file nv.d3.css
+- Fixed incorrect product name issue on popup while deactivaing any product from Backoffice
+- Restrict sellers to activate/deactivate their product despite not having permission
+- Restrict seller and customer to write review by creating form. Also restrict if customer is not not allowed for review.
+- Fixed undefined index issue of facebook_id, twitter_id, google_id, instagram_id on seller request page
+- Fixed span closing issue on strike price on show page
+- Display by default products on shop collection by desc order of id_mp_product so that new product can be display first
+- Remove unused parameters from displayAjaxChangeCoverImage() of productimageedit.php controller
+- Removed delivery time feature if Prestashop Version is below 1.7.3.0
+- Low stock data will not saved in ps table if Prestashop Version is below 1.7.3.0. It will manage at our end only.
+- Change description of combination activate/deactivate settings
+- Allow seller/admin to enter impact and weight in negative value on generate combination page
+- Use 'PS_ALLOW_HTML_IFRAME' in isCleanHtml() so that description can be validate according to this configuration
+- Remove duplicate code while seller change order status as cancelled
+- Increase product quantity of seller product while cancel order from backoffice order details page (admin end)
+- Fixed shop name validation issue while choose Marketplace Multilanguage settings as No with seller default language option in module default configuration
+
+Hook added -
+- Add new hook 'actionBeforeMpProductAttributeDelete' before delete seller product combination
+Hook::exec('actionBeforeMpProductAttributeDelete', array('id_mp_product_attribute' => (int) $this->id));
+
+############################################################################################
+Change Log : Marketplace V5.1.6 to V5.2.0 | COMPATIBLE:: PRESTASHOP V1.7 |
+Released On : 20 March 2019
+#############################################################################################
+
+Update Policy:
+- Major changed in database and file, need uninstall, DELETE and upload and install the new version module.
+
+Bug Fixed:
+- Fix translation issue on seller translation list page
+- While two seller's product are ordered same time then if admin check view product of specific seller order then all sellers products were showing.
+- Display full amount in 6 digits (without round off) on settlement popup so that admin can pay actual amount.
+- Fix setMedia function issue in Marketplace admin controllers as per PHP 7.2
+- Fix translation issue on mptransaction front controller
+- Product list page all checkbox functioanality is not working while check second time
+- Fix pagination total propduct count issue on shop page
+- In case of multiple seller products sold in single order, if admin updates the order status then all the seller's order status must be changed.
+- Used jstree-clicked event with a unique parent ID so that other module can use jstree plugin on same page
+- Add product unit_price_ratio is not equal to Zero condition while assign product to seller
+- Add product match condition while update quantity from combination list of update product page
+- Fix count function issue of PHP 7.2 on product list and shop store page
+- Restrict seller product to activate from catalog product list if seller is deactivated
+- Fix validation issue while create new product feature and multilang configuration is set as PS default language
+- Add realimage validation while upload product image
+- Display transaction at seller end according to order (not product wise)
+- Use registerStylesheet() instead of addCSS() on hookDisplayHeader
+- Set product feature pre-defined value priority greater than custom value, If both exist
+- Change content of feature 'Distribute commission on' as per its functioanality on Default settings configuration
+- Remove 'actionValidateOrder' to being register in our module because we are not using this hook
+- Remove cancel icon from image list of update product page and product details page
+- Get voucher conversion rate from cart currency instead of context currency conversion rate
+- Get seller through seller order detail table using product id while change order status from backoffice
+- Add address validation on seller address field
+- Redirecting on Undefined controller while click on 'Generate these combinations' button on generate combination page in Backoffice without select any attribute
+- Fix issue regarding wrong voucher amount applied on seller product while customer orders in different currency
+
+Added Features:
+- Sellers can add tax indentification number on their profile
+- Sellers can apply "On sale!" flag on their products and "On sale!" flag will display on products of shop/profile page according to seller product approval settings configuration
+- Sellers can add additional shipping cost on their products
+- Sellers can add delivery time on their products
+- Sellers can add low stock level for notification on their products or combinations. (Admin will also get mail)
+- Seller rating summary will display on Product page and Seller Profile page.
+- Admin can set review sorting order in seller profile settings configuration.
+- Add Customer settings section in BO Approval settings
+	- Customer can can write a review and can see rating and review manage according to Module configuration
+	- Customer can give feedback on seller review that review is helpful or not. (Depends on Module configuration)
+	- 'Only registered customers can contact with seller' section shift to customer settings section in configuration.
+- Add 'View all orders' button on dashbaord page below recent orders, if orders is greater than Five
+- Seller can choose cover image of deactive product's images
+- Seller can change position of deactive product's images
+- Rollback seller transaction data if Admin change whole order status as cancelled
+- Rollback seller transaction data if seller change his/her order status as cancelled
+
+Improvement:
+- Change Marketplace Management tab name to 'Marketplace' in back-office
+- Change Maketplace sub tab name in back-office
+- Remove tracking number and url features from seller order details (Feature will be added in seller shipping)
+- Remove multiple foreach code to get seller product list on product list page at seller panel
+- Add new common tpl (product-quantity.tpl) to hold all quantity section (quantity, minimal quantity, low stock level) in Backoffice and Frontoffice.
+- Allow seller to use multifeature if prestashop version is greater than or equal 1.7.3.0
+- Use ajaxProcess function for contact seller functioanality
+- Improve seller review page design
+- Remove seller rating and review permission settings from 'Display Seller Details Settings'. It will be work according to Admin.
+- Use category js validation with growl plugin
+- Change 'Edit product' button position on product page
+- Add Spanish(cb.js) file for tinymce language
+- Seller orders and transaction - Display unique shop name, seller name, seller email on seller order and transaction list if seller is deleted
+- Update filemanager version to V9.14.0 (Security issue fixed in this version)
+- Add index.php file while create directory with seller id in filemanager
+- Payment accepted distribution manage by order history status (instead of invoice) on seller dashbaord page
+- Payment accepted distribution manage by order history status (instead of invoice) on seller transaction page
+- Add css to hightlight default combination in seller combination list
+- Move 'Edit product' button to near solby link on product page
+- Improved deactivateProductAfterUpdate() function code in WkMpSellerProduct class to deactivate product using object
+
+
+Hook added/updated:
+- Add new hook {hook h="displayOrderDetailsExtraTab" id_order=$id_order} for new section on order details
+	Path - /modules/marketplace/views/templates/front/order/_partials/mporderdetails-shipping.tpl
+- Add new hook {hook h="displayOrderDetailsExtraTabContent" id_order=$id_order} for new section on order details
+	Path - /modules/marketplace/views/templates/front/order/_partials/mporderdetails-shipping.tpl
+- Add new hook {hook h="displayMpShopProductListReviews" product=$product} for shop page product list reviews
+	Path - /modules/marketplace/views/templates/front/shop/_partials/shopcollection.tpl
+
+File Structure changed:
+- Remove install.sql file and use class WkMpInstall to create tables
+- Remove rateit library directory from libs directory AND use raty.min.js inside module js directory
+- Change function name createOrUpdateMpProductCombination to saveMpProductCombination. Old function (createOrUpdateMpProductCombination) is currentyl deprecated.
+
+Table Structure changed:
+Table altered:
+- `wk_mp_seller`
+	- Add new column `tax_identification_number` after `id_state`
+
+- `wk_mp_seller_product`
+	- Add new column `low_stock_threshold` after `minimal_quantity`
+	- Add new column `low_stock_alert` after `low_stock_threshold`
+	- Add new column `on_sale` after `id_tax_rules_group`
+	- Add new column `additional_shipping_cost` after `on_sale` and before `quantity`
+	- Add new column `additional_delivery_times` after `admin_approved`
+
+- `wk_mp_seller_product_lang`
+	- Add new column `delivery_in_stock` after `link_rewrite`
+	- Add new column `delivery_out_stock` after `delivery_in_stock`
+
+- `wk_mp_seller_product_image`
+	- Change column name `id_position` to `position`
+	- Add new column `cover` before `active` and after `position`
+
+- `wk_mp_product_attribute`
+	- Add new column `low_stock_threshold` after `mp_available_date`
+	- Add new column `low_stock_alert` after `low_stock_threshold`
+
+- `wk_mp_product_attribute_shop`
+	- Add new column `low_stock_threshold` after `mp_available_date`
+	- Add new column `low_stock_alert` after `low_stock_threshold`
+
+- `wk_mp_seller_order`
+	- Add new column `seller_id` after `seller_customer_id`
+	- Add 3 columns `seller_firstname`, `seller_lastname`, `seller_email` after `seller_shop`
+
+- `wk_mp_seller_order_detail`
+	- Add new column `tax_distribution_type` after `commission_rate`
+
+- `wk_mp_seller_order_status`
+	- Remove column `tracking_number`
+	- Remove column `tracking_url`
+
+- `wk_mp_seller_transaction_history`
+	- Add new column `id_mp_order_detail` after `id_currency`
+
+- Add new table `wk_mp_seller_review_likes` to manage seller reviews like and dislikes
+
+- Change column name to `id_mp_attribute_impact` from `id_mp_product_attribute` in table `wk_mp_attribute_impact`
+
+- Replace table name to `wk_mp_product_feature_value_lang` from `wk_mp_product_feature_lang`
+
+
+
+
+#############################################################################################
+Change Log : Marketplace V5.1.5 to V5.1.6 | COMPATIBLE:: PRESTASHOP V1.7
+Released On : 2 Aug 2018
+#############################################################################################
+
+Update Policy:
+- Update only zip file of module new version
+
+Fixed Bug:
+- Remove `block-reassurance` id from mp_soldby.tpl
+- Fix 'Undefined deleteSuccess' error message issue when delete any attribute value and that value is used in any product.
+- Hide manage combination page if admin doesn't allow seller to access Combination tab
+- Change impact price decimal validation from 2 digits to 6 digits in generate combination page
+- Change 'self' variable name to 'wkself'
+- Changed contact seller mail template content
+- Hide 'Become a seller' button from terms&condition popup of seller request page
+- Fixed issue on order status bulk update from back-office order list.
+- Upload image message - Success and Error, make translatable
+- Remove ext_music file upload. Seller can not upload music file through Tinymce.
+- Fixed issue : Recent product slider must be move one by one on mobile view on selle profile page
+- Fixed thumbnail image display issue after upload product image in Safari browser
+- Fixed issue of removing Sold By link on product quantity update
+- Fixed and Removed echo issue from Admin Generate combination controller
+- Remove ['img_ps_dir' => _PS_IMG_DIR_] from defineGlobalJSVariables() function of WkMpHelper.php class because On window serer _PS_IMG_DIR_ return like C:/xampp/htdocs/img. And its coflicting on JS file.
+- Display disabled Add to cart if product is not available for order
+- Fixed error message issue on indefinite digits on price and quantiy on generate combination page
+
+Replace/Remove Files and Folder:
+- Remove hook `DisplayOrderDetail` because code inside this hook was commented (not using)
+- Delete productsellerdetails.css file and remove code from hookActionFrontControllerSetMedia function
+- Remove Admin shipping details code that is not using on AdminSellerOrdersController.php
+- Remove wjhk.jupload.jar directory from /marketplace/libs/filemanager/uploader
+
+Improvement:
+- Review add/edit/delete/view on seller profile page will work on 'Seller Rating & Review' permission
+- Admin can configure that only registered customers can contact with seller from profile and shop page.
+- Mp Seller Staff module is compatible with this Marketplace Version 5.1.6
+- Change contact-seller-form.tpl file position from templates/hook/_partials to templates/front/_partials
+- Added 15 more languages translation - Arabic(ar), Catalan(cr), Spanish(es), German(de), Italian(It), Russian(ru), Japanese(ja), Bulgarian (bg), Finnish (fi), Polish(pl), Dutch(nl), Hungarian (hu), Slovak (sk), Romanian (ro), Portuguese (pt)
+- Improved design and functionality on change of Product Active Image position
+- Display Info with Seller Earning column in seller transaction page
+- Improve pagination using truncate option in shop collection page
+- Display price tax Incl or excl and price hide/show according to customer group settings
+- Add more content in module description for showing on module list
+- Total Earning table of Manage Seller Transaction make responsive
+- Add new parameter for sending PRIMARY_KEY in updateIdLangInLangTables function of WkMpHelper.php class
+
+Hook Changes -
+- Add following hooks in addSellerProductToPs() function of WkMpSellerProduct.php class
+	- 	Hook::exec('actionBeforeAddSellerProductToPs', array('mp_id_product' => $mpIdProduct));
+	- 	Hook::exec(
+			'actionAfterAddSellerProductToPs',
+			array(
+				'mp_id_product' => $mpIdProduct,
+				'ps_id_product' => $psIdProduct,
+			)
+		);
+- Add hook after 'add product' with active mode by Admin in AdminSellerProductDetailsController.php file
+	-	Hook::exec('actionToogleMPProductCreateStatus', array(
+                    'id_product' => $psProductId, 'id_mp_product' => $sellerProductId, 'active' => 1));
+
+Changelog with mp seller staff module -
+- Add mp staff enabled condition on following class and controller -
+	- marketplace.php
+	- dashbaord.php
+	- productlist.php
+	- addproduct.php
+	- updateproduct.php
+	- productdetails.php
+	- managecombination.php
+	- generatecombination.php
+	- mporder.php
+	- mporderdetails.php
+	- mptransaction.php
+
+- Add hook `actionAfterStaffUpdation` for manage staff log in following class and controller (Hook is registered in Mp Seller Staff Module)
+	- addproduct.php
+	- updateproduct.php
+	- productimageedit.php
+	- managecombination.php
+	- generatecombination.php
+	- mporderdetails.php
+	- WkMpProductAttribute.php
+
+- Add new hook {hook h="displayMPStaffMenu"} in hook/mpmneu.tpl (If seller not available) (Hook is registered in Mp Seller Staff Module)
+- Add id_customer parameter in hook actionBeforeAddSeller
+
+##########################################################################
+Change Log : Marketplace V5.1.4 to V5.1.5 | COMPATIBLE:: PRESTASHOP V1.7
+Released On : 18 June 2018
+##########################################################################
+
+Update Policy:
+– Update only zip file of module new version
+
+Fixed Bug:
+- Change position of hook `displayGDPRConsent` - Added after hook `displayMpSellerRequestFooter` on sellerrequest.tpl
+- Display Seller Shipping column in Manage Seller Orders page and Manage Seller Trasanction page of Backoffice only if Mp Shipping or Mp HyperLocal is Enabled Or Seller shipping distribution data is exist in `wk_mp_seller_shipping_distribution` table
+- Fix seller order details commission summary table and product details table design issue
+
+Improvement:
+- Display order date in seller shipping details page
+
+Hook changes:
+- Add 2 new hooks `actionShippingDistribution` in WkMpAdminShipping.php class and `actionShippingDistributionCost` in WkMpSellerPaymentSplit.php class to distribute shipping amout to seller
+
+#################################################################################################
+Change Log : Marketplace V5.1.3 to V5.1.4 | COMPATIBLE:: PRESTASHOP V1.7
+Released On : 10 June 2018
+#################################################################################################
+
+Update Policy:
+– Update only zip file of module new version
+- Need to register 3 hooks - 'registerGDPRConsent', 'actionDeleteGDPRCustomer', 'actionExportGDPRData'
+
+Fixed Bug:
+- Zip/postal code will be enable of the basis of country settings. If country allow then seller can add it.
+- Fix datatable issue on seller transactions page
+- Fix link_rewrite issue with Arabic language
+- Set link_rewrite field required => false in WkMpSellerProduct class
+- Set custom value priority highen than pre-defined value as per prestashop standard
+- Fix tabs design issue if addons module tabs are exist on add/update product page
+- Give option split payment product wise in paymentGatewaySplitedAmount() of WkMpSellerPaymentSplit class.
+
+Improvement:
+- This version is compliance with GDPR Law - (Added 3 Hooks - 'registerGDPRConsent', 'actionDeleteGDPRCustomer', 'actionExportGDPRData')
+- Added configuration for seller request mail and product assign to seller mail
+- Display carrier name on seller order details
+- Display shipping tab permanently in manage order page in backoffice (even if mp shipping not available)
+- Add Portuguese(br.js) and Spanish(ve.js) file for tinymce language
+
+Hook Changes -
+- Add 'id_mp_product' => $mpProductId parameter in `actionToogleMPProductCreateStatus` hook
+- Change Hook name from `actionAfterUpdateMPProduct` to `actionAfterUpdateMPProductCombination` in WkMpProductAttribute class
+- Add new hook 'actionSellerProductsListResultModifier' in getSellerProduct() of WkMpSellerProduct.php class
+- Add new hook 'displayGDPRConsent' in sellerrequest.tpl
+
+##########################################################################
+Change Log : Marketplace V5.1.2 to V5.1.3 | COMPATIBLE:: PRESTASHOP V1.7 |
+Released On : 29 March 2018
+##########################################################################
+
+Update Policy:
+– Update only zip file of module new version
+
+Fixed Bug:
+- Remove static email when seller product order
+- Fix typecasting issue
+
+
+##########################################################################
+Change Log : Marketplace V5.1.1 to V5.1.2 | COMPATIBLE:: PRESTASHOP V1.7 |
+Released On : 23 March 2018
+##########################################################################
+
+Update Policy:
+– Update only zip file of module new version
+
+Fixed Bug:
+- Change class name 'WkMpOrderStatus' to 'WkMpSellerOrderStatus' everywhere
+- If no voucher details is available on seller order mail, no section will be display for voucher.
+- Fixed filter issue with translation list in back-office
+- Display default payment mode in trasaction history
+- Fixed Incorrect Transaction Id issue, when settlement has been cancelled.
+- Fixed issue : Admin is able to transfer 0 amount to seller.
+- Display voucher details in french order mail
+
+New Improvement:
+- Display single row for same order with multiple products And Add action to view these products in transaction list in popup
+- Display seller shipping in seller order mail
+- Add seller shipping amount in seller amount section of translation history
+
+New Hooks Added/Changed:
+- Add display hook for display etra details after product list in seller order details
+	{hook h='displayMpOrderProductDetailsBottom'} - (Path - marketplace/views/templates/front/order/mporderdetails.tpl)
+
+
+##########################################################################
+Change Log : Marketplace V5.1.0 to V5.1.1 | COMPATIBLE:: PRESTASHOP V1.7 |
+Released On : 8 FEB 2018
+##########################################################################
+
+Update Policy:
+– Update only zip file of module new version
+
+Fixed Bug:
+- Fix validation issue on generate combination page
+- Fix validation issue with product name and unique shop name when enter special characters
+- Display view all button if reviews are greater than two at seller profile page
+- Display inactive images of product in fancybox
+- Fix issue of product status after re-activate any seller
+- Fix issue of 'Customise value' while changing Feature from catalog
+- Fix total quantity of product issue with combinations if we update product after change qty from combination list
+- Fix dashboard graph issue if seller choose future start date
+- Fix product price RoundOf issue with payment gateway split function
+- Fix shop name validation issue when multilang is Off and set as 'seller default langauge'
+- Fix issue for feature creation on add product at admin end (if features not allowed for seller)
+- Fix issue for change image position of product at admin end
+- Hide preview button if product is not active on manage seller product page at backend
+- Rollback $idSeller in settleSellerAmount() of WkMpSellerPaymentSplit class
+- Fixed Filemanager security issue - Remove ext_file and ext_misc file upload through Tinymce
+
+
+##########################################################################
+Change Log : Marketplace V5.0.1 to V5.1.0 | COMPATIBLE:: PRESTASHOP V1.7 |
+Released On : 10 JAN 2018
+##########################################################################
+
+Update Policy:
+– Major changed in database and file, need uninstall, DELETE and upload and install the new verion module.
+
+Fixed Bug:
+- Remove displayError function from backend errors
+- Image can be uploaded till server size. Remove static value as 10
+- Issue occured when admin deactivate any seller and seller product still not activated by admin
+- Order status list issue resolved on configuration page
+- Category issue resolved when product added with 5th child category
+- Remove static category id from add product
+- Changed form name of assign product to seller in backend
+- Make product shipping tpl string translatable
+- Use getCarriers() as static function in product add/update page
+- Remove page bottom advertisement from quick view
+- Make product images table responsive
+- Match product id when seller change default combination and delete combination
+- Make image upload error messages translatable
+- Seller can choose pre-defined feature value after set custom value and if both fill then pre-defined value will be applicable.
+- Combination reference, upc, ean fields will be display on seller end according to configuration.
+- Global commission was taking negative percentage.
+- Use $smarty.post with all multi lang fields so that if any error occurred then seller can get existing data filled by default.
+- Configuration features - Seller can activate/deactivate product and deactivate product of update both should be seperated.
+- Check validation before assign admin product to seller that product is already assigned to any seller or not. If not then assign.
+- Seller can access another seller product details page.
+- Filter issue on seller name field on AdminCustomerCommission Controller
+
+
+New Improvement:
+- Delete all mail's lang directory (expect en and fr) and create according to ps imported language when module installed
+- Changed all backend controllers title name
+- Manage Shop collection page 'Add to cart' button according all possible condition
+	- Allow Orders(Product Availability preferences)
+	- Show Prices(Groups tab Under Customer)
+	- Customer group
+- Remove terms & condition and add CMS page for terms & condition in configuration.
+- Improve Seller Dashboard page
+	- Seller can check total sales, total orders in dashboard graph
+	- Admin can set that graph will display according to payment accepted or order confirmation
+	- Seller can check recent orders on dashboard
+	- Move dashboard.tpl file in front/dashboard directory
+- Merge Mp Feature Module
+	- Seller can manage(add/edit/delete) prestashop features and their values.
+	- Admin can set in configuration that seller can manage prestashop features or not.
+- Merge Mp Combination Module
+	- Seller can manage(add/edit/delete) prestashop attributes and their values.
+	- Admin can set in configuration that seller can manage prestashop attributes or not.
+	- Seller can generate combinations.
+- Tinymce image folder make compatible according to seller. Seller can see only their uploaded images in tinymce.
+- Admin can preview seller profile from seller list in backoffice
+- Add 'Save & Stay' button on add/update combination page
+- Admin can manage that sellers can add minimum qty, product condition, wholesale price and price per unit on their products and combinations or not.
+- Remove Tax incl price text field from add/update product page.
+- Seller and Admin can change combination quantity from product combination list (combination tab).
+- If product has combination then product qty and minimum qty will be hide for both Seller and Admin.
+- Seller and Admin can change position of product active images.
+- If number of reviews are greater than 3 then 'View All' button will be shown on seller profile page.
+- Add js confirm message before assign product to seller by Admin
+- Send mail to admin if seller delete mp product and also send mail to seller if admin delete product.
+- Send mail to seller if admin delete seller account from backend
+- Add order reference in seller order mail
+- Fax field will display in edit profile's information tab according to admin configuration.
+- Add Zip/Postal code for seller address and this will configure with city and country configuration settings
+- Display admin commission at Add/Edit product and product details page of seller front end
+- On shop page and profile page, Product original (retail) price will display with strike through if any specific price set on that product ie. ps product page
+- Seller can contact admin via Email from Edit profile page.
+- Seller can set show_condition option for product condition (only in PS 1.7)
+- Display seller orders and seller transaction in separated pages at both end
+- Now 'Updated products has to be approved by admin' feature is not dependent on 'Sellers can activate/deactivate their products' feature
+
+- Shipping Distribution Feature - (Need Mp Shipping V3.1.0)
+	- If marketplace seller shipping module is enabled then Admin can distribute shipping amount to Seller.
+
+
+- File name and content changed :
+	- Changed 'Default Category' name to 'Main Category' on add/update product
+	- Changed 'Set up your Marketplace' Tab name to 'Configuration' Tab
+	- Change 'menu_item' css class name to 'wk_menu_item' in marketplace_account.css
+	- Changed shop_store.css name to mp_shop_store.css AND store_profile.css name to mp_store_profile.css
+	- Changed productsellerdetails.js name to contactseller.js
+	- Changed AdminReviewsController.php page name to AdminSellerReviewsController.php
+
+
+Table Structure changed:
+New Table added:
+- `wk_mp_attribute_impact`
+- `wk_mp_seller_shipping_distribution` :for shipping distribution feature with Mp Shipping Module
+- `wk_mp_seller_transaction_history` : in place of old `wk_mp_seller_payment_history` table
+
+Table altered:
+- `wk_mp_seller`
+	- Add new column `postcode` after address
+- `wk_mp_seller_product_image` :
+    - Add new column `id_position` after `id_ps_image`
+- `wk_mp_seller_product` :
+	- Add new column `status_before_deactivate` after `active`
+	- Add new column `show_condition` before `condition`
+	- Add new column `admin_approved` after `ps_id_carrier_reference`
+- `wk_mp_admin_shipping` :
+	- Add new column `admin_earn` after `shipping_amount`
+	- Add new column `seller_earn` after `admin_earn`
+- `wk_mp_seller_order_detail` :
+    - Add new column `commission_rate` after `id_order`
+
+Tables removed:
+- wk_mp_seller_shipping
+- wk_mp_delivery
+- wk_mp_seller_payment
+- wk_mp_seller_order_payment
+- wk_mp_seller_payment_history
+
+Changed class name:
+	- WkMpSellerPaymentHistory.php changed WkMpSellerTransactionHistory.php
+
+Removed classes and files ::
+Classes
+    - WkMpSellerShipping.php
+    - WkMpDelivery.php
+    - WkMpSellerPayment.php
+
+TPL
+    - mporderdetails-message.tpl
+    - mporderdetails-shipping-shipped-form.tpl
+    - mporderdetails-shipping-delivered-form.tpl
+
+JS
+    - mporderdetails_shipping.js
+
+Front Controller
+    - updateordertrackingnumber.php
+
+
+New Hooks Added/Changed:
+- Add display hook for configuration controller extra tab in backend.
+	{hook h='displayMpConfigurationExtraTab'} - (Path - marketplace/views/templates/hook/displayconfigurationtabs.tpl)
+
+- Add display hook for seller details controller extra tab in backend.
+	{hook h='displayMpSellerDetailsExtraTab'} - (Path - marketplace/views/templates/hook/displaysellerdetailstabs.tpl)
+
+- Add action hook on tracking number add and update (Path - marketplace/controllers/front/mporderdetails.php)
+	Hook::exec('actionAfterSaveTracking', array(
+							'idOrder' => $idOrder,
+							'trackingURL' => $trackingURL,
+							'trackingNumber' => $trackingNumber,
+							'idSeller' => $mpSeller['id_seller']
+						));
+
+- Add action hook in payment split class (Path - marketplace/classes/WkMpSellerPaymentSplit.php)
+	- For marketplace split in sellerWiseSplitedAmount() function
+		Hook::exec('actionOverrideMpAdminCommission', array('sellerProductDetail' => $product, 'action' => 'marketplace'));
+
+	- For payment gateway split in paymentGatewaySplitedAmount() function
+		Hook::exec('actionOverrideMpAdminCommission', array('sellerProductDetail' => $MarketplaceSellerProductData, 'action' => 'paymentgateway'));
+
+- Changed position of Hook 'actionBeforeAddSeller' and 'actionBeforeUpdateSeller' (Add before $this->errors condition)
+	(Path - marketplace/controllers/admin/AdminSellerInfoDetailController.php)
+
+- Changed position of Hook {hook h='displayMpProductPriceTop'} - Shift after 'Princing' heading (top of price section)
+	(Path - marketplace/views/templates/front/product/_partials/product-pricing.tpl)
+
+- Changed position of Hook {hook h="displayMpProductListTop"}  - Shift parallel to 'Add Product' button
+	(Path - marketplace/views/templates/front/product/productlist.tpl)
+
+- Add hook in /marketplace/views/templates/hook/admin-order-view-seller-details.tpl
+	- {hook h='displayAdminPsSellerOrderViewHead'}
+	- {hook h='displayAdminPsSellerOrderViewBody' idSellerCustomer=$mp_order_detail.0.seller_customer_id}
+
+- Add hook in editprofile controller for active/deactive seller [Seller activate/deactivate their shop ie. backend]
+	- Hook::exec('actionToogleSellerStatus', array('id_seller' => $idSeller, 'is_seller' => $objSeller->shop_approved, 'status' => $objSeller->active));
+
+
+
+#################################################################################################################
+Change Log : Marketplace V5.0.0 to V5.0.1 | COMPATIBLE:: PRESTASHOP V1.7 |
+Released On : 05/06/2017
+#################################################################################################################
+
+Update Policy:
+– Module need only file update, can be updated only by UPLOADING new version on module.
+
+Fixed Bug:
+- Remove below translation from updateproduct.php and form.tpl(sellerproduct) (specific price remove so no need)
+- Code improvement (when product is assigned to seller)
+- <div class="clearfix"></div> (Add this code in edit profile images page after input type)
+- on seller product update page add product button is not looking at right place
+- in seller_product form.tpl, id="mp_admin_saveas_button" is used in two places. Change id in save&stay button
+- Change value as FALSE of WK_MP_PRODUCT_UPDATE_ADMIN_APPROVE  (IF WK_MP_SELLER_PRODUCTS_SETTINGS is TRUE) in AdminMarketplaceApprovalSettings
+- Product available_now, available_later and Seo (meta title, desc, linkrewrite) must be validate with php validation.
+- Admin form action must be pass with id (See desc)
+- Admin form action must be pass with id in param if working on edit page
+- Default category was not selected in edit product page of Backend
+- Changes in mp_custom_style.css
+- On collection page,if any filter is used,then on moving to the next page filter (Sort By/category) gets automatically removed.
+- While assigning the admin product to seller,if a product combination has -ve Quantity. then no combination gets assigned with the product and also the error is shown.
+- Add missing function findAllActiveSellerProductByLimit() in WkMpSellerProduct class
+- Improved function settleSellerAmount() of class WkMpSellerPaymentSplit
+- Settlement has been cancelled,then also paid status is shown in transaction rather than cancel.
+- If customer ordered a product combination which has only 1 qty.,then on reordering the same,error is shown
+- Issue occurring of 'manage seller order page',if admin pays the seller amount in float.
+- By default Total earning, due amount & paid amount has to be calculated after "order status" is updated to "payment accepted".
+- Filter Issues on seller review and seller orders page.
+- Product page link issue at seller order page when click on product name
+- Remove / slash from template path
+- Category Issue : If continue 3 parents are not checked and 4th checked then category tree not open with 4th category
+- Fix display issue with mail config content From Title for seller email
+- Issue with product qty when update product combinations qty and also set 'Yes' to "update approval in product approval settings"
+- Get Active, Deactive and all product with function getSellerProduct() improve of Class WkMpSellerProduct
+- id assigned in seller admin product page for pack product requirement see commit #008c546a
+- Remove seller deactive or not exist condition from mpmenu.tpl page
+- Display loading image on state load and fix state selected issue
+- Product success message will also display on Product List page after click on save button
+- Use Carrier class -> getCarriers() instead of CarrierDataProvider
+- Display all carriers include other module carriers on seller product
+- Combination reference validation issue resolved
+- Seller can enter phone number with internation code
+- Combination validation issue if change id from inspect element
+
+New Improvement:
+- Before save product which tab was active, after save&stay same Tab will be active
+- Js Validation used for mp seller form or mp seller product form in both end
+- Preview in popup for shop image and seller profile image
+- PHP validation used with field size in all needed fields
+
+New Hooks Added:
+- displayMpSellerPaymentTableColumn => display hook added in front/transaction/seller_total_detail.tpl
+- displayMpTransactionTopContent => display hook added in admin/.. list/list_header.tpl
+- actionBeforeCancelSellerTransaction => action hook added in AdminSellerOrdersController.php
+- actionBeforeReSettleSellerTransaction => action hook added in AdminSellerOrdersController.php
+- displayMpProductSoldByBottom => display hook in mp_soldby.tpl
+- actionAfterUpdateMPProduct (existing hook) => added when combination will create or update for that product (function createOrUpdateMpProductCombination() in class WkMpProductAttribute.php)
+- actionAfterUpdateMPProduct hook parameter updated =>
+	# When only product update - Hook::exec('actionAfterUpdateMPProduct', array('id_mp_product' => $idMpProduct, 'id_mp_product_attribute' => 0));
+	# When product combination update - Hook::exec('actionAfterUpdateMPProduct', array('id_mp_product' => $idMpProduct, 'id_mp_product_attribute' => $idMpProductAttribute));
+
+- Hook::exec('actionAfterSellerOrderStatusUpdate', array(
+		'id_seller' => $mpSeller['id_seller'],
+		'id_order' => $idOrder,
+		'id_order_state' => $idOrderState
+	));
+- Hook added in mporderdetails.php file when seller update order status
+
+
+
+###############################################################################################
+
+Release Notes for Marketplace V5.0.0 & Marketplace V3.0.0
+
+Marketplace V5.0.0 :
+- Change Log : Marketplace V4.0.0 to V5.0.0  | COMPATIBLE:: PRESTASHOP V1.7 |
+Marketplace V3.0.0 :
+- Change Log : Marketplace V2.1.1 to V3.0.0  | COMPATIBLE:: PRESTASHOP V1.6 |
+
+###############################################################################################
+
+Update Policy:
+– Major changed in database and file, need uninstall, DELETE and upload and install the new verion module
+
+
+Fixed Bug:
+- Filters on 'manage seller orders' page
+- 'Add your first product' on seller request page, if already have product on direct hit the sellerrequest page
+- If admin deactivates seller profile/product without any reason then text 'reason to deactivate profile' should not be shown in mail.
+
+
+Improved/changed features:
+- Add prefix WK_ before all configuration variable of module
+- Add prefix wk_mp_ before all tables name
+- Admin Marketplase seller tabs re-arranged
+- Configuration improved and updated
+- Every FO page design changed
+- Crop image functioanality has been removed
+- Class name and filename updated
+- Function name updated
+- Mail send by default active
+- 'Manage Commission' tab configuration moved in Configuration tab
+- 'Payment Mode' tab configuration moved in Configuration tab
+- Admin can see stars on seller review list now instead of number
+- Seller registration form have autofill data from customer details
+- Merged: Seller collection and Shop Page to be Shop page only
+- 'Sold By' link added on product page, all details removed
+- Disable save button after add or update seller info or seller product info in frontend
+- Category tree improved by AJAX
+- Mail file added: customer_tracking.html, product_assignment_to_seller.html
+- de,es,pl.php translations file deleted
+- Tab name 'Marketplace Management' -> 'Marketplace'
+
+
+Deprecated methods:
+
+
+Deleted:
+
+- Customer Message display to seller removed
+
+Added Features:
+
+- Multiple image upload on one click
+- After upload images, there is no need to update product page or edit profile page
+- For adding product image, seller need to add product first then he can upload images from update product page
+- Admin can apply custom CSS on seller pages
+- Admin can add 'Become a seller' on site after installing Marketplace
+- Admin can allow/disallow seller to manage profile display
+- Admin can manage to allow:
+	SEO, product visibility, avalibility preferences, Reference, EAN-13,
+	UPC, ISBN, create combination, can apply admin shipping, manage feature
+- Admin can preview product by MP product list, if product active
+- Seller can add Instagram Social Profile
+- Seller can manage profile details display
+- Sellers can add minimum qty in their standard products
+- Seller can add availability preferences for products
+- Seller can add all types of prices i.e. wholesale price, unit price etc.
+- Seller can add tracking number and URL for order
+- Seller can upload banner for shop page
+
+Merged Module:
+
+- MP Tax Rule (Basic)
+- MP Reference/EAN/UPC/ISBN
+- MP Combination
+- MP Feature
+- MP SEO
+- MP Product Visibility
+- MP Seller Payment
+- MP Banner
+
+
+#############################################################################################
+Change Log : Marketplace V2.1.1 to V4.0.0 | COMPATIBLE:: PRESTASHOP V1.7 |
+#############################################################################################
+
+Compatible:
+- New admin parent tab, 'AdminMarketplace' added
+- parent::__construct() moved to top in admin tab __construct()
+- hook/customeraccount.tpl and mpmyaccountmenu.tpl tabs design compatible
+- front setTemplate() updated, {extends file=$layout} and {block name='content'} on tpl added
+- submit btn css fixed
+- img_ps_dir,logged assigned from controller now
+- {$smarty.const._MODULE_DIR_} using instead of global var:{$modules_dir} on tpl
+- dashboard.php addJqueryUI() array passing removed for 'ui.datepicker'
+- {convertPrice price=$} removed from tpls, sending by displayPrice() from controller
+- $this->pagination() removed from collection front controller
+- {$categoryTree nofilter} nofilter added for html escaping
+- labels like 'Default Language' and other display right fixed
+- front tabs on add and update product page re-designed
+- $.uniform.defaults.fileButtonHtml removed from js
+- background-color:#fff added on class wk_right_col in marketplace_account.css
+- $this->registerStylesheet and registerJavascript added
+- google chart fixed on dashboard
+- store_profile.css label width removed
+- box-shadow added in dashboard content
+- html escape removed from tpls
+- main_block bottom margin added
+- CSS:p.wk_btn_add_product css added on product list
+- bootstrap bodel box using for imageedit popup, fancybox removed
+- modex box in rating popup
+- main page 'display()' changed in 'fetch()'
+- mporderdetails tpl tab fixed
+- home-default.jpg image added to display default image
+- displayProductTab hook removed, using displayReassurance hook for now
+- hook/seller_details_content.tpl tpl deleted
+- actionFrontControllerSetMedia hook added for hook css and js add
+- contactsellerprocess controller camel capsed
+- backoffice admin tab icon css removed from hookDisplayBackOfficeHeader fn
+- Shop Collection page sortby and pagination added manually
+- for category tree jquery-ui updated to jquery-ui-1.11.4.custom.min.js from 1.8.12
+- fn: MarketplaceProductImage::uploadProductImage() updated with hard coded '.jpg' ext
+- fn: AdminSellerProductDetailsController::uploadProductImage() updated with hard coded '.jpg' ext
+- image_url fixed on shopcollection page
+- validate.js removed from editprofile and sellerrequest.php,
+- form label astrick CSS added on marketplace_account.css
+- Edit review buttons CSS fixed
+- Datatable pagination CSS fixed by writing CSS on marketplace_account.css
+- mp_order_product_list.tpl convertPrice issue fixed
+- account_input, wk_text_field class removed from everywhere
+
+Added new files:
+- mppayment.tpl js moved to mp_payment.js new js file added
+- mporder.tpl js moved to mporder.js new js file added
+- bxSlider removed from PS 1.7 using responsiveslides.min.js now, so files added in marketplace
+- shopstore.js added
+
+[BO]:
+
+- initToolbar() overrided in AdminSellerInfoDetailController
+- jpg image upload fixed
+
+Fixed:
+- using die() in ValidateUniqueShop controller now
+- Home translation fixed on addproduct.tpl
+- mporder.tpl, mporderdetails.tpl and productlist.tpl wrapped in class="main_block"
+- sellerprofile.tpl best-sell js unnecessary removed
+- dashboard.tpl, no order available inline fixed
+- still 'Add first product' if already having items on seller request fixed
+- 'marketplace_order_voucher_details' table deleted while uninstall module
+
+Improved:
+- new js mpdashboard.js and downloaded google_jsapi.js added,
+- shop_store.css removed from allreviews.php
+- shop_store.css file deleted
+- mporder.js added
+- imageedit.tpl loop key using for indexing now
+- _partials folder created for partials tpl files
+- front tpl directory is folder wise with partials now
+- imageedit.js, mp_form_validations.js beautified
+- seller_review.js deleted, sellerprofile.js added
+- rating error alert removed
+- createTable() function added
+- registerMpHook() function added to register Mp Hook
+- Class file deleted: MarketplaceShop.php, MarketplaceShopProduct.php, MarketplaceCustomer.php
+- header.css removed added on shopcollection.php
+- shopcollection page variable camel capsed
+- hook/seller_details_on_order_view.tpl changed to admin-order-view-seller-details.tpl
+- hook/seller_details_content.tpl.tpl changed to product-seller-details.tpl
+- all hooks defined are in camel capse now
+- initialize WK_MP_SUPERADMIN_EMAIL for superadmin logic updated in install()
+- callUninstall() tab removed moved to updated uninstallTab fn
+- marketplace.php fn ordered by hook, ununinstall and install functions
+- reference added on order details page
+- productdetails.css to mpproductdetails.css
+- all CSS and JS file formated
+- #tree1 to #wk_mp_category_tree id changed of category tree
+- timestamp added in backend and front seller image
+- delete confirmation added on review delete
+- On marketplace.php fn removed: hookDisplayMpproductdescriptionheaderhook
+- fn:: MpHelper::randomImageName() $length passing var now
+- commented functions removed from SellerProductDetail.php class
+- front/_partials/mp-product-slider.tpl using for mp slider on seller profile and shop page
+- front/_partials/seller-image-block.tpl using on seller profile and shop page left image block
+- 'clear filter' button added on shop collection page
+- sellerprofile::getMostTwoReviewDetails function improved
+- clearfix added on sellerdetails on main product page
+- add-to-cart pop-up btn added on mp collection page
+
+CSS:
+- many unused classes and ids css removed from add_product.css, marketplace_account.css, mpproductdetails.css, mpproductdetails.css, registration.css, shop_collection.css, store_profile.css
+- all_reviews.css removed
+
+Deleted:
+- class::MpPayment.php removed, duplicate from MarketplaceCustomerPaymentDetail class
+- ask_ques.css, contact.css, enq_desc.css, my_request.css deleted not using anywhere
+- image_edit.css om productimageedit.php but blank file
+- fieldform.js deleted, not using
+- mporderdetails_shipping.css deleted
+
+New Function:
+- MpHelper::getSupperAdmin(), getTimestamp() added
+- mp_form_validation.js : validate_isEmail(), validate_isName() and validate_isPhoneNumber() added
+- UI improved for logout user to write review , follow process to login and back
+
+Hook Registration removed:
+- displayleftColumn, displayMenuhook, displayMpbottomordercustomerhook, displayMpbottomorderstatushook
+- displayMpbottomorderproductdetailhook, displayMpordershippinghook, displayMpordershippinglefthook
+- displayMpordershippingrighthook, displayMpdashboardtophook, displayMpdashboardbottomhook,
+- displayMpsplefthook, displayMpspcontentbottomhook, displayMpsprighthook, displayMpshopcontentbottomhook
+- displayMpshoprighthook, displayMpcollectionlefthook, displayMpcollectionfooterhook, displayMpaddproductfooterhook
+- displayMpupdateproductfooterhook, displayMpshoprequestfooterhook, displayMpshopaddfooterhook,
+- displayMpproductdetailheaderhook, displayMpproductdetailfooterhook, displayMppaymentdetailfooterhook,
+- displayMpsellerinfobottomhook, displayMpsellerleftbottomhook, actionAddproductExtrafield,
+- actionUpdateproductExtrafield, actionAddshopExtrafield, actionUpdateshopExtrafield,
+- displayProductTab, displayProductTabContent not using in 17
+
+TODO:
+- visible-print div removed from mporderdetails tpl check it out
+- to use png image now OR get the uploaded image dynamically
+- Mp Collection Page :: Quick View : Need to create model box with ajax response
+
+
+#############################################################################################
+Change Log : Marketplace V2.1.0 to V2.1.1  | COMPATIBLE:: PRESTASHOP V1.6 |
+#############################################################################################
+
+New Features :
+- Seller can add city, country and state in their profile.
+- Admin can manage in configuration that city,country fields will be mandatory or not.
+- Now order's shipping will be listed in Order Detail Controller (backend).
+- Order wise shipping can be seen in admin order controller.
+- New configuration added - Admin can choose commission and tax will only distribute in case of payment accepted or order confirmation.
+- Admin Order Controller will show, how many orders are pending for payment (seller wise).
+- Front end - seller can see the vouchers in orders details if voucher applied on seller's product.
+- Admin can edit the Mail From Name and Email Address while sending mail to seller.
+- Seller can disable/enable his/her own shop if Admin will allow this functionality in Configuration.
+
+
+Bug Fixed :
+
+- Error on orderpage if voucher code applied on the admin product (voucher created through seller wallet module)
+- Upload and crop image functionality through ajax process in back office
+- Admin can delete seller profile image or shop image from back office.
+- An error comes on order page if voucher code applied on the admin product (voucher created through seller wallet module)
+- Display date in all places with prestashop date format
+- Admin and seller can upload image up to max size that website server will provide. Now there is no limit set in this module i.e. 8MB
+- License added in our files
+
+Table Changes:
+	A: Remove tables:
+		1: Remove Table "marketplace_query_records" and Class "MarketplaceQueryRecord"
+
+	B: New tables:
+		1: Add new table "marketplace_admin_total_shipping" for calculate marketplace admin total shipping and class for this table is "MarketplaceAdminTotalShipping".
+		2: Add new table "marketplace_order_voucher_details" for display voucher of seller products and class for this table is "MarketplaceOrderVoucherDetails".
+
+	D: Column changes:
+		1: In "marketplace_seller_info" table:
+			(i) Add new column "city" for seller's city after fax field
+			(ii) Add new column "id_country" for seller's country after city field
+			(iii) Add new column "id_state" for seller's state after id_country field
+			(iv) Add new column "shop_approved" for seller's shop first time approved by admin after active field
+
+
+
+
+#############################################################################################
+Change Log : Marketplace V2.0.2 to V2.1.0  | COMPATIBLE:: PRESTASHOP V1.6 |
+#############################################################################################
+
+
+New Feature:
+
+- Marketplace MultiLanguage - Seller can add or update product in multi-language.
+- Admin can ON or OFF Marketplace Multiplanguage from configuration page.
+- Seller and Admin can uplaod image of product and seller with cropping.
+- Fully SEO URL of seller's profile, shop and collection page.
+- Admin can change seller's profile, shop and collection page URL pre-fix.
+- Admin can turn off SEO URL of seller's profile, shop and collection page.
+- Admin and seller can check order in same currency in which customer place order.
+- Cutomer can edit their review.
+- Admin can select enable or disable when add new seller from back office.
+- Admin can select enable or disable when add new seller's product from back office.
+- Display shipping amount and total order amount in order mail for seller i.e. order details page
+- Replace Product List tab name with Product
+- Remove Add product button from marketplace menus and display this button in Product (Product List) page
+- Add "actionBeforeAddSeller" and "actionBeforeUpdateSeller" hook in Admin Seller Info controller.
+
+
+Bug Fixed :
+
+- Assigned product(s) old order display bug fixed.
+- Seller order's total according order currency bug fixed.
+- Cutomer can review more than one time for same seller bug fixed.
+- Add bootstrap tab in back office marketplace product page.
+- Create a global function for assigning default lang at all forms
+- Create a new column 'admin_shipping_cost' in table 'marketplace_seller_shipping_details' for display admin shipping in order's shipping tab
+- Seller collection page total number of product bug fixed.
+- Seller collection page category filter bug fixed.
+- Seller dashboard order graph bug fixed.
+- If admin delete any langauge and that langauge is used in any seller's default lang then ps default lang will be set as default lang for that seller
+- Total quantity display issue in seller product list,When applied the gift voucher of seller's product.
+- Error when applied amount voucher on the order.
+
+
+
+Table Changes:
+	A: Remove tables:
+		1: Remove "marketplace_shop_product" table and add "id_ps_product" column in "marketplace_seller_product" for prestashop id product.
+		2: Remove "marketplace_shop" table and add "seller_customer_id" column in "marketplace_seller_info" for seller's cutomer id.
+		3: Remove "marketplace_order_commision" table because this table did not used any where in marketplace.
+		4: Remove "marketplace_cutomer" table and add "seller_customer_id" column in "marketplace_seller_info" table.
+
+	B: Table rename:
+		1: Rename "marketplace_commision_calc" to "marketplace_seller_orders_details" for marketplace order details while class of this table is same "MarketplaceSellerOrderDetails".
+
+	C: New tables:
+		1: Add new table "marketplace_seller_shipping_details" for marketplace seller order shipping and class for this table is "MarketplaceSellerShippingDetails".
+		2: Add new table "marketplace_seller_info_lang" for saving seller data in multi-lang.
+		3: Add new table "marketplace_seller_product_lang" for saving mp product data in multi-lang.
+
+	D: Column changes:
+		1: In "marketplace_seller_product" table:
+			(i) Add new column "id_ps_product" for prestashop id product.
+			(ii) Remove "id_shop" because shop table removed.
+		2: In "marketplace_seller_info" table:
+			(i) Rename "shop_name" column to "shop_name_unique" for seller's unique shop name.
+			(ii) Add new column "link_rewrite" for seller's unique shop name link re-write.
+			(iii) Add new column "default_lang" for seller default language.
+			(iv) Add new column "seller_customer_id" for seller's customer id.
+		3: In "marketplace_commision" table:
+			(i) Rename "customer_id" to "seller_customer_id" because this column store seller's customer id.
+			(ii) Rename "customer_name" to "seller_customer_name" because this store seller's customer name.
+		4: In "marketplace_seller_orders" table:
+			(i) Rename "id_customer_seller" to "seller_customer_id" because this column store seller's customer id.
+			(ii) Rename "total_earn" to "total_earn_ti" and this column store seller's total earn with tax.
+			(iii) Add new column "total_earn_te" and this column store seller's total earn without tax.
+			(iv) Add new column "total_admin_tax" and this column store total admin tax.
+			(v) Add new column "total_seller_amount" and this column store seller's total amount.
+			(vi) Add new column "total_seller_tax" and this column store seller's total tax.
+			(vii) Add new column "total_seller_shipping" and this column store seller's total shipping.
+		5: In "marketplace_customer_payment_detail" table:
+			(i) Rename "id_customer" to "seller_cutomer_id".
+
+
+#############################################################################################
+Change Log : V2.0.2  | COMPATIBLE:: PRESTASHOP V1.6 |
+#############################################################################################
+
+
+New Features :
+
+- Reason to fill while deactivating seller and products.
+- Default Category selection by seller.
+- Product can not be active if seller is deactive.
+- Product will not be active if you are activating the seller.
+- Seller Details on Prestashop order view page.
+- Cross added in success message on payment detail in front.
+- Remove div on image delete in front by fadeout design.
+- Mail send or not configuration set.
+- "Total order" display on order details page.
+- Top 5 orders on dashboard page is same as main my order page.
+- Delete button added on MP product detail page for unactive images
+- Seller can see and edit image on product update page (Major).
+- Deactive images will also display in front if uploaded in deactive product.
+- On Seller product form.tpl code added for seller product details bootstrab display in admin panel.
+
+
+Bug Fixed :
+
+- 0% commission fixed, admin can set 0% commission and it will distribute by seller and admin.
+- mp change cover, temp display in catalog fixed.
+- blank image upload, if add more image left blank by admin mp product upload fixed.
+- change cover of product from backend fixed.
+- about shop on shop page escape html fixed.
+- imageedit.js removed from mppayment controller.
+- after change cover in front delete image is fixed in front.
+- tax excluded price display in order details on seller my order.
+- description escape html fixed.
+- dashboard graph single qty price fixed , now total product display.
+- dashboard Order Total fixed.
+- duplicate row display on mp order details page fixed.
+- Datatable translation fixed.
+- MP Datepicker file excluded from frontcontroler dashboard.php
+- Invoice and Shipping #ID fixed on mporderdetail.tpl file.
+- Check seller email and shop name by admin create seller fixed.
+- Review count issue fixed on all review page.
+- description escape html fixed on edit product tiny mce value.
+- tiny mce description validated by isCleanHtml on seller request, update profile.
+- admin end, delete cover image make another as a cover fixed.
+- On Marketplace Order page "No product found" fixed.
+- 'fancybox', 'bxslider' added on pages, these are not found for some theme.
+- java upload remove from tinymce image upload.
+- 'unactive' words changed to 'inactive' everywhere.

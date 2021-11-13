@@ -1,0 +1,332 @@
+/**
+* 2010-2021 Webkul.
+*
+* NOTICE OF LICENSE
+*
+* All right is reserved,
+* Please go through LICENSE.txt file inside our module
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade this module to newer
+* versions in the future. If you wish to customize this module for your
+* needs please refer to CustomizationPolicy.txt file inside our module for more information.
+*
+* @author Webkul IN
+* @copyright 2010-2021 Webkul IN
+* @license LICENSE.txt
+*/
+
+.wk_mp_disabled,
+.wk_mp_disabled:focus {
+    background: #ddd none repeat scroll 0 0 !important;
+    border: medium none #ddd !important;
+    pointer-events: none;
+}
+
+.wrapper {
+    width: 1280px;
+    float: left;
+}
+
+#seller_details {
+    width: 60%;
+    margin-left: 5%;
+    height: 200px;
+    border: 1px solid #DDDDDD;
+    float: left;
+}
+
+.seller_info_row,
+.popup_row {
+    width: 100%;
+    float: left;
+    margin-top: 5px;
+}
+
+.seller_info_row_title {
+    width: 30%;
+    margin-left: 3%;
+    float: left;
+}
+
+.seller_info_row_title span:nth-child(2) {
+    float: right
+}
+
+.seller_info_row_title span:nth-child(1) {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.seller_info_row_details {
+    width: 64%;
+    margin-left: 3%;
+    float: left;
+}
+
+#span_payment_details {
+    height: 100px;
+    overflow-x: auto;
+}
+
+#payment_details {
+    float: left;
+    margin-left: 3%;
+    width: 30%;
+    height: 200px;
+}
+
+.payment_row {
+    width: 96%;
+    float: left;
+    margin: 5px;
+}
+
+.payment_row_title {
+    float: left;
+    width: 60%;
+}
+
+.payment_row_details {
+    float: left;
+    width: 40%;
+}
+
+.payment_row_title span:nth-child(1) {
+    font-weight: bold;
+    font-size: 14px;
+    float: left;
+}
+
+.payment_row_title span:nth-child(2) {
+    float: right;
+    margin-right: 2px;
+}
+
+.payment_row_details span {
+    float: left;
+}
+
+#payment_btn {
+    margin-top: 20px;
+    float: left;
+    width: 100%;
+}
+
+#pay {
+    background-color: #428BCA;
+    border-color: #357EBD;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    background-image: none;
+}
+
+#pay:hover {
+    background-color: #3276B1;
+    border-color: #285E8E;
+    color: white;
+}
+
+#wrapper_bottom_title {
+    float: left;
+    margin-left: 5%;
+    width: 100%;
+}
+
+#transaction_block {
+    float: left;
+    margin-left: 5%;
+    width: 100%;
+}
+
+#change {
+    background-color: #428BCA;
+    border-color: #357EBD;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.42857;
+    padding: 3px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    background-image: none;
+    float: right;
+}
+
+.CSSTableGenerator {
+    margin: 0px;
+    padding: 0px;
+    width: 60%;
+    box-shadow: 10px 10px 5px #888888;
+    border: 1px solid #000000;
+    -moz-border-radius-bottomleft: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    -moz-border-radius-topright: 0px;
+    -webkit-border-top-right-radius: 0px;
+    border-top-right-radius: 0px;
+    -moz-border-radius-topleft: 0px;
+    -webkit-border-top-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.CSSTableGenerator table {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.CSSTableGenerator table tr td {
+    text-align: center;
+}
+
+.CSSTableGenerator tr:last-child td:last-child {
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.CSSTableGenerator table tr:first-child td:first-child {
+    -moz-border-radius-topleft: 0px;
+    -webkit-border-top-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.CSSTableGenerator table tr:first-child td:last-child {
+    -moz-border-radius-topright: 0px;
+    -webkit-border-top-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.CSSTableGenerator tr:last-child td:first-child {
+    -moz-border-radius-bottomleft: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.CSSTableGenerator tr:hover td {}
+
+.CSSTableGenerator tr:nth-child(odd) {
+    background-color: #e5e5e5;
+}
+
+.CSSTableGenerator tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.CSSTableGenerator td {
+    vertical-align: middle;
+    border: 1px solid #000000;
+    border-width: 0px 1px 1px 0px;
+    text-align: left;
+    padding: 7px;
+    font-size: 10px;
+    font-family: Arial;
+    font-weight: normal;
+    color: #000000;
+}
+
+.CSSTableGenerator tr:last-child td {
+    border-width: 0px 1px 0px 0px;
+}
+
+.CSSTableGenerator tr td:last-child {
+    border-width: 0px 0px 1px 0px;
+}
+
+.CSSTableGenerator tr:last-child td:last-child {
+    border-width: 0px 0px 0px 0px;
+}
+
+.CSSTableGenerator tr:first-child td {
+    background: -o-linear-gradient(bottom, #cccccc 5%, #b2b2b2 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #cccccc), color-stop(1, #b2b2b2));
+    background: -moz-linear-gradient(center top, #cccccc 5%, #b2b2b2 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#cccccc", endColorstr="#b2b2b2");
+    background: -o-linear-gradient(top, #cccccc, b2b2b2);
+    background-color: #cccccc;
+    border: 0px solid #000000;
+    text-align: center;
+    border-width: 0px 0px 1px 1px;
+    font-size: 14px;
+    font-family: Arial;
+    font-weight: bold;
+    color: #000000;
+}
+
+.CSSTableGenerator tr:first-child:hover td {
+    background: -o-linear-gradient(bottom, #cccccc 5%, #b2b2b2 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #cccccc), color-stop(1, #b2b2b2));
+    background: -moz-linear-gradient(center top, #cccccc 5%, #b2b2b2 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#cccccc", endColorstr="#b2b2b2");
+    background: -o-linear-gradient(top, #cccccc, b2b2b2);
+    background-color: #cccccc;
+}
+
+.CSSTableGenerator tr:first-child td:first-child {
+    border-width: 0px 0px 1px 0px;
+}
+
+.CSSTableGenerator tr:first-child td:last-child {
+    border-width: 0px 0px 1px 1px;
+}
+
+.white-popup {
+    position: relative;
+    background: #FFF;
+    padding: 20px;
+    width: auto;
+    max-width: 600px;
+    margin: 20px auto;
+    height: 220px;
+}
+
+.popup_row_title {
+    float: left;
+    width: 150px;
+}
+
+.popup_row_detail {
+    width: 300px;
+    float: left;
+}
+
+.popup_row_title span:nth-child(1) {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.popup_row_title span:nth-child(2) {
+    float: right;
+    margin-right: 5px;
+}
+
+.money_text {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555555;
+    display: block;
+    font-size: 14px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    vertical-align: middle;
+    width: 100px;
+    float: left;
+}
+
+.popup_row_detail input[type="text"]:nth-child(2) {
+    margin-left: 10px;
+}

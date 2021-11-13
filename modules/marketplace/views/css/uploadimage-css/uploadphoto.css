@@ -1,0 +1,185 @@
+/**
+* 2010-2021 Webkul.
+*
+* NOTICE OF LICENSE
+*
+* All right is reserved,
+* Please go through LICENSE.txt file inside our module
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade this module to newer
+* versions in the future. If you wish to customize this module for your
+* needs please refer to CustomizationPolicy.txt file inside our module for more information.
+*
+* @author Webkul IN
+* @copyright 2010-2021 Webkul IN
+* @license LICENSE.txt
+*/
+
+.photo-uploader {
+    border: 2px dashed #c1c1c1;
+    padding: 20px;
+    position: relative;
+}
+
+.seller-upload-img {
+    width: 30px;
+    margin: auto;
+}
+
+.seller-dragdrop {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.seller-photo-or {
+    font-size: 16px;
+    line-height: 24px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.seller-pickphoto {
+    background: none repeat scroll 0 0 #343333;
+    border: medium none;
+    color: white;
+    font-size: 19px;
+    padding: 5px 0 !important;
+    width: 100% !important;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.upload-error {
+    display: none;
+    color: red;
+    font-size: 14px;
+}
+
+.wk_delete_img {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.icon-jfi-cloud-up-o {
+    font-size: 50px !important;
+}
+
+.picuploadbutton {
+    background: none repeat scroll 0 0 #343333;
+    border: medium none;
+    color: #fff;
+    font-size: 19px;
+    padding: 11px 0;
+    text-transform: uppercase;
+}
+
+.picuploadbutton:hover {
+    color: #fff;
+}
+
+.uploadpicture {
+    display: block;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+.productimg_div {
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 13%;
+}
+
+.productimg_blank {
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+}
+
+.shop_hover {
+    clear: both;
+    float: left;
+    position: relative;
+}
+
+.collectiondiv {
+    float: left;
+    position: relative;
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+
+.cleardiv {
+    clear: both;
+}
+
+.delete_sellerimg_byadmin {
+    position: absolute;
+    right: 69;
+    top: 3px;
+}
+
+#wholepage_div {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 100000;
+}
+
+.loading-img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.wk_uploader_wholediv div.uploader {
+    width: auto !important;
+    height: 0px !important;
+}
+
+.wk_upload_product_image div.uploader {
+    width: auto !important;
+    height: 0px !important;
+}
+
+.wk_uploader_margin {
+    margin: 10px 0;
+}
+
+.wk_uploader_wholediv {
+    display: none;
+    margin-bottom: 20px;
+}
+
+.wk_upload_product_image {
+    margin: auto;
+    width: 85%;
+}
+
+
+/* Filer css override */
+
+.jFiler-item {
+    list-style: none !important;
+}
+
+
+/*For smaller screen*/
+
+@media only screen and (max-width:768px) {
+    .seller-pickphoto {
+        font-size: 14px;
+    }
+    .seller-dragdrop {
+        font-size: 14px;
+    }
+}

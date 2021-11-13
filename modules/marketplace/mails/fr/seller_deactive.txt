@@ -1,0 +1,23 @@
+[{shop_url}]
+
+Bonjour {seller_name}
+
+Votre demande pour devenir un vendeur sur marketplace {mp_shop_name} a été désactivé par l'administrateur.
+
+ Raisons pour désactiver votre profil
+
+{reason_text}
+
+Détails de votre boutique :
+
+
+Nom du vendeur: {seller_name}
+
+Nom de la boutique: {mp_shop_name}
+
+Téléphone: {phone}
+
+Email: {business_email}
+
+Principal nom de la boutique: {shop_name}
+

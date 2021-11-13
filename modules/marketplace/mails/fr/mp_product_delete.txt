@@ -1,0 +1,19 @@
+[{shop_url}]
+
+Bonjour {to_mail_person}
+
+{from_mail_person} a supprimé un produit
+
+Détails
+
+Nom de Produit :  {product_name}
+
+Nom de Vendeur  : {seller_name}
+
+Nom de la Boutique : {seller_shop}
+
+Téléphone: {seller_phone}
+
+Email: {seller_email_id}
+
+Visitez la boutique en cliquant ici : [{shop_url}]

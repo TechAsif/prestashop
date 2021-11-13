@@ -1,0 +1,22 @@
+
+[{shop_url}]
+
+Hello {seller_name}
+
+Your product is nearly out of stock.
+
+The remaining stock is now less than or equal the specified minimum of
+{last_quantity}.
+
+Remaining stock: {quantity}
+
+Your Product details as below:
+
+Product name: {product_name}
+
+Category name: {category_name}
+
+Main shop name: {shop_name}
+
+Your shop name: {mp_shop_name}
+

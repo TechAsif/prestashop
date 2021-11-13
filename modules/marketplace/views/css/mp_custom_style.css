@@ -1,0 +1,297 @@
+/**
+* 2010-2021 Webkul.
+*
+* NOTICE OF LICENSE
+*
+* All right is reserved,
+* Please go through LICENSE.txt file inside our module
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade this module to newer
+* versions in the future. If you wish to customize this module for your
+* needs please refer to CustomizationPolicy.txt file inside our module for more information.
+*
+* @author Webkul IN
+* @copyright 2010-2021 Webkul IN
+* @license LICENSE.txt
+*/
+
+#wrapper {
+    background-color: #fafafa;
+}
+
+.wk-mp-block h1,
+.wk-mp-block h2,
+.wk-mp-block h3,
+.wk-mp-block h4,
+.wk-mp-block h5,
+.wk-mp-block h6 {
+    text-transform: uppercase !important;
+}
+
+.wk-mp-block .form-control {
+    background-color: #fff !important;
+    border: 1px solid #ccc !important;
+    color: #999 !important;
+    font-size: 14px !important;
+}
+
+.wk-mp-block .dropdown-toggle {
+    background-color: #fff !important;
+    border: 1px solid #ccc !important;
+    color: #999 !important;
+    font-size: 14px !important;
+}
+
+.wk-mp-block .form-control-select {
+    -moz-appearance: none;
+    background: #fff url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAAPklEQVR4Ae3TwREAEBQD0V/6do4SXPZg7EsBhsQ8IEmSMOsiuEfg3gL3oXC7wK0bd1G4o8X9F4yIkyQfSrIByQBjp7QuND8AAAAASUVORK5CYII=") no-repeat scroll right 0.1rem center / 1.25rem 1.25rem !important;
+}
+
+.wk-mp-block select.form-control:not([size]):not([multiple]) {
+    height: 36px !important;
+    padding: 5px 16px 5px 3px !important;
+}
+
+.wk-mp-block .menutitle {
+    font-weight: 600;
+    color: #333;
+}
+
+.wk-mp-block .list_content li span a {
+    color: #333;
+}
+
+.wk-mp-block .wk_menu_item ul li {
+    background-color: #fbfbfb;
+    text-transform: uppercase !important;
+    font-size: 12px !important;
+    font-weight: 600;
+}
+
+.wk-mp-block .wk_menu_item ul li:hover {
+    background-color: #2fb5d2 !important;
+}
+
+.wk-mp-block .wk_menu_item ul li:hover a {
+    color: #fff !important;
+}
+
+.wk-mp-block .menu_active {
+    background-color: #2fb5d2 !important;
+}
+
+.wk-mp-block .menu_active a {
+    color: #fff !important;
+}
+
+.wk-mp-block .menu_count {
+    /* color: #d43f3a; */
+}
+
+.wk-mp-block .wk_btn_cancel {
+    border: 1px solid #ff4c4c;
+    background-color: #ff4c4c;
+    color: #fff !important;
+}
+
+.wk-mp-block .wk_btn_cancel:hover {
+    border: 1px solid #ff1919;
+    background-color: #ff0f0f;
+    color: #fff !important;
+}
+
+.wk-mp-block #sp_price {
+    background-color: #f2f2f2 !important;
+}
+
+.wk-mp-block label,
+.label {
+    /* text-transform: uppercase !important; */
+    font-size: 13px !important;
+    color: #555 !important;
+    font-weight: 600 !important;
+}
+
+.wk-mp-block .input-group-addon {
+    padding: 0.4rem 0.75rem !important;
+}
+
+.wk-mp-block #mp_product_list {
+    border: 1px solid #f6f6f6 !important;
+}
+
+.table thead th {
+    border-bottom: 1px solid #2fb5d2 !important;
+    font-weight: 600;
+}
+
+.wk-mp-block table .even {
+    background-color: #fff !important;
+}
+
+.wk-mp-block table .odd {
+    background-color: #fafafa !important;
+}
+
+.wk-mp-block .form-control:focus {
+    outline: 0.12rem solid #2fb5d2 !important;
+    border: 1px solid #fff !important;
+}
+
+.wk-mp-block .wk_product_approved {
+    background-color: #4cbb6c;
+    border-color: #4cbb6c;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 12px;
+    padding: 3px 5px;
+}
+
+.wk-mp-block .wk_product_pending {
+    background-color: #ff4c4c;
+    border-color: #ff4c4c;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 12px;
+    padding: 3px 5px;
+}
+
+
+/*.wk-mp-block .btn-default {
+    padding: 0.3rem 0.6rem !important;
+}*/
+
+.wk-mp-block .wk-mp-right-column .wk_product_list .btn-primary {
+    background-color: #4cbb6c !important;
+    padding: 0.3rem 0.6rem !important;
+}
+
+.wk-mp-block .wk_edit_profile_btn,
+.wk_deactivate_shop {
+    background-color: #4cbb6c !important;
+    padding: 0.3rem 0.6rem !important;
+}
+
+.wk-mp-block .btn-primary-outline {
+    background-color: #fff !important;
+    border: 1px solid #2fb5d2 !important;
+    color: #2fb5d2 !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    padding: 10px 12px !important;
+}
+
+.wk-mp-block .btn-primary-outline .material-icons {
+    font-size: 20px !important;
+}
+
+.wk-mp-block .pagination .disabled a {
+    background-color: #f2f2f2 !important;
+    cursor: not-allowed !important;
+}
+
+.wk-mp-block .material-icons {
+    font-size: 1.2rem !important;
+    margin-bottom: 1px !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+.wk-mp-block .wk_language_menu li a {
+    color: #999 !important;
+    font-size: 14px !important;
+}
+
+.wk-mp-block .wk_language_menu li a:hover {
+    color: #2fb5d2 !important;
+}
+
+.wk-mp-block .wk_bulk_actions li {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.wk-mp-block .wk_bulk_actions li a {
+    color: #999 !important;
+    font-size: 14px !important;
+}
+
+.wk-mp-block .wk_bulk_actions li a:hover {
+    color: #2fb5d2 !important;
+}
+
+.wk-mp-block .box-account .box-head h6 {
+    font-size: 14px !important;
+    color: #414141 !important;
+    font-weight: 600 !important;
+}
+
+.wk-mp-block .wk-mp-right-column p {
+    color: #414141;
+}
+
+.wk-mp-block #wk_add_attribute_button {
+    padding: 7px 14px;
+}
+
+.wk-mp-block .wk_each_group {
+    background-color: #fff !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+}
+
+.wk-mp-block .nav-tabs .nav-item {
+    /* text-transform: uppercase !important; */
+}
+
+.wk-mp-block .wk_formfield_comment {
+    color: #a9a9a9 !important;
+    font-style: italic !important;
+}
+
+.wk-mp-block .form-control-comment {
+    color: #777 !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    padding: 4px !important;
+}
+
+.wk-mp-block .wk_profile_img {
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+.wk-mp-block #chart_div {
+    color: #414141 !important;
+}
+
+.modal-content .wk_btn_cancel {
+    border: 1px solid #ff4c4c;
+    background-color: #ff4c4c;
+    color: #fff !important;
+}
+
+.modal-content .wk_btn_cancel:hover {
+    border: 1px solid #ff1919;
+    background-color: #ff0f0f;
+}
+
+.modal-content .form-control {
+    background-color: #fff !important;
+    border: 1px solid #ccc !important;
+    color: #999 !important;
+    font-size: 14px !important;
+}
+
+#wk_product_combination .highlighted{
+    background-color: #ddd !important;
+}
+
+/*For smaller screen*/
+
+@media only screen and (max-width:768px) {
+    .wk-mp-block label,
+    .label {
+        text-align: left;
+    }
+}

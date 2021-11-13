@@ -191,8 +191,8 @@ class FlingexApi
                     break;break;
                 } else if(
                     preg_match("/sub.*dhaka/i", $service['slug'])
-                    && preg_match("/savar|tongi/i", $userAddress['city'])
-                    && preg_match("/savar|tongi/i", strtolower($marchantAddress))
+                    && preg_match("/Savar|Gazipur|Kamrangirchar/i", $userAddress['city'])
+                    && preg_match("/Savar|Gazipur|Kamrangirchar/i", strtolower($marchantAddress))
                 ) {
                     $bestService = $service;
                     break;break;
@@ -238,7 +238,7 @@ class FlingexApi
                 }
                 if(
                     preg_match("/sub.*dhaka/i", $zone['zonename'])
-                    && preg_match("/savar|tongi/i", $userAddress['city'])
+                    && preg_match("/Savar|Gazipur|Kamrangirchar/i", $userAddress['city'])
                 ) {
                     $nearestZone = $zone;
                     break;break;
@@ -282,6 +282,7 @@ class FlingexApi
     {
 
         $time = pSQL(Tools::getValue('time', microtime(true)));
+        $res = null;
 
         $order_query = Db::getInstance()->executeS(
             'SELECT fo.reference,fo.id_flingex_order,fo.tracking_number,fo.id_order

@@ -56,7 +56,7 @@ class PaperFly extends Module
         $return &= parent::install();
 
         $return &= $this->createDbTables();
-        $return &= $this->installTab('AdminDhldpManifest', 'PAPERFLY', 'AdminParentShipping', true);
+        $return &= $this->installTab('AdminPaperfly', 'Paperfly', 'AdminParentShipping', true);
         $return &= $this->registerHook('displayBackOfficeHeader');
         $return &= $this->registerHook('displayAdminOrder');
         $return &= $this->registerHook('actionOrderReturn');
@@ -217,37 +217,6 @@ class PaperFly extends Module
 
     }
 
-
-    public function hookDisplayHeader($params)
-    {
-        // restriction - only for germany
-        if (($this->context->controller instanceof AddressController) &&
-            self::getConfig('DHL_PFPS', $this->context->shop->id)) {
-            $this->context->controller->addJquery();
-            $this->context->controller->addjqueryPlugin('fancybox');
-            $this->context->controller->addjqueryPlugin('scrollTo');
-            
-
-        } elseif (($this->context->controller instanceof OrderController) &&
-            (self::getConfig('DHL_GOOGLEMAPAPIKEY', $this->context->shop->id) != '') &&
-            self::getConfig('DHL_PFPS', $this->context->shop->id)) {
-            $this->context->controller->addJquery();
-            $this->context->controller->addjqueryPlugin('fancybox');
-            $this->context->controller->addjqueryPlugin('scrollTo');
-
-            if (self::getConfig('DHL_CONFIRMATION_PRIVATE')) {
-                if (version_compare(_PS_VERSION_, '1.7', '<')) {
-                    $this->context->controller->addJS($this->_path . 'views/js/private.js');
-                    $this->context->controller->addCSS($this->_path . 'views/css/private.css');
-                } else {
-                    $this->context->controller->registerJavascript('dhl_private', 'modules/' . $this->name . '/views/js/private.js', array('position' => 'bottom', 'priority' => 100));
-                    $this->context->controller->registerStylesheet('dhl_private', 'modules/' . $this->name . '/views/css/private.css', array('media' => 'all', 'priority' => 150));
-                }
-            }
-
-        } 
-    }
-
     public function filterShipping($shipping, $id_shop)
     {
         $dhl_carriers = $this->getDhlCarriers(true, false, $id_shop);
@@ -329,6 +298,24 @@ class PaperFly extends Module
         }
 
         return $link;
+    }
+
+
+    public function hookDisplayHeader($params)
+    {
+        if (($this->context->controller instanceof OrderController)) {
+            $this->context->controller->addjqueryPlugin('fancybox');
+            $this->context->controller->addjqueryPlugin('scrollTo');
+
+                if (version_compare(_PS_VERSION_, '1.7', '<')) {
+                    $this->context->controller->addJS($this->_path . 'views/js/private.js');
+                    $this->context->controller->addCSS($this->_path . 'views/css/private.css');
+                } else {
+                    $this->context->controller->registerJavascript('dhl_private', 'modules/' . $this->name . '/views/js/private.js', array('position' => 'bottom', 'priority' => 100));
+                    $this->context->controller->registerStylesheet('dhl_private', 'modules/' . $this->name . '/views/css/private.css', array('media' => 'all', 'priority' => 150));
+                }
+
+        } 
     }
 
     public function hookDisplayBackOfficeHeader($params)

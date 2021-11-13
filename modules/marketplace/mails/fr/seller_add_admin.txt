@@ -1,0 +1,18 @@
+[{shop_url}]
+
+Bonjour {seller_name}
+
+Vous êtes fait un vendeur de marketplace  {mp_shop_name} par l'administrateur.
+
+Détails de votre boutique:
+
+Nom du vendeur: {seller_name}
+
+Nom de votre boutique: {mp_shop_name}
+
+Téléphone: {phone}
+
+Email: {business_email}
+
+Principal nom de la boutique: {shop_name}
+

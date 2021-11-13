@@ -1,0 +1,2 @@
+- Module V5.3.1 compatible with PrestaShop V1.7.x.x
+- Module V3.3.1 compatible with PrestaShop V1.6.x.x

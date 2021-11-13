@@ -1,0 +1,18 @@
+[{shop_url}]
+
+BONJOUR ADMINISTRATEUR,
+
+ Une nouvelle requête du vendeur a été créé par {seller_name}
+
+DÉTAILS
+
+Nom du vendeur : {seller_name}
+
+Nom de la boutique: {seller_shop}
+
+Téléphone: {seller_phone}
+
+Email: {seller_email_id}
+
+Venez à votre boutique en cliquant sur le lien ci-dessous: [{shop_url}]
+

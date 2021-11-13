@@ -1,0 +1,15 @@
+[{shop_url}]
+
+Bonjour {seller_name}
+
+Administrateur a assigné un produit {product_name} à vous.
+
+Détails de votre produit :
+
+Nom de Produit : {product_name}
+
+Nom de la Catégorie : {category_name}
+
+Price: {product_price}
+
+Quantité : {quantity}
