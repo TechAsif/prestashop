@@ -506,6 +506,27 @@ class WkMpSellerProduct extends ObjectModel
         return false;
     }
 
+
+    public static function getAllSpecificProduct(){
+
+       
+
+         $sqltestfinal =  'SELECT * FROM `ps_specific_price` sp inner JOIN ps_product pp on sp.id_product = pp.id_product WHERE sp.id_group = 4 order by sp.id_product,sp.reduction';
+
+
+       
+
+        $mpProducts = Db::getInstance()->executeS($sqltestfinal);
+
+        
+        if ($mpProducts && !empty($mpProducts)) {
+            return $mpProducts;
+        }
+
+        return false;
+
+    }
+
     /**
      * Get seller's product images with seller id product.
      *
@@ -550,6 +571,12 @@ class WkMpSellerProduct extends ObjectModel
                 LEFT JOIN `'._DB_PREFIX_.'wk_mp_seller_product_lang` mspl ON (mspl.id_mp_product = msp.id_mp_product)
                 WHERE mspl.`id_lang` = '.(int) $idLang;
 
+        $sqltest = 'SELECT * FROM `'._DB_PREFIX_.'specific_price` 
+                WHERE id_group = 4';
+
+         $sqltestfinal =       'SELECT  *  FROM `ps_specific_price` sp inner JOIN ps_product_lang pl on sp.id_product = pl.id_product WHERE sp.id_group = 4 GROUP by sp.id_product';
+
+
         if ($idSeller) {
             $sql .= ' AND msp.`id_seller` = '.(int) $idSeller;
         }
@@ -570,6 +597,67 @@ class WkMpSellerProduct extends ObjectModel
         $sql .= ' LIMIT '.$start_point.', '.$limit_point;
 
         $mpProducts = Db::getInstance()->executeS($sql);
+
+        Hook::exec(
+            'actionSellerProductsListResultModifier',
+            array('seller_product_list' => &$mpProducts)
+        );
+
+        if ($mpProducts && !empty($mpProducts)) {
+            return $mpProducts;
+        }
+
+        return false;
+    }
+    /**
+     * Get seller's product whether added into prestashop or not.
+     *
+     * @param int  $idSeller Seller ID
+     * @param bool $idLang   Language id
+     * @param bool $active   activated or not
+     *
+     * @return array
+     */
+    public static function getSellerOffersProduct($idSeller = false, $active = 'all', $idLang = false, $orderby = false, $orderway = false, $start_point = 0, $limit_point = 10000000)
+    {
+        if (!$idLang) {
+            $idLang = Configuration::get('PS_LANG_DEFAULT');
+        }
+
+        if (!$orderway) {
+            $orderway = 'desc';
+        }
+
+        $sql = 'SELECT * FROM `'._DB_PREFIX_.'wk_mp_seller_product` msp
+                LEFT JOIN `'._DB_PREFIX_.'wk_mp_seller_product_lang` mspl ON (mspl.id_mp_product = msp.id_mp_product)
+                WHERE mspl.`id_lang` = '.(int) $idLang;
+
+        $sqltest = 'SELECT * FROM `'._DB_PREFIX_.'specific_price` 
+                WHERE id_group = 4';
+
+         $sqltestfinal =       'SELECT  *  FROM `ps_specific_price` sp inner JOIN ps_product_lang pl on sp.id_product = pl.id_product WHERE sp.id_group = 4 GROUP by sp.id_product';
+
+
+        if ($idSeller) {
+            $sql .= ' AND msp.`id_seller` = '.(int) $idSeller;
+        }
+
+        if ($active === true || $active === 1) {
+            $sql .= ' AND msp.`active` = 1 ';
+        } elseif ($active === false || $active === 0) {
+            $sql .= ' AND msp.`active` = 0 ';
+        }
+
+        if (!$orderby) {
+            $sql .= ' ORDER BY msp.`id_mp_product` '.pSQL($orderway);
+        } elseif ($orderby == 'name') {
+            $sql .= ' ORDER BY mspl.`product_name` '.pSQL($orderway);
+        } else {
+            $sql .= ' ORDER BY msp.`'.$orderby.'` '.pSQL($orderway);
+        }
+        $sql .= ' LIMIT '.$start_point.', '.$limit_point;
+
+        $mpProducts = Db::getInstance()->executeS($sqltestfinal);
 
         Hook::exec(
             'actionSellerProductsListResultModifier',

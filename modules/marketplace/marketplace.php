@@ -76,6 +76,8 @@ class Marketplace extends Module
             'productfeature',
             'viewfeaturevalue',
             'generatecombination',
+            'abc',
+
         );
         parent::__construct();
         $this->displayName = $this->l('Marketplace');
@@ -273,9 +275,16 @@ class Marketplace extends Module
                     $totalSellerProducts = 0;
                 }
 
+                if ($sellerOfferProduct = WkMpSellerProduct::getSellerOffersProduct($seller['id_seller'], 'all', $this->context->language->id)) {
+                    $totalSellerOffersProducts = count($sellerOfferProduct);
+                } else {
+                    $totalSellerOffersProducts = 0;
+                }
+
                 $this->context->smarty->assign(array(
                     'name_shop' => $seller['link_rewrite'],
                     'totalSellerProducts' => $totalSellerProducts,
+                    'totalSellerOffersProducts' => $totalSellerOffersProducts,
                 ));
             }
 

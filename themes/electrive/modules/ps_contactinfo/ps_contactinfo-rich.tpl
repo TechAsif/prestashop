@@ -39,6 +39,16 @@
        </div>
     </div>
   {/if}
+
+    <hr/>
+    <div class="block">
+      <div class="icon"><i class="material-icons">&#xE0CD;</i></div>
+      <div class="data">
+        {l s='Call us:' d='Shop.Theme.Global'}<br/>
+        <a href="tel:{$contact_infos.phone}">+8801733</a>
+       </div>
+    </div>
+ 
   {if $contact_infos.fax}
     <hr/>
     <div class="block">
