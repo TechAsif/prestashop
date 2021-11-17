@@ -137,7 +137,7 @@
           <i class="material-icons">add_circle</i>Add a specific price
         </a>
         <table id="js-specific-price-list" class="table hide seo-table"
-          data="/ps174/admin084oazcuj/index.php/specific-price/list/1?_token=TPMW9jc1YO_o8OughS85zTVmciw_-Gog550S_c5mpUU"
+          data="/ps174/en/module/marketplace/spacificprice?ajax=1&action=list&product_id=21"
           data-action-delete="/ps174/admin084oazcuj/index.php/specific-price/delete/1?_token=TPMW9jc1YO_o8OughS85zTVmciw_-Gog550S_c5mpUU">
           <thead class="thead-default">
             <tr>
