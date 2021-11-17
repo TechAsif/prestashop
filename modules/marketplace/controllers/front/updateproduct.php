@@ -858,6 +858,9 @@ class MarketplaceUpdateProductModuleFrontController extends ModuleFrontControlle
         $this->registerJavascript('mp-mp_form_validation', 'modules/'.$this->module->name.'/views/js/mp_form_validation.js');
         $this->registerJavascript('mp-change_multilang', 'modules/'.$this->module->name.'/views/js/change_multilang.js');
 
+        Media::addJsDef(array(
+            'spacificprice_ajax' => $this->context->link->getModuleLink($this->module->name,'spacificprice', array('ajax'=>true)),
+        ));
 
         $this->registerJavascript('mp-bloodhound', 'modules/'.$this->module->name.'/views/js/bloodhound.js');
         $this->registerJavascript('mp-typeahead', 'modules/'.$this->module->name.'/views/js/typeahead.bundle.js');

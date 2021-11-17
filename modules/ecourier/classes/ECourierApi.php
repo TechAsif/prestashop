@@ -17,13 +17,28 @@ class ECourierApi
     public $warnings;
     public $user_token = false;
     public $module;
-    public $api_version;
+    public $base_url;
+    public $request_header;
     
     public static $conf_prefix = 'ECOURIER_';
 
-    public function __construct($module, $api_version = '3.1')
+    public function __construct($module)
     {
         $this->module = $module;
+        
+        $USER_ID = Configuration::get(self::$conf_prefix . 'USER_ID');
+        $API_KEY = Configuration::get(self::$conf_prefix . 'API_KEY');
+        $API_SECRET = Configuration::get(self::$conf_prefix . 'API_SECRET');
+
+        $this->request_header = [
+            'USER-ID: '.$USER_ID,
+            'API-KEY: '.$API_KEY,
+            'API-SECRET: '.$API_SECRET,
+            'Content-Type: application/json'
+        ];
+
+        $mode = Configuration::get(self::$conf_prefix.'SANDBOX'); // sandbox 1 = live
+        $this->base_url  = (int)$mode == 1  ? 'https://backoffice.ecourier.com.bd/api/' : 'https://staging.ecourier.com.bd/api/';
     }
     
     public function phpCurlRequest($curlUrl, $method, $data=array(),$headers=array()) {
@@ -88,33 +103,14 @@ class ECourierApi
         }
     }
     
-
-
-    public function checkAccount($username, $password)
-    {
-        $curlUrl = 'https://ecourier.com/api/merchant/login?username='.$username.'&password='. $password;
-        $response = $this->phpCurlRequest($curlUrl, 'POST');
-
-        ECourier::logToFile('Response',$response, 'account');
-
-        return $response;
-    }
-
-
-    public function callPFApi($function, $params, $id_shop = null)
-    {
-        $this->errors = array();
-        $msg = "\n-----------------------------------------";
-        ECourier::logToFile('DHL', $msg, 'dhl_api');
-        return false;
-    }
-
     
     /*******sent to shipping via ecourier***********/
 
-    public function sentOrderToECourier($order) {
+    public function sentOrderToECourier($params) {
 
-        $token = Configuration::get(self::$conf_prefix.'LIVE_TOKEN');
+
+        $order = $params['order'];
+        $products = $params['cart']->getProducts();
 
         $delivery_address_id=$order->id_address_delivery;
         $address= Db::getInstance()->executeS(
@@ -122,27 +118,45 @@ class ECourierApi
             FROM `'._DB_PREFIX_.'address`
             WHERE id_address ='.$delivery_address_id
         );
-        $bestService = $this->getBestServiceType($address);
-        $reciveZone = $this->getReciveZone($address);
 
+        $bestPackage = $this->getBestPackage($address);
+        
         if(count($address)) {
             
-            $post_data = [
-                'token' => $token,
-                'choose_service_type_id' => $bestService ? $bestService['id'] : 1,
-                'reciveZone' => $reciveZone ? $reciveZone['id'] : '7', // default sub-dhaka
-                'cod' => ($order->total_paid + (int)$bestService['deliverycharge']), // collected amount of price
-                'name' => $address[0]["firstname"] .' '. $address[0]["lastname"], // customer name
-                'weight' => 1,
-                'address' => $address[0]["address1"]. $address[0]["address2"],
-                'phonenumber' => $address[0]["phone"],
-                'invoiceNo' => $order->reference,
-                'note' => '',
+            $post_data = [                
+                "package_code"=> isset($bestPackage['package_code']) ? $bestPackage['package_code']: "#2416", // mandatory
+                "product_id"=> $products[0]['id_product'],
+                "ep_id"=> "32132212", // mandatory // Unique eCommerce Partner ID
+                "ep_name"=> "Trank", // eCommerce Partner (EP) Name
+                "pick_contact_person"=> "Mahbub",
+                "pick_division"=> "Dhaka",
+                "pick_district"=> "Dhaka", // mandatory
+                "pick_thana"=> "Badda", // mandatory
+                "pick_hub"=> "18490", // mandatory
+                "pick_union"=> "1212", // mandatory
+                "pick_address"=> "House no 7, Road 5, middle badda, dhaka", // mandatory
+                "pick_mobile"=> "01738457162", // mandatory
+                "recipient_name"=> $address[0]["firstname"] .' '. $address[0]["lastname"], // mandatory
+                "recipient_mobile"=> $address[0]["phone"], // mandatory
+                "recipient_division"=> "Dhaka",
+                "recipient_district"=> "Dhaka",
+                "recipient_city"=> $address[0]["city"], // mandatory
+                "recipient_area"=> "A K Khan", // mandatory
+                "recipient_thana"=> "Babuganj", // mandatory
+                "recipient_union"=> "8216", // mandatory
+                "recipient_address"=> $address[0]["address1"]. $address[0]["address2"], // mandatory
+                "parcel_detail"=> "parcel detail",
+                "number_of_item"=> count($products),
+                "product_price"=> $order->total_paid_tax_incl, // mandatory
+                "payment_method"=> "COD", // $order->payment, // mandatory
+                "actual_product_price"=> $order->total_paid,
+                "pgwid"=> 8888, //Payment gateway ID. eCourier will share with merchant
+                "pgwtxn_id"=>"asdasdsad" // Payment gateway transaction ID
             ];
-    
-            $curlUrl = 'https://ecourier.com/api/merchant/create?'. http_build_query($post_data);
 
-            $apiJsonResponse = $this->phpCurlRequest($curlUrl, 'POST');
+            $curlUrl = $this->base_url. 'order-place-reseller';
+
+            $apiJsonResponse = $this->phpCurlRequest($curlUrl, 'POST', json_encode($post_data), $this->request_header);
     
             return json_decode($apiJsonResponse, true);
         }
@@ -151,126 +165,69 @@ class ECourierApi
     }
 
 
-    public function getBestServiceType($address)
+    public function getBestPackage($address)
     {
         $disticts = $this->getBDDistricts();
-             
-        $token = Configuration::get(self::$conf_prefix.'LIVE_TOKEN');
-        $curlUrl = 'https://ecourier.com/api/merchant/choose-service';
-        $formData = array('token' => $token);
-        $apiJsonResponse = json_decode($this->phpCurlRequest($curlUrl, 'GET', $formData), true);
 
-        if($apiJsonResponse['code'] != 200)
-            return false;
+        $curlUrl = $this->base_url. 'packages';
+        $packages = json_decode($this->phpCurlRequest($curlUrl, 'POST', [], $this->request_header), true);
 
-        $services = isset($apiJsonResponse['data']['pricing']) ? $apiJsonResponse['data']['pricing']: [['deliverycharge'=> 0]];
+        if(!isset($package['coverage']))
+            return null;
 
-        usort($services, function($a, $b) {
-            return $a['deliverycharge'] > $b['deliverycharge'];
+        usort($packages, function($a, $b) {
+            return $a['shipping_charge'] > $b['shipping_charge'];
         });
-        $bestService = null;
+        $bestPackage = null;
         $userAddress = $address[0];
         $marchantAddress = 'Dhaka'; // initally let consider all vendor marchandizer address inside dhaka
 
 
         foreach ($disticts as $key => $distict) {
-            foreach ($services as $service_key => $service) {
+            foreach ($packages as $package_key => $package) {
                 if(
-                    preg_match("/inside-dhaka/i", $service['slug'])
+                    preg_match("/inside.*dhaka/i", $package['coverage'])
                     && preg_match("/dhaka/i", $userAddress['city'])
                     && preg_match("/dhaka/i", strtolower($marchantAddress))
                 ) {
-                    $bestService = $service;
-                    break;break;
-                } else if( 
-                    preg_match("/own.*city/i", $service['slug'])
-                    && strtolower($userAddress['city'])==strtolower($distict) 
-                    && strtolower($userAddress['city'])==strtolower($marchantAddress) 
-                ) {
-                    $bestService = $service;
+                    $bestPackage = $package;
                     break;break;
                 } else if(
-                    preg_match("/sub.*dhaka/i", $service['slug'])
+                    preg_match("/sub.*dhaka/i", $package['coverage'])
                     && preg_match("/Savar|Gazipur|Kamrangirchar/i", $userAddress['city'])
                     && preg_match("/Savar|Gazipur|Kamrangirchar/i", strtolower($marchantAddress))
                 ) {
-                    $bestService = $service;
+                    $bestPackage = $package;
                     break;break;
                 }
                 
             }
         }
-        if($bestService != null) {
-            return $bestService;
+        if($bestPackage != null) {
+            return $bestPackage;
         } else {
-            foreach ($services as $service_key => $service) {
-                if (preg_match("/outside.*dhaka/i", $service['slug']))
-                    return $service;
+            foreach ($packages as $package_key => $package) {
+                if (preg_match("/outside.*dhaka/i", $package['coverage']))
+                    return $package;
                 
             }
             return null;
         }
     }
-
-    public function getReciveZone($address)
-    {
-        $disticts = $this->getBDDistricts();
-             
-        $token = Configuration::get(self::$conf_prefix.'LIVE_TOKEN');
-        $curlUrl = 'https://ecourier.com/api/merchant/zone';
-        $formData = array('token' => $token);
-        $apiJsonResponse = json_decode($this->phpCurlRequest($curlUrl, 'GET', $formData), true);
-
-        if($apiJsonResponse['code'] != 200)
-            return false;
-
-        $zones = isset($apiJsonResponse['data']['nearestzones']) ? $apiJsonResponse['data']['nearestzones']: [['id'=> 6]];
-
-        $nearestZone = null;
-        $userAddress = $address[0];
-        $addKeywords = preg_split("/[\s,]+/", $userAddress['address1'].$userAddress['address2']);
-
-        foreach ($zones as $zone_key => $zone) {
-            foreach ($addKeywords as $addKeyword) {
-                if( strtolower($zone['zonename']) == strtolower($addKeyword)) {
-                    $nearestZone = $zone;
-                    break;break;
-                }
-                if(
-                    preg_match("/sub.*dhaka/i", $zone['zonename'])
-                    && preg_match("/Savar|Gazipur|Kamrangirchar/i", $userAddress['city'])
-                ) {
-                    $nearestZone = $zone;
-                    break;break;
-                }
-            }
-            
-        }
     
-        if($nearestZone != null) {
-            return $nearestZone;
-        } else {
-            foreach ($zones as $zone_key => $zone) {
-                if (preg_match("/outside.*dhaka/i", $zone['zonename']))
-                    return $zone;
-                
-            }
-            return null;
-        }
-    }
-
     /*******sent to shipping via ecourier***********/
 
     public function sentOrderToECourierTrackingApi($tracking_id){
 
         if( !$tracking_id )
             return ["status"=> "error","msg"=> "Tracking ID not found"]; 
+        
+        $curlUrl = $this->base_url. 'track';
+        $post_data = [
+            'ecr' => $tracking_id // eCourier ID
+        ];
 
-        $token = Configuration::get(self::$conf_prefix.'LIVE_TOKEN');
-
-        $post_data = ['token' => $token];
-        $curlUrl = 'https://ecourier.com/api/merchant/parcel/track/'.$tracking_id.'?'. http_build_query($post_data);
-        $trackingResponse = $this->phpCurlRequest($curlUrl, 'GET');
+        $trackingResponse = $this->phpCurlRequest($curlUrl, 'POST', json_encode($post_data), $this->request_header);
 
         return json_decode($trackingResponse, true);
 
