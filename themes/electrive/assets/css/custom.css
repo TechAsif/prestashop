@@ -2611,9 +2611,11 @@ body::-webkit-scrollbar-thumb {
 #product_comparison .product-image-block img,.wlp_bought_item_container img{
     border-radius: 5px;
 }
-#cta-terms-and-conditions-0{
+#cta-terms-and-conditions-0,.cta-terms-and-conditions{
     color: #ffcc00;
 }
+
+
 .brand {
     display: inline-block;
     text-align: center;
