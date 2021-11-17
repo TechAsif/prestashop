@@ -324,7 +324,7 @@ p.wk_btn_add_product {
     margin-left: 10px;
 }
 
-#mp_product_list .edit_seq .mp-list-img-link {
+#mp_product_list  .edit_seq .mp-list-img-link {
     cursor: pointer;
 }
 

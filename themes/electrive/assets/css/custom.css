@@ -48,6 +48,7 @@ button:focus,button:hover{
 :focus{outline: none;}
 .owl-carousel{
      z-index: 0;
+     height: 300px;
 }
 :focus{
     outline: none !important;
@@ -576,6 +577,8 @@ body::-webkit-scrollbar-thumb {
 }
 .homeslider-container{
     position: relative;
+     height: 300px;
+        overflow:hidden;
 }
 #owl-image-slider .owl-dots{
     position: absolute;
@@ -592,6 +595,7 @@ body::-webkit-scrollbar-thumb {
 }
 .homeslider-container img{
     border-radius: 4px;
+    height: 300px;
 }
 /* slider end */
 /* service */
@@ -2607,9 +2611,11 @@ body::-webkit-scrollbar-thumb {
 #product_comparison .product-image-block img,.wlp_bought_item_container img{
     border-radius: 5px;
 }
-#cta-terms-and-conditions-0{
+#cta-terms-and-conditions-0,.cta-terms-and-conditions{
     color: #ffcc00;
 }
+
+
 .brand {
     display: inline-block;
     text-align: center;
@@ -2739,6 +2745,7 @@ body::-webkit-scrollbar-thumb {
     }
     .homeslider-container{
         margin: 0;
+       
     }
     .slide.col-xs-12{
         padding: 0;
@@ -3701,3 +3708,4 @@ body.active .sidenav {
     }
 } 
 /* box layout end */
+
