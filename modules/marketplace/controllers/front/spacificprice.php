@@ -23,12 +23,8 @@
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 */
-use PrestaShopBundle\Controller\Admin\SpecificPriceController;
-use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
-
 class MarketplaceSpacificPriceModuleFrontController extends ModuleFrontController
 {
-    public $customContainer;
     public function __construct()
     {
         parent::__construct();
@@ -38,43 +34,10 @@ class MarketplaceSpacificPriceModuleFrontController extends ModuleFrontControlle
     */
     public function initContent()
     {
-        // {
-        //     "id_specific_price": "5",
-        //     "id_product": 21,
-        //     "rule_name": "--",
-        //     "attributes_name": "All combinations",
-        //     "shop": "Prestashop 1.7.4",
-        //     "currency": "Bangladeshi Taka",
-        //     "country": "Bangladesh",
-        //     "group": "All groups",
-        //     "customer": "All customers",
-        //     "fixed_price": "--",
-        //     "impact": "- BDT10.00 (Tax incl.)",
-        //     "period": "From 2021-11-11 00:00:00<br />to 2022-03-12 00:00:00",
-        //     "from_quantity": "1",
-        //     "can_delete": true
-        //   }
+        header('Content-Type: application/json');
 
-        // `id_specific_price`, //  INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-        // `id_product`, //  INT(10) UNSIGNED NOT NULL,
-
-        // `id_specific_price_rule`, //  INT(10) UNSIGNED NOT NULL,
-        // `id_cart`, //  INT(10) UNSIGNED NOT NULL,
-        // `id_shop`, //  INT(10) UNSIGNED NOT NULL DEFAULT 1,
-        // `id_shop_group`, //  INT(10) UNSIGNED NOT NULL,
-        // `id_currency`, //  INT(10) UNSIGNED NOT NULL,
-        // `id_country`, //  INT(10) UNSIGNED NOT NULL,
-        // `id_group`, //  INT(10) UNSIGNED NOT NULL,
-        // `id_customer`, //  INT(10) UNSIGNED NOT NULL,
-        // `id_product_attribute`, //  INT(10) UNSIGNED NOT NULL,
-        // `price`, //  DECIMAL(20,6) NOT NULL,
-        // `from_quantity`, //  MEDIUMINT(7) UNSIGNED NOT NULL,
-        // `reduction`, //  DECIMAL(20,6) NOT NULL,
-        // `reduction_tax`, //  TINYINT(1) NOT NULL DEFAULT 1,
-        // `reduction_type`, //  ENUM(amount,percentage) NOT NULL,
-        // `from`, //  DATETIME NOT NULL,
-        // `to`, //  DATETIME NOT NULL,
-        // header('Content-Type: application/json');
+        $action = Tools::getValue('action');
+        $product_id = Tools::getValue('product_id');
 
        
 
@@ -112,43 +75,76 @@ class MarketplaceSpacificPriceModuleFrontController extends ModuleFrontControlle
 
 
         
+        if( $action == 'list')
+            $this->showList($product_id);
+        if( $action == 'add')
+            $this->addSpacificPrice($product_id);
 
+        die();
         
-        $order_sql = "SELECT 
-        `id_specific_price`,
-        `id_product`,
-        pot.name as rule_name,
-        `id_specific_price_rule`,
-        `id_cart`,
-        `id_shop`,
-        `id_shop_group`,
-        `id_currency`,
-        `id_country`,
-        `id_group`,
-        `id_customer`,
-        `id_product_attribute`,
-        `price`,
-        `from_quantity`,
-        `reduction`,
-        `reduction_tax`,
-        `reduction_type`,
-        `from`,
-        `to`,
-        FROM "._DB_PREFIX_."specific_price po 
-        left JOIN "._DB_PREFIX_."specific_price_rule pot 
-        ON (po.id_specific_price_rule=pot.id_specific_price_rule)group by po.reference'";
+    }
+    
+    // http://localhost/ps174/en/module/marketplace/spacificprice?ajax=1&action=list&product_id=21
+    public function showList($product_id)
+    {
+        
+        $specific_price_list_sql = "SELECT
+            sp.id_specific_price,
+            sp.id_product,
+            spr.name AS rule_name,
+            sop.name AS shop,
+            cur.name AS currency,
+            ctl.name AS country,
+            grl.name AS `group`,
+            sp.id_specific_price_rule,
+            sp.price as fixed_price,
+	        cur.iso_code AS currency_code,
+            sp.id_cart,
+            sp.id_shop,
+            sp.id_shop_group,
+            sp.id_currency,
+            sp.id_country,
+            sp.id_group,
+            sp.id_customer,
+            sp.id_product_attribute,
+            sp.from_quantity,
+            sp.reduction,
+            sp.reduction_tax,
+            sp.reduction_type,
+            sp.from,
+            sp.to
+        FROM
+            "._DB_PREFIX_."specific_price sp
+        LEFT JOIN "._DB_PREFIX_."specific_price_rule spr ON
+            (sp.id_specific_price_rule = spr.id_specific_price_rule)
+        LEFT JOIN "._DB_PREFIX_."shop sop ON
+            (sp.id_shop = sop.id_shop)
+        LEFT JOIN "._DB_PREFIX_."currency cur ON
+            (sp.id_currency = cur.id_currency)
+        LEFT JOIN "._DB_PREFIX_."country_lang ctl ON
+            (sp.id_country = ctl.id_country AND ctl.id_lang = 1)
+        LEFT JOIN "._DB_PREFIX_."group_lang grl ON
+            (sp.id_group = grl.id_group AND grl.id_lang = 1)
+        LEFT JOIN "._DB_PREFIX_."customer cus ON
+            (sp.id_customer = cus.id_customer)
+        WHERE sp.id_product = ".$product_id."
+        GROUP BY sp.id_specific_price";
 
+        $specific_price_list = Db::getInstance()->executeS($specific_price_list_sql);
 
-        // $order_query = Db::getInstance()->executeS($order_sql);
+        foreach ($specific_price_list as $key=>$specific_price){
+            $specific_price_list[$key]['impact'] = '-'.$specific_price['currency_code'].$specific_price['reduction'].'('.($specific_price['reduction_tax'] == 1 ? 'Tax incl.': 'Tax excl.' ).')';
+            $specific_price_list[$key]['period'] = 'From '.$specific_price['from'].'<br />to '.$specific_price['to'];
+            $specific_price_list[$key]['can_delete'] = 'true';            
+        };
 
-        // foreach ($order_query as $key=>$paperfly_order){
-        //     specific_price
-        // }
-        die(json_encode([
-            'preview' => 'lroem',
-            'modal'   => 'ipsdddum'
-        ]));
+        die(json_encode($specific_price_list));
     }
 
+    // http://localhost/ps174/en/module/marketplace/spacificprice?ajax=1&action=add&product_id=21
+    public function addSpacificPrice($product_id)
+    {
+        
+    }
 
 }
