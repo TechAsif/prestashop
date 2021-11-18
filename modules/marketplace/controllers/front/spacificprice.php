@@ -76,6 +76,42 @@ class MarketplaceSpacificPriceModuleFrontController extends ModuleFrontControlle
         // `to`, //  DATETIME NOT NULL,
         // header('Content-Type: application/json');
 
+       
+
+
+        $spIdShop = $_POST["form"]["step2"]["specific_price"]["sp_id_shop"];
+        $spIdCurrency = $_POST["form"]["step2"]["specific_price"]["sp_id_currency"];
+        $spIdCountry = $_POST["form"]["step2"]["specific_price"]["sp_id_country"];
+        $spIdGroup = $_POST["form"]["step2"]["specific_price"]["sp_id_group"];
+        $spIdProductAttribute = $_POST["form"]["step2"]["specific_price"]["sp_id_product_attribute"];
+        $spFormDate = $_POST["form"]["step2"]["specific_price"]["sp_from"];
+        $spIdToDate = $_POST["form"]["step2"]["specific_price"]["sp_to"];
+        $spFromQuentity = $_POST["form"]["step2"]["specific_price"]["sp_from_quantity"];
+        $spLeaveBPrice = $_POST["form"]["step2"]["specific_price"]["leave_bprice"];
+        $spReduction = $_POST["form"]["step2"]["specific_price"]["sp_reduction"];
+        $spReductionType = $_POST["form"]["step2"]["specific_price"]["sp_reduction_type"];
+        $spReductionTax = $_POST["form"]["step2"]["specific_price"]["sp_reduction_tax"];
+        $spIdProduct = $_POST["form"]["id_product"];
+
+
+
+        /* return Db::getInstance()->execute('
+		INSERT INTO `'._DB_PREFIX_.'specific_price` (`id_product`, `priority`)
+		VALUES ('.(int)$spIdProduct.',\''.pSQL(rtrim($value, ';')).'\')
+		ON DUPLICATE KEY UPDATE `priority` = \''.pSQL(rtrim($value, ';')).'\'
+		'); */
+
+        $quary = 'INSERT INTO '._DB_PREFIX_.'specific_price (id_product, id_shop, id_currency, id_country, id_group, id_product_attribute, price, from_quantity, reduction, reduction_tax, reduction_type, `from`, `to`,id_specific_price_rule, id_cart,id_shop_group,id_customer) VALUES('.$spIdProduct.', '.$spIdShop.','.$spIdCurrency.', '.$spIdCountry.', '.$spIdGroup.', '.$spIdProductAttribute.', '.$spLeaveBPrice.', '.$spFromQuentity.','.$spReduction.', '.$spReductionTax.', "'.$spReductionType.'","'.$spFormDate.'", "'.$spIdToDate.'",0,0,0,0)';
+           
+         return Db::getInstance()->execute($quary);
+        
+        /* $res = Db::getInstance()->execute('
+        INSERT INTO '._DB_PREFIX_.'specific_price
+            (id_attachment, id_product) VALUES
+            ('.(int) $this->id.', '.(int) $idProduct.')'); */
+
+
+        
 
         
         $order_sql = "SELECT 
