@@ -113,19 +113,19 @@
                     {/block}
 
                     <div class="pitemp">
-                      {if $product->quantity > 0}
+                      {if $product.quantity > 0}
                         <span class="item-quantity d-inline-block">{$product.quantity|intval}
                           {l s='items' d='Shop.Theme.Catalog'}</span>
                       {/if}
 
                       <div class="obar d-inline-block">
-                        {if $product->quantity <= 50}
+                        {if $product.quantity <= 50}
                           <div class="ibar bar1"></div>
-                        {elseif $product->quantity <= 100}
+                        {elseif $product.quantity <= 100}
                           <div class="ibar bar2"></div>
-                        {elseif $product->quantity <= 150}
+                        {elseif $product.quantity <= 150}
                           <div class="ibar bar3"></div>
-                        {elseif $product->quantity <= 200}
+                        {elseif $product.quantity <= 200}
                           <div class="ibar bar4"></div>
                         {else}
                           <div class="ibar bar5"></div>
