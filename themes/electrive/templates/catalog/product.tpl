@@ -40,8 +40,8 @@
   <meta property="product:price:amount" content="{$product.price_amount}">
   <meta property="product:price:currency" content="{$currency.iso_code}">
   {if isset($product.weight) && ($product.weight != 0)}
-  <meta property="product:weight:value" content="{$product.weight}">
-  <meta property="product:weight:units" content="{$product.weight_unit}">
+    <meta property="product:weight:value" content="{$product.weight}">
+    <meta property="product:weight:units" content="{$product.weight_unit}">
   {/if}
 {/block}
 
@@ -56,283 +56,272 @@
           <section class="page-content" id="content">
             {block name='page_content'}
               {* {block name='product_flags'}
-                <ul class="product-flags">
-                  {foreach from=$product.flags item=flag}
-                    <li class="product-flag {$flag.type}">{$flag.label}</li>
-                  {/foreach}
-                </ul>
+                        <ul class="product-flags">
+
+                {foreach from=$product.flags item=flag}
+                              <li class="product-flag {$flag.type}">{$flag.label}</li>
+
+                {/foreach}
+                        </ul>
+
               {/block} *}
 
               {block name='product_cover_thumbnails'}
                 {include file='catalog/_partials/product-cover-thumbnails.tpl'}
               {/block}
-               <div class="scroll-box-arrows">
+              <div class="scroll-box-arrows">
                 <i class="material-icons left">&#xE314;</i>
                 <i class="material-icons right">&#xE315;</i>
               </div>
             {/block}
           </section>
         {/block}
-        </div>
-        <div class="col-xl-7 col-lg-7 col-md-6 col-sm-6 col-xs-12 propage">
-          <div class="row">
-            <div class="col-xl-8 col-lg-7 col-xs-12 prorightw">
-               {block name='page_header_container'}
-                {block name='page_header'}
-                  <h1 class="h1" itemprop="name">{block name='page_title'}{$product.name}{/block}</h1><hr>
-                {/block}
+      </div>
+      <div class="col-xl-7 col-lg-7 col-md-6 col-sm-6 col-xs-12 propage">
+        <div class="row">
+          <div class="col-xl-8 col-lg-7 col-xs-12 prorightw">
+            {block name='page_header_container'}
+              {block name='page_header'}
+                <h1 class="h1" itemprop="name">{block name='page_title'}{$product.name}{/block}</h1>
+                <hr>
+              {/block}
+            {/block}
+
+            <div class="arltr">
+              {block name='product_reviews'}
+                {hook h='displayProductListReviewspro' product=$product}
+              {/block}
+              <a href="#rate" id="ratep"><i class="fa fa-comments-o"></i>{l s='review' d='Shop.Theme.Global'}</a>
+            </div>
+
+            <div class="product-information">
+              {block name='product_description_short'}
+                <div id="product-description-short-{$product.id}" itemprop="description" class="prodes">
+                  {$product.description_short nofilter}</div>
               {/block}
 
-              <div class="arltr">
-             {block name='product_reviews'}
-              {hook h='displayProductListReviewspro' product=$product}
-            {/block}
-            <a href="#rate" id="ratep"><i class="fa fa-comments-o"></i>{l s='review' d='Shop.Theme.Global'}</a>
-              </div>
+              <div class="product-actions">
+                {block name='product_buy'}
+                  <form action="{$urls.pages.cart}" method="post" id="add-to-cart-or-refresh">
+                    <input type="hidden" name="token" value="{$static_token}">
+                    <input type="hidden" name="id_product" value="{$product.id}" id="product_page_product_id">
+                    <input type="hidden" name="id_customization" value="{$product.id_customization}"
+                      id="product_customization_id">
 
-              <div class="product-information">
-            {block name='product_description_short'}
-              <div id="product-description-short-{$product.id}" itemprop="description" class="prodes">{$product.description_short nofilter}</div>
-            {/block}
+                    {block name='product_discounts'}
+                      {include file='catalog/_partials/product-discounts.tpl'}
+                    {/block}
 
-            <div class="product-actions">
-              {block name='product_buy'}
-                <form action="{$urls.pages.cart}" method="post" id="add-to-cart-or-refresh">
-                  <input type="hidden" name="token" value="{$static_token}">
-                  <input type="hidden" name="id_product" value="{$product.id}" id="product_page_product_id">
-                  <input type="hidden" name="id_customization" value="{$product.id_customization}" id="product_customization_id">
+                    <div class="pitemp">
+                      {if $product->quantity > 0}
+                        <span class="item-quantity d-inline-block">{$product.quantity|intval}
+                          {l s='items' d='Shop.Theme.Catalog'}</span>
+                      {/if}
 
-                  {block name='product_discounts'}
-                    {include file='catalog/_partials/product-discounts.tpl'}
-                  {/block}
-
-                  <div class="pitemp">
-                    {if $product->quantity > 0}
-                      <span class="item-quantity d-inline-block">{$product.quantity|intval} {l s='items' d='Shop.Theme.Catalog'}</span>
-                    {/if}
-                    
-                    <div class="obar d-inline-block">
-                    {if $product->quantity <= 50}
-                      <div class="ibar bar1"></div>
-                      {elseif $product->quantity <= 100}
-                      <div class="ibar bar2"></div>
-                      {elseif $product->quantity <= 150}
-                      <div class="ibar bar3"></div>
-                      {elseif $product->quantity <= 200}
-                      <div class="ibar bar4"></div>
-                      {else}
-                      <div class="ibar bar5"></div>
-                    {/if}
+                      <div class="obar d-inline-block">
+                        {if $product->quantity <= 50}
+                          <div class="ibar bar1"></div>
+                        {elseif $product->quantity <= 100}
+                          <div class="ibar bar2"></div>
+                        {elseif $product->quantity <= 150}
+                          <div class="ibar bar3"></div>
+                        {elseif $product->quantity <= 200}
+                          <div class="ibar bar4"></div>
+                        {else}
+                          <div class="ibar bar5"></div>
+                        {/if}
+                      </div>
                     </div>
-                  </div>
 
-                  {hook h='displayProductPriceBlock' product=$product type="weight" hook_origin='product_sheet'}
-                  
-                  {* Winter Infotech Start 10-12-2020*}
-        {if isset($product.flags['on-sale']) && isset($product.specific_prices.to) && ($product.specific_prices.to|date_format:"%Y/%m/%d" > $smarty.now|date_format:"%Y/%m/%d")}
-          <div claas="wb_countdown">
-          <div data-date="{$product.specific_prices.to|date_format}" class="wb_product_countdown">
-            <div class="wb_countdown_days">
-              <span class="wb_countdown_days_digit"></span>
-              <p>{l s='Days' d='Shop.Theme.Catalog'}</p>
-            </div>
-            <div class="wb_countdown_hours">
-              <span class="wb_countdown_hours_digit"></span>
-              <p>{l s='Hours' d='Shop.Theme.Catalog'}</p>
-            </div>
-            <div class="wb_countdown_minutes">
-              <span class="wb_countdown_minutes_digit"></span>
-              <p>{l s='Min' d='Shop.Theme.Catalog'}</p>
-            </div>
-            <div class="wb_countdown_seconds">
-              <span class="wb_countdown_seconds_digit"></span>
-              <p>{l s='Sec' d='Shop.Theme.Catalog'}</p>
-            </div>
-          </div>
-          </div>
-        {/if}
-        {* Winter Infotech End*}
-        
+                    {hook h='displayProductPriceBlock' product=$product type="weight" hook_origin='product_sheet'}
 
-                  {block name='product_pack'}
-                    {if $packItems}
-                      <section class="product-pack">
-                        <h3 class="h4">{l s='This pack contains' d='Shop.Theme.Catalog'}</h3>
-                        {foreach from=$packItems item="product_pack"}
-                          {block name='product_miniature'}
-                            {include file='catalog/_partials/miniatures/pack-product.tpl' product=$product_pack}
-                          {/block}
-                        {/foreach}
-                    </section>
+                    {* Winter Infotech Start 10-12-2020*}
+                    {if isset($product.flags['on-sale']) && isset($product.specific_prices.to) && ($product.specific_prices.to|date_format:"%Y/%m/%d" > $smarty.now|date_format:"%Y/%m/%d")}
+                      <div claas="wb_countdown">
+                        <div data-date="{$product.specific_prices.to|date_format}" class="wb_product_countdown">
+                          <div class="wb_countdown_days">
+                            <span class="wb_countdown_days_digit"></span>
+                            <p>{l s='Days' d='Shop.Theme.Catalog'}</p>
+                          </div>
+                          <div class="wb_countdown_hours">
+                            <span class="wb_countdown_hours_digit"></span>
+                            <p>{l s='Hours' d='Shop.Theme.Catalog'}</p>
+                          </div>
+                          <div class="wb_countdown_minutes">
+                            <span class="wb_countdown_minutes_digit"></span>
+                            <p>{l s='Min' d='Shop.Theme.Catalog'}</p>
+                          </div>
+                          <div class="wb_countdown_seconds">
+                            <span class="wb_countdown_seconds_digit"></span>
+                            <p>{l s='Sec' d='Shop.Theme.Catalog'}</p>
+                          </div>
+                        </div>
+                      </div>
                     {/if}
-                  {/block}
-                  
+                    {* Winter Infotech End*}
 
-                  {if $product.is_customizable && count($product.customizations.fields)}
-              {block name='product_customization'}
-                {include file="catalog/_partials/product-customization.tpl" customizations=$product.customizations}
-              {/block}
-            {/if}
 
-                  
+                    {block name='product_pack'}
+                      {if $packItems}
+                        <section class="product-pack">
+                          <h3 class="h4">{l s='This pack contains' d='Shop.Theme.Catalog'}</h3>
+                          {foreach from=$packItems item="product_pack"}
+                            {block name='product_miniature'}
+                              {include file='catalog/_partials/miniatures/pack-product.tpl' product=$product_pack}
+                            {/block}
+                          {/foreach}
+                        </section>
+                      {/if}
+                    {/block}
 
-                  {block name='product_additional_info'}
-                    {include file='catalog/_partials/product-additional-info.tpl'}
-                  {/block}
 
-                   {* Input to refresh product HTML removed, block kept for compatibility with themes *}
-                  {block name='product_refresh'}{/block}
 
-                </form>
-              {/block}
+                    {block name='product_additional_info'}
+                      {include file='catalog/_partials/product-additional-info.tpl'}
+                    {/block}
 
+                    {* Input to refresh product HTML removed, block kept for compatibility with themes *}
+                    {block name='product_refresh'}{/block}
+
+                  </form>
+                {/block}
+
+              </div>
             </div>
-        </div>
 
-        {block name='hook_display_reassurance'}
+            {block name='hook_display_reassurance'}
               {hook h='displayReassurance'}
             {/block}
 
-            </div>
+          </div>
 
-            <div class="col-xl-4 col-lg-5 col-xs-12 prorightwt">
-              <div class="productpbr">
+          <div class="col-xl-4 col-lg-5 col-xs-12 prorightwt">
+            <div class="productpbr">
               <div class="product-actions">
                 {block name='product_prices'}
-                {include file='catalog/_partials/product-prices.tpl'}
-              {/block}
-              <form action="{$urls.pages.cart}" method="post" id="add-to-cart-or-refresh">
-                <input type="hidden" name="token" value="{$static_token}">
-                    <input type="hidden" name="id_product" value="{$product.id}" id="product_page_product_id">
-                    <input type="hidden" name="id_customization" value="{$product.id_customization}" id="product_customization_id">
-              {block name='product_add_to_cart'}
-                {include file='catalog/_partials/product-add-to-cart.tpl'}
-              {/block}
-              </form>
-              <div class="prodpay"><div class="pmt"></div></div>
+                  {include file='catalog/_partials/product-prices.tpl'}
+                {/block}
+                <form action="{$urls.pages.cart}" method="post" id="add-to-cart-or-refresh">
+                  <input type="hidden" name="token" value="{$static_token}">
+                  <input type="hidden" name="id_product" value="{$product.id}" id="product_page_product_id">
+                  <input type="hidden" name="id_customization" value="{$product.id_customization}"
+                    id="product_customization_id">
+                  {block name='product_add_to_cart'}
+                    {include file='catalog/_partials/product-add-to-cart.tpl'}
+                  {/block}
+                </form>
+                <div class="prodpay">
+                  <div class="pmt"></div>
+                </div>
               </div>
             </div>
-            </div>
-         
+          </div>
 
-       </div>
+
+        </div>
       </div>
     </div>
 
-             
- 
-            {block name='product_tabs'}
-                <div class="product-tab">
-                <ul class="nav nav-tabs" role="tablist">
-                  {if $product.description}
-                    <li class="nav-item">
-                       <a
-                         class="nav-link{if $product.description} active{/if}"
-                         id="tab1"
-                         data-toggle="tab"
-                         href="#description"
-                         role="tab"
-                         aria-controls="description"
-                         {if $product.description} aria-selected="true"{/if}>{l s='Description' d='Shop.Theme.Global'}</a>
-                    </li>
-                  {/if}
-                  <li class="nav-item pdetail">
-                    <a
-                      class="nav-link{if !$product.description} active{/if}"
-                      data-toggle="tab"
-                      id="tab2"
-                      href="#product-details"
-                      role="tab"
-                      aria-controls="product-details"
-                      {if !$product.description} aria-selected="true"{/if}>{l s='Details' d='Shop.Theme.Global'}</a>
-                  </li>
-                  {if $product.attachments}
-                    <li class="nav-item">
-                      <a
-                        class="nav-link"
-                        id="tab3"
-                        data-toggle="tab"
-                        href="#attachments"
-                        role="tab"
-                        aria-controls="attachments">{l s='Attachments' d='Shop.Theme.Global'}</a>
-                    </li>
-                  {/if}
-                  {foreach from=$product.extraContent item=extra key=extraKey}
-                    <li class="nav-item">
-                      <a
-                        class="nav-link"
-                        data-toggle="tab"
-                        href="#extra-{$extraKey}"
-                        role="tab"
-                        aria-controls="extra-{$extraKey}">{$extra.title}</a>
-                    </li>
-                  {/foreach}
-                  {* <li class="nav-item">
+
+
+    {block name='product_tabs'}
+      <div class="product-tab">
+        <ul class="nav nav-tabs" role="tablist">
+          {if $product.description}
+            <li class="nav-item">
+              <a class="nav-link{if $product.description} active{/if}" id="tab1" data-toggle="tab" href="#description"
+                role="tab" aria-controls="description" {if $product.description} aria-selected="true"
+                {/if}>{l s='Description' d='Shop.Theme.Global'}</a>
+            </li>
+          {/if}
+          <li class="nav-item pdetail">
+            <a class="nav-link{if !$product.description} active{/if}" data-toggle="tab" id="tab2" href="#product-details"
+              role="tab" aria-controls="product-details" {if !$product.description} aria-selected="true"
+              {/if}>{l s='Details' d='Shop.Theme.Global'}</a>
+          </li>
+          {if $product.attachments}
+            <li class="nav-item">
+              <a class="nav-link" id="tab3" data-toggle="tab" href="#attachments" role="tab"
+                aria-controls="attachments">{l s='Attachments' d='Shop.Theme.Global'}</a>
+            </li>
+          {/if}
+          {foreach from=$product.extraContent item=extra key=extraKey}
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#extra-{$extraKey}" role="tab"
+                aria-controls="extra-{$extraKey}">{$extra.title}</a>
+            </li>
+          {/foreach}
+          {* <li class="nav-item">
                       <a class="nav-link" href="#rate" data-toggle="tab" role="tab" id="rv"> {l s='Review' d='Shop.Theme.Global'}</a>
                   </li> *}
-                </ul>
+        </ul>
 
-                <div class="tab-content" id="tab-content">
-                 <div class="tab-pane fade in{if $product.description} active{/if}" id="description" role="tabpanel">
-                   {block name='product_description'}
-                     <div class="product-d">{$product.description nofilter}</div>
-                   {/block}
-                 </div>
+        <div class="tab-content" id="tab-content">
+          <div class="tab-pane fade in{if $product.description} active{/if}" id="description" role="tabpanel">
+            {block name='product_description'}
+              <div class="product-d">{$product.description nofilter}</div>
+            {/block}
+          </div>
 
-                 {block name='product_details'}
-                   {include file='catalog/_partials/product-details.tpl'}
-                 {/block}
+          {block name='product_details'}
+            {include file='catalog/_partials/product-details.tpl'}
+          {/block}
 
-                 {block name='product_attachments'}
-                   {if $product.attachments}
-                    <div class="tab-pane fade in" id="attachments" role="tabpanel">
-                       <section class="product-attachments">
-                       {*   <h3 class="h5 text-uppercase">{l s='Download' d='Shop.Theme.Actions'}</h3> *}
-                         {foreach from=$product.attachments item=attachment}
-                           <div class="attachment">
-                             <h4><a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">{$attachment.name}</a></h4>
-                             <p>{$attachment.description}</p>
-                             <a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">
-                               <i class="fa fa-download"></i>    {l s='Download' d='Shop.Theme.Actions'} ({$attachment.file_size_formatted})
-                             </a>
-                           </div>
-                         {/foreach}
-                       </section>
-                     </div>
-                   {/if}
-                 {/block}
+          {block name='product_attachments'}
+            {if $product.attachments}
+              <div class="tab-pane fade in" id="attachments" role="tabpanel">
+                <section class="product-attachments">
+                  {*   <h3 class="h5 text-uppercase">{l s='Download' d='Shop.Theme.Actions'}</h3> *}
+                  {foreach from=$product.attachments item=attachment}
+                    <div class="attachment">
+                      <h4><a
+                          href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">{$attachment.name}</a>
+                      </h4>
+                      <p>{$attachment.description}</p>
+                      <a href="{url entity='attachment' params=['id_attachment' => $attachment.id_attachment]}">
+                        <i class="fa fa-download"></i> {l s='Download' d='Shop.Theme.Actions'} ({$attachment.file_size_formatted})
+                      </a>
+                    </div>
+                  {/foreach}
+                </section>
+              </div>
+            {/if}
+          {/block}
 
-                 {foreach from=$product.extraContent item=extra key=extraKey}
-                 <div class="tab-pane fade in {$extra.attr.class}" id="extra-{$extraKey} tab2" role="tabpanel" {foreach $extra.attr as $key => $val} {$key}="{$val}"{/foreach}>
-                   {$extra.content nofilter}
-                 </div>
-                 {/foreach}
-                {* <div class="tab-pane fade in" id="rate" role="tabpanel">
+          {foreach from=$product.extraContent item=extra key=extraKey}
+            <div class="tab-pane fade in {$extra.attr.class}" id="extra-{$extraKey} tab2" role="tabpanel"
+              {foreach $extra.attr as $key => $val} {$key}="{$val}" {/foreach}>
+              {$extra.content nofilter}
+            </div>
+          {/foreach}
+          {* <div class="tab-pane fade in" id="rate" role="tabpanel">
                   {hook h='displayProductFooter' product=$product}
                  </div> *}
 
-              </div>
-            </div>
-          {/block}
-          <div class="pro-review">
-            <h2 class="rhead">{l s='Review' d='Shop.Theme.Global'}</h2>
-            {hook h='displayProductFooter' product=$product}
-          </div>
+        </div>
+      </div>
+    {/block}
+    <div class="pro-review">
+      <h2 class="rhead">{l s='Review' d='Shop.Theme.Global'}</h2>
+      {hook h='displayProductFooter' product=$product}
+    </div>
 
 
     {block name='product_accessories'}
       {if $accessories}
         <section class="product-accessories clearfix prelated tabpro next-prevb">
-          
-          <div class="home-heading"><h2><span>{l s='Related Product' d='Shop.Theme.Global'}</span></h2></div>
-          <div class="products co-content row marginrow">
-          <div id="owl-related" class="owl-carousel owl-theme">
-            {foreach from=$accessories item="product_accessory"}
-              {block name='product_miniature'}
-                {include file='catalog/_partials/miniatures/product.tpl' product=$product_accessory}
-              {/block}
-            {/foreach}
+
+          <div class="home-heading">
+            <h2><span>{l s='Related Product' d='Shop.Theme.Global'}</span></h2>
           </div>
+          <div class="products co-content row marginrow">
+            <div id="owl-related" class="owl-carousel owl-theme">
+              {foreach from=$accessories item="product_accessory"}
+                {block name='product_miniature'}
+                  {include file='catalog/_partials/miniatures/product.tpl' product=$product_accessory}
+                {/block}
+              {/foreach}
+            </div>
           </div>
         </section>
       {/if}
