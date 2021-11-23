@@ -26,12 +26,12 @@ class Address extends AddressCore
             'other' => array('type' => self::TYPE_STRING, 'validate' => 'isMessage', 'size' => 300),
             'phone' => array('type' => self::TYPE_STRING, 'validate' => 'isPhoneNumber', 'size' => 32),
             'phone_mobile' => array('type' => self::TYPE_STRING, 'validate' => 'isPhoneNumber', 'size' => 32),
-            'dni' => array('type' => self::TYPE_STRING, 'validate' => 'isDniLite', 'size' => 16),
+            // 'dni' => array('type' => self::TYPE_STRING, 'validate' => 'isDniLite', 'size' => 16),
             'deleted' => array('type' => self::TYPE_BOOL, 'validate' => 'isBool', 'copy_post' => false),
             'date_add' => array('type' => self::TYPE_DATE, 'validate' => 'isDate', 'copy_post' => false),
             'date_upd' => array('type' => self::TYPE_DATE, 'validate' => 'isDate', 'copy_post' => false),
-            'up' => array('type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 255),
-            'thana' => array('type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 255),
+            // 'up' => array('type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 255),
+            // 'thana' => array('type' => self::TYPE_STRING, 'validate' => 'isGenericName', 'size' => 255),
         ),
     );
 }

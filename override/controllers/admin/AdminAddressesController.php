@@ -62,7 +62,7 @@ class AdminAddressesController extends AdminAddressesControllerCore
                     'name' => 'my_custom_field',
                     'required' => false,
                     'col' => '4',
-                    'hint' => $this->l('Just a custom field!')
+                    'hint' => $this->trans('Just a custom field!')
                 ), 
                 array(
                     'type' => 'text',
