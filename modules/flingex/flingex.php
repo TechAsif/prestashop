@@ -58,7 +58,7 @@ class Flingex extends Module
         $return &= parent::install();
 
         $return &= $this->createDbTables();
-        $return &= $this->installTab('AdminFlingexManifest', 'FLINGEX', 'AdminParentShipping', true);
+        $return &= $this->installTab('AdminFlingex', 'FlingEx', 'AdminParentShipping', true);
         $return &= $this->registerHook('displayBackOfficeHeader');
         $return &= $this->registerHook('displayAdminOrder');
         $return &= $this->registerHook('actionOrderReturn');

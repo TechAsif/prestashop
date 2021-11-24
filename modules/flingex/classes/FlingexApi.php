@@ -26,7 +26,7 @@ class FlingexApi
         $this->module = $module;
     }
     
-    public function phpCurlRequest($curlUrl, $method, $data=array(),$headers=array()) {
+    public static function  phpCurlRequest($curlUrl, $method, $data=array(),$headers=array()) {
         $req = '';
         $curl = curl_init();
     
@@ -93,7 +93,7 @@ class FlingexApi
     public function checkAccount($username, $password)
     {
         $curlUrl = 'https://flingex.com/api/merchant/login?username='.$username.'&password='. $password;
-        $response = $this->phpCurlRequest($curlUrl, 'POST');
+        $response = self::phpCurlRequest($curlUrl, 'POST');
 
         Flingex::logToFile('Response',$response, 'account');
 
@@ -142,7 +142,7 @@ class FlingexApi
     
             $curlUrl = 'https://flingex.com/api/merchant/create?'. http_build_query($post_data);
 
-            $apiJsonResponse = $this->phpCurlRequest($curlUrl, 'POST');
+            $apiJsonResponse = self::phpCurlRequest($curlUrl, 'POST');
     
             return json_decode($apiJsonResponse, true);
         }
@@ -158,7 +158,7 @@ class FlingexApi
         $token = Configuration::get(self::$conf_prefix.'LIVE_TOKEN');
         $curlUrl = 'https://flingex.com/api/merchant/choose-service';
         $formData = array('token' => $token);
-        $apiJsonResponse = json_decode($this->phpCurlRequest($curlUrl, 'GET', $formData), true);
+        $apiJsonResponse = json_decode(self::phpCurlRequest($curlUrl, 'GET', $formData), true);
 
         if($apiJsonResponse['code'] != 200)
             return false;
@@ -219,7 +219,7 @@ class FlingexApi
         $token = Configuration::get(self::$conf_prefix.'LIVE_TOKEN');
         $curlUrl = 'https://flingex.com/api/merchant/zone';
         $formData = array('token' => $token);
-        $apiJsonResponse = json_decode($this->phpCurlRequest($curlUrl, 'GET', $formData), true);
+        $apiJsonResponse = json_decode(self::phpCurlRequest($curlUrl, 'GET', $formData), true);
 
         if($apiJsonResponse['code'] != 200)
             return false;
@@ -261,7 +261,7 @@ class FlingexApi
 
     /*******sent to shipping via flingex***********/
 
-    public function sentOrderToFlingexTrackingApi($tracking_id){
+    public static function sentOrderToFlingexTrackingApi($tracking_id){
 
         if( !$tracking_id )
             return ["status"=> "error","msg"=> "Tracking ID not found"]; 
@@ -270,7 +270,7 @@ class FlingexApi
 
         $post_data = ['token' => $token];
         $curlUrl = 'https://flingex.com/api/merchant/parcel/track/'.$tracking_id.'?'. http_build_query($post_data);
-        $trackingResponse = $this->phpCurlRequest($curlUrl, 'GET');
+        $trackingResponse = self::phpCurlRequest($curlUrl, 'GET');
 
         return json_decode($trackingResponse, true);
 
