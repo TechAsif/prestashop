@@ -4,7 +4,7 @@
     <displayName><![CDATA[Paperfly LG Tech]]></displayName>
     <version><![CDATA[1.0.11]]></version>
     <description><![CDATA[Paperfly and Lets go tech shipment service]]></description>
-    <author><![CDATA[rokan]]></author>
+    <author><![CDATA[Rokan]]></author>
     <tab><![CDATA[shipping_logistics]]></tab>
 	<confirmUninstall><![CDATA[Are you sure you want to uninstall?]]></confirmUninstall>
     <is_configurable>1</is_configurable>

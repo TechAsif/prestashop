@@ -25,6 +25,7 @@ class AdminFlingexController extends ModuleAdminController
 
 		// $this->display = 'manifest';
 	}
+	
 	public function init()
 	{
 		parent::init();

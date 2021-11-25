@@ -81,7 +81,7 @@ class Flingex extends Module
     public function uninstall()
     {
         $return = true;
-        $return &= $this->uninstallTab('AdminFlingexManifest');
+        $return &= $this->uninstallTab('AdminFlingex');
         $return &= $this->removeHook('actionGetIDDeliveryAddressByIDCarrier');
         $return &= $this->removeHook('actionGetIDOrderStateByIDCarrier');
         $return &= parent::uninstall();
