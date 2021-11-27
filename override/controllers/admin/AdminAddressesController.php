@@ -58,19 +58,27 @@ class AdminAddressesController extends AdminAddressesControllerCore
                 ),
                 array(
                     'type' => 'text',
-                    'label' => $this->l('My custom field'),
-                    'name' => 'my_custom_field',
+                    'label' => $this->trans('Address alias', array(), 'Admin.Orderscustomers.Feature'),
+                    'name' => 'alias',
+                    'required' => true,
+                    'col' => '4',
+                    'hint' => $this->trans('Invalid characters:', array(), 'Admin.Notifications.Info').' &lt;&gt;;=#{}'
+                ), 
+                array(
+                    'type' => 'text',
+                    'label' => $this->l('Union Porishad'),
+                    'name' => 'up',
                     'required' => false,
                     'col' => '4',
                     'hint' => $this->trans('Just a custom field!')
                 ), 
                 array(
                     'type' => 'text',
-                    'label' => $this->trans('Address alias', array(), 'Admin.Orderscustomers.Feature'),
-                    'name' => 'alias',
-                    'required' => true,
+                    'label' => $this->l('Thana'),
+                    'name' => 'thana',
+                    'required' => false,
                     'col' => '4',
-                    'hint' => $this->trans('Invalid characters:', array(), 'Admin.Notifications.Info').' &lt;&gt;;=#{}'
+                    'hint' => $this->trans('Just a custom field!')
                 ), 
                 array(
                     'type' => 'textarea',
@@ -336,7 +344,8 @@ class AdminAddressesController extends AdminAddressesControllerCore
 
         $return = false;
         if (empty($this->errors)) {
-            $return = parent::processSave();
+            // $return = parent::processSave();
+            $return = AdminController::processSave();
         } else {
             // if we have errors, we stay on the form instead of going back to the list
             $this->display = 'edit';
