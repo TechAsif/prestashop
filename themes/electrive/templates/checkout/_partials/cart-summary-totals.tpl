@@ -24,12 +24,21 @@
  *}
 <div class="card-block cart-summary-totals">
 
-  {block name='cart_summary_total'}
+{**  {block name='cart_summary_total'}
     <div class="cart-summary-line cart-total">
       <span class="label">{$cart.totals.total.label} {$cart.labels.tax_short}</span>
       <span class="value">{$cart.totals.total.value}</span>
     </div>
   {/block}
+*}
+
+  {block name='cart_summary_total'}
+    <div class="cart-summary-line cart-total">
+      <span class="label">Shipping</span>
+      <span class="value">On Actual</span>
+    </div>
+  {/block}
+
 
   {block name='cart_summary_tax'}
     <div class="cart-summary-line">
