@@ -185,9 +185,9 @@ class ECourier extends Module
 
 		$tracking_response = $this->ecourier_api->sentOrderToECourierTrackingApi($tracking_id);
 
-		$tracking_response_data = (isset($tracking_response["query_data"]) && $tracking_response["query_data"]) ? $tracking_response["query_data"] : "";
+		$tracking_response_data = (isset($tracking_response["query_data"]) && $tracking_response["query_data"]) ? (isset($tracking_response["query_data"]["status"]) ? $tracking_response["query_data"]["status"] : $tracking_response["query_data"]): [];
+
 		$tracking_response_status = (isset($tracking_response["response_code"]) && $tracking_response["response_code"]) ? $tracking_response["response_code"] : ( isset($tracking_response["status"]) ? $tracking_response["status"] : '');
-		$tracking_response_msg = (isset($tracking_response["query_data"]) && $tracking_response["query_data"]) ? $tracking_response["query_data"] : ( isset($tracking_response["msg"]) ? $tracking_response["msg"] : '');
 
 		$reference = $order->reference;
 		$sql = 'INSERT INTO ' . _DB_PREFIX_ . 'ecourier_order
@@ -206,19 +206,23 @@ class ECourier extends Module
 		Db::getInstance()->execute($sql);
 		$id_ecourier_order = Db::getInstance()->Insert_ID();
 
-		$sql_tracking = 'INSERT INTO ' . _DB_PREFIX_ . 'ecourier_order_tracking
-					(`id_order`,`reference`, `id_ecourier_order`, `tracking_number`,`parcel_status`,
-					`api_response_status`,`api_response_message`)
-					values(
-						' . (int)$order->id . ',
-						"' . $reference . '",
-						' . (int)$id_ecourier_order . ',
-						"' . $tracking_id . '",
-						"' . $tracking_response_data . '",
-						"' . $tracking_response_status . '",
-						"' . $tracking_response_msg . '"
-					)';
-		Db::getInstance()->execute($sql_tracking);
+		foreach ((array)$tracking_response_data as $key => $value) {
+			$value = isset($value['status'])? $value['status'] : (is_array($value) ? json_encode($value) : (string)$value );
+
+			$sql_tracking = 'INSERT INTO ' . _DB_PREFIX_ . 							'ecourier_order_tracking
+				(`id_order`,`reference`, `id_ecourier_order`, `tracking_number`,`parcel_status`,
+				`api_response_status`,`api_response_message`)
+				values(
+					' . (int)$order->id . ',
+					"' . $reference . '",
+					' . (int)$id_ecourier_order . ',
+					"' . $tracking_id . '",
+					"' . $value . '",
+					"' . (string)$tracking_response_status . '",
+					""
+				)';
+			Db::getInstance()->execute($sql_tracking);
+		}
 	}
 	
 

@@ -88,6 +88,15 @@ class AdminECourierController extends ModuleAdminController
 		// Default response with translation from the module
 		$response = array('status' => false, "message" => $this->trans('Nothing here.'));
 
+		// $address= Db::getInstance()->executeS(
+		// 	'SELECT *
+		// 	FROM `'._DB_PREFIX_.'address`
+		// 	WHERE id_address =18'
+		// );
+
+		// $bestPackage = $this->module->ecourier_api->getBestPackage($address);
+
+
 		if (Tools::isSubmit('action')) {
 
 			switch (Tools::getValue('action')) {
@@ -138,9 +147,14 @@ class AdminECourierController extends ModuleAdminController
 
 			$tracking_response = $this->module->ecourier_api->sentOrderToECourierTrackingApi($ecourier_order["tracking_number"]);
 
-			$tracking_response_data = (isset($tracking_response['data']) && isset($tracking_response['data']['trackInfos']) && $tracking_response['data']['trackInfos']) ? $tracking_response['data']['trackInfos'] : [];
+			$tracking_response_data = (isset($tracking_response["query_data"]) && $tracking_response["query_data"]) ? (isset($tracking_response["query_data"]["status"]) ? $tracking_response["query_data"]["status"] : $tracking_response["query_data"]): [];
 
-			foreach ($tracking_response_data as $key => $value) {
+			$tracking_response_status = (isset($tracking_response["response_code"]) && $tracking_response["response_code"]) ? $tracking_response["response_code"] : ( isset($tracking_response["status"]) ? $tracking_response["status"] : '');
+	
+
+			foreach ((array)$tracking_response_data as $key => $value) {
+				$value = isset($value['status'])? $value['status'] : (is_array($value) ? json_encode($value) : (string)$value );
+
 				$sql_tracking = 'INSERT INTO ' . _DB_PREFIX_ . 'ecourier_order_tracking
 					(`id_order`,`reference`, `id_ecourier_order`, `tracking_number`,`parcel_status`,
 					`api_response_status`,`api_response_message`)
@@ -149,9 +163,9 @@ class AdminECourierController extends ModuleAdminController
 					"' . $ecourier_order['reference'] . '",
 					' . (int)$ecourier_order['id_ecourier_order'] . ',
 					"' . $ecourier_order['tracking_number'] . '",
-					"' . $value['parcelStatus'] . '",
-					"' . $tracking_response['code'] . '",
-					"' . $tracking_response['msg'] . '"
+					"' . $value . '",
+					"' . (string)$tracking_response_status . '",
+					""
 					)';
 				$res = Db::getInstance()->execute($sql_tracking);
 			}
