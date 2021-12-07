@@ -46,11 +46,7 @@
           {/block}
         </div>
   </div>
-  <div>
-    {block name='hook_displayTopColumn'}
-      {hook h='displayTopColumn'}
-    {/block}
-  </div>
+
 </div> 
         
       <div class="foot-copy">
@@ -58,8 +54,8 @@
           <div class="row">
             <div class="col-sm-6 col-xs-12"> 
               {block name='copyright_link'}
-                <a class="_blank" href="http://www.prestashop.com" target="_blank">
-                  {l s='%copyright% %year% - Ecommerce software by %prestashop%' sprintf=['%prestashop%' => 'PrestaShop™', '%year%' => 'Y'|date, '%copyright%' => '©'] d='Shop.Theme.Global'}
+                <a class="_blank" href="https://letsgobd.com/" target="_blank">
+                  {l s='%copyright% %year% - Ecommerce software by %prestashop%' sprintf=['%prestashop%' => 'LetsGO Mart™', '%year%' => 'Y'|date, '%copyright%' => '©'] d='Shop.Theme.Global'}
                 </a>
               {/block}
             </div>

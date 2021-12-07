@@ -58,7 +58,7 @@ class Flingex extends Module
         $return &= parent::install();
 
         $return &= $this->createDbTables();
-        $return &= $this->installTab('AdminFlingexManifest', 'FLINGEX', 'AdminParentShipping', true);
+        $return &= $this->installTab('AdminFlingex', 'FlingEx', 'AdminParentShipping', true);
         $return &= $this->registerHook('displayBackOfficeHeader');
         $return &= $this->registerHook('displayAdminOrder');
         $return &= $this->registerHook('actionOrderReturn');
@@ -81,7 +81,7 @@ class Flingex extends Module
     public function uninstall()
     {
         $return = true;
-        $return &= $this->uninstallTab('AdminFlingexManifest');
+        $return &= $this->uninstallTab('AdminFlingex');
         $return &= $this->removeHook('actionGetIDDeliveryAddressByIDCarrier');
         $return &= $this->removeHook('actionGetIDOrderStateByIDCarrier');
         $return &= parent::uninstall();

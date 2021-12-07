@@ -172,7 +172,7 @@ class ECourierApi
         $curlUrl = $this->base_url. 'packages';
         $packages = json_decode($this->phpCurlRequest($curlUrl, 'POST', [], $this->request_header), true);
 
-        if(!isset($package['coverage']))
+        if(!isset($packages[0]['coverage']))
             return null;
 
         usort($packages, function($a, $b) {
@@ -222,7 +222,7 @@ class ECourierApi
         if( !$tracking_id )
             return ["status"=> "error","msg"=> "Tracking ID not found"]; 
         
-        $curlUrl = $this->base_url. 'track';
+        $curlUrl = $this->base_url. 'track-child';
         $post_data = [
             'ecr' => $tracking_id // eCourier ID
         ];

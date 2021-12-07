@@ -79,7 +79,7 @@ class PaperFly extends Module
     public function uninstall()
     {
         $return = true;
-        $return &= $this->uninstallTab('AdminDhldpManifest');
+        $return &= $this->uninstallTab('AdminPaperfly');
         $return &= $this->removeHook('actionGetIDDeliveryAddressByIDCarrier');
         $return &= $this->removeHook('actionGetIDOrderStateByIDCarrier');
         $return &= parent::uninstall();
@@ -583,11 +583,6 @@ class PaperFly extends Module
                             'desc'             => $this->l('"Live" signature for user authentication for business customer shipping API'),
                             'required'         => true,
                             'form_group_class' => 'dhl_authdata_live'
-                        ),
-                        array(
-                            'name'  => self::$conf_prefix.'LIVE_RESET',
-                            'type'  => 'free',
-                            'label' => '',
                         ),
                     ),
                     'submit'      => array(

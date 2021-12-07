@@ -59,7 +59,7 @@ class ECourier extends Module
 		$return &= parent::install();
 
 		$return &= $this->createDbTables();
-		$return &= $this->installTab('AdminECourierManifest', 'ECOURIER', 'AdminParentShipping', true);
+		$return &= $this->installTab('AdminECourier', 'eCourier', 'AdminParentShipping', true);
 		$return &= $this->registerHook('displayBackOfficeHeader');
 		$return &= $this->registerHook('displayAdminOrder');
 		$return &= $this->registerHook('actionOrderReturn');
@@ -82,7 +82,7 @@ class ECourier extends Module
 	public function uninstall()
 	{
 		$return = true;
-		$return &= $this->uninstallTab('AdminECourierManifest');
+		$return &= $this->uninstallTab('AdminECourier');
 		$return &= $this->removeHook('actionGetIDDeliveryAddressByIDCarrier');
 		$return &= $this->removeHook('actionGetIDOrderStateByIDCarrier');
 		$return &= parent::uninstall();
@@ -180,10 +180,14 @@ class ECourier extends Module
 		$api_response = $this->ecourier_api->sentOrderToECourier($params);
 
 		$tracking_id = (isset($api_response['ID']) && $api_response['ID']) ? $api_response['ID'] : null;
+		$api_response_code = (isset($api_response['response_code']) && $api_response['response_code']) ? $api_response['response_code'] : '';
+		$api_message = (isset($api_response['message']) && $api_response['message']) ? $api_response['message'] : (string)$api_response;
 
 		$tracking_response = $this->ecourier_api->sentOrderToECourierTrackingApi($tracking_id);
 
-		$tracking_response_data = (isset($tracking_response["query_data"]) && $tracking_response["query_data"]) ? $tracking_response["query_data"] : [];
+		$tracking_response_data = (isset($tracking_response["query_data"]) && $tracking_response["query_data"]) ? (isset($tracking_response["query_data"]["status"]) ? $tracking_response["query_data"]["status"] : $tracking_response["query_data"]): [];
+
+		$tracking_response_status = (isset($tracking_response["response_code"]) && $tracking_response["response_code"]) ? $tracking_response["response_code"] : ( isset($tracking_response["status"]) ? $tracking_response["status"] : '');
 
 		$reference = $order->reference;
 		$sql = 'INSERT INTO ' . _DB_PREFIX_ . 'ecourier_order
@@ -194,27 +198,31 @@ class ECourier extends Module
              ' . (int)$order->id_customer . ',
              "' . $tracking_id . '",
              "' . $reference . '",
-             "' . $api_response["response_code"] . '",
-             "' . $api_response["message"] . '"
+             "' . $api_response_code . '",
+             "' . $api_message . '"
             
                )';
 
 		Db::getInstance()->execute($sql);
 		$id_ecourier_order = Db::getInstance()->Insert_ID();
 
-		$sql_tracking = 'INSERT INTO ' . _DB_PREFIX_ . 'ecourier_order_tracking
-					(`id_order`,`reference`, `id_ecourier_order`, `tracking_number`,`parcel_status`,
-					`api_response_status`,`api_response_message`)
-					values(
-						' . (int)$order->id . ',
-						"' . $reference . '",
-						' . (int)$id_ecourier_order . ',
-						"' . $tracking_id . '",
-						"' . $tracking_response_data . '",
-						"' . $tracking_response["response_code"] . '",
-						"' . $tracking_response["query_data"] . '"
-					)';
-		Db::getInstance()->execute($sql_tracking);
+		foreach ((array)$tracking_response_data as $key => $value) {
+			$value = isset($value['status'])? $value['status'] : (is_array($value) ? json_encode($value) : (string)$value );
+
+			$sql_tracking = 'INSERT INTO ' . _DB_PREFIX_ . 							'ecourier_order_tracking
+				(`id_order`,`reference`, `id_ecourier_order`, `tracking_number`,`parcel_status`,
+				`api_response_status`,`api_response_message`)
+				values(
+					' . (int)$order->id . ',
+					"' . $reference . '",
+					' . (int)$id_ecourier_order . ',
+					"' . $tracking_id . '",
+					"' . $value . '",
+					"' . (string)$tracking_response_status . '",
+					""
+				)';
+			Db::getInstance()->execute($sql_tracking);
+		}
 	}
 	
 

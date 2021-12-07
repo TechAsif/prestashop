@@ -33,6 +33,20 @@
   <title>{block name='head_seo_title'}{$page.meta.title}{/block}</title>
   <meta name="description" content="{block name='head_seo_description'}{$page.meta.description}{/block}">
   <meta name="keywords" content="{block name='head_seo_keywords'}{$page.meta.keywords}{/block}">
+  
+   {literal}
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2D6DE9G6KY"></script>
+ <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2D6DE9G6KY');
+</script>
+  
+  {/literal}
+  
   {if $page.meta.robots !== 'index'}
     <meta name="robots" content="{$page.meta.robots}">
   {/if}
@@ -44,6 +58,10 @@
             <link rel="alternate" href="{$pageUrl}" hreflang="{$code}">
       {/foreach}
   {/block}
+{/block}
+
+{block name='google_verification'}
+  <meta name="google-site-verification" content="juooDWHjp9ErwWKI9UNJ7VCyxAnIPXPo3nHVY1AIUmw" />
 {/block}
 
 {block name='head_viewport'}

@@ -122,8 +122,6 @@
     border: 1px solid #f6f6f6 !important;
 }
 
-
-
 .table thead th {
     border-bottom: 1px solid #2fb5d2 !important;
     font-weight: 600;
@@ -135,10 +133,6 @@
 
 .wk-mp-block table .odd {
     background-color: #fafafa !important;
-}
-
-.wk-mp-block table .odd:hover {
-    background-color: #ddd !important;
 }
 
 .wk-mp-block .form-control:focus {

@@ -23,6 +23,12 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 <div class="product-additional-info">
+    {if isset($static_token) && isset($product)}
+	 <a class="prowish" id="buy_now_button"  
+	    href="{$link->getPageLink('cart',false, NULL, "add=1&qty=1&id_product={$product.id|intval}&token={$static_token}", false)|escape:'html':'UTF-8'}" 
+	    rel="nofollow" 
+	    title="{l s='Buy Now'}" data-id-product="{$product->id|intval}">Buy Now</a>                       
+    {/if}
    {hook h='displayCompareButton' product=$product}
    {hook h='displayProductAdditionalInfo' product=$product}
 </div>

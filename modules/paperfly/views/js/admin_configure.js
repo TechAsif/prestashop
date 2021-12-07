@@ -13,10 +13,12 @@
 var dhldp_admin_configure = {
     init: function() {
         var self = this;
-        $('select.select2').select2({});
+        if( typeof($.fn.select2) == "function" )
+            $('select.select2').select2({});
         self.validateForm();
     },
     validateForm: function() {
+        if( typeof($.fn.validate) == "function" )
         $("#dhl_global_settings").validate({
             rules: {
             },

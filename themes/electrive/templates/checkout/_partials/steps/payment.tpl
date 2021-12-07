@@ -87,9 +87,7 @@
 
     <form id="conditions-to-approve" method="GET">
       <ul>
-      
-         
-          <li>
+        <li>
             <div class="float-xs-left">
               <span class="custom-checkbox">
                 <input  id    = "conditions3_to_approve"
@@ -108,7 +106,6 @@
               </label>
             </div>
           </li>
-        
       </ul>
     </form>
   {/if}
