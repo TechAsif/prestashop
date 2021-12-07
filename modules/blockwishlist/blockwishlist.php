@@ -84,6 +84,7 @@ class BlockWishList extends Module
             !$this->registerHook('adminCustomers') ||
             !$this->registerHook('displayProductListFunctionalButtons') ||
             !$this->registerHook('displayTop') ||
+            !$this->registerHook('displayNav') ||
             !$this->registerHook('top')) {
             return false;
         }
