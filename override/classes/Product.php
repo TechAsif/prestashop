@@ -8,7 +8,7 @@ class Product extends ProductCore
 {
     /*
     * module: amazzingfilter
-    * date: 2021-10-02 20:01:13
+    * date: 2021-09-23 21:38:10
     * version: 3.1.6
     */
     public static function getPricesDrop(
@@ -46,7 +46,7 @@ class Product extends ProductCore
     }
     /*
     * module: amazzingfilter
-    * date: 2021-10-02 20:01:13
+    * date: 2021-09-23 21:38:10
     * version: 3.1.6
     */
     public static function getNewProducts(
@@ -83,7 +83,7 @@ class Product extends ProductCore
     */
     /*
     * module: amazzingfilter
-    * date: 2021-10-02 20:01:13
+    * date: 2021-09-23 21:38:10
     * version: 3.1.6
     */
     public static function getProductsProperties($id_lang, $query_result)

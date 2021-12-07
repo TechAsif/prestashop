@@ -48,6 +48,10 @@
       <div class="data">
         <a href="tel:{$contact_infos.phone}">{$contact_infos.phone}</a>
        </div>
+      <div class="icon"><svg width="20px" height="20px"><use xlink:href="#phone"></use></svg></div>
+      <div class="data">
+        <a href="tel:{$contact_infos.phone}">+8809666 757 779</a>
+       </div>
     </li>
   {/if}
 

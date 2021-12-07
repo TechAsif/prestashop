@@ -121,7 +121,7 @@ class WebserviceSpecificManagementProduct implements WebserviceSpecificManagemen
             OR p.`reference` LIKE \'%' . pSQL($name) . '%\'
             OR p.`supplier_reference` LIKE \'%' . pSQL($name) . '%\'
             OR EXISTS(SELECT * FROM `' . _DB_PREFIX_ . 'product_supplier` sp WHERE sp.`id_product` = p.`id_product` AND `product_supplier_reference` LIKE \'%' . pSQL($name) . '%\')' : '') . '
-            ' . (!empty($date) ? 'ORDER BY p.`date_add` DESC' : 'ORDER BY p.`date_add`') . '
+            ' . (!empty($date) ? 'ORDER BY p.`date_upd` DESC' : 'ORDER BY p.`date_upd` DESC') . '
             LIMIT '.$limit);
     }
 

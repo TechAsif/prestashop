@@ -146,7 +146,7 @@
                     <input type="hidden" name="token" value="{$static_token}">
                     <input type="hidden" name="id_product" value="{$product.id}" class="product_page_product_id">
                     <input type="hidden" name="qty" value="1">
-                    {if $product.quantity < 1 }
+                    {if isset($product) && ($product.quantity < 1) }
                     <button  data-toggle="tooltip" title="{l s='stock out' d='Shop.Theme.Catalog'}" data-button-action="add-to-cart" class="cartb" disabled>
                         <svg width="18px" height="18px"><use xlink:href="#pcart"></use></svg><span> {l s='stock out' d='Shop.Theme.Catalog'}</span>
                     </button>

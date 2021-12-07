@@ -87,13 +87,11 @@
 
     <form id="conditions-to-approve" method="GET">
       <ul>
-      
-         
-          <li>
+        <li>
             <div class="float-xs-left">
               <span class="custom-checkbox">
-                <input  id    = "conditions3_to_approve[]"
-                        name  = "conditions3_to_approve[]"
+                <input  id    = "conditions3_to_approve"
+                        name  = "conditions3_to_approve"
                         required
                         type  = "checkbox"
                         value = "1"
@@ -103,12 +101,11 @@
               </span>
             </div>
             <div class="condition-label" >
-              <label  for="conditions3_to_approve[]">
+              <label  for="conditions3_to_approve">
                 I agree to the <a href="https://letsgobd.com/en/content/3-terms-and-conditions-of-use" class="cta-terms-and-conditions"> terms of service </a>,<a href="https://letsgobd.com/en/content/10-returns-and-refunds" class="cta-terms-and-conditions"> Refund and Return Policy</a>, <a href="https://letsgobd.com/en/content/12-privacy-policy" class="cta-terms-and-conditions"> Privacy Policy </a> and will adhere to them unconditionally.
               </label>
             </div>
           </li>
-        
       </ul>
     </form>
   {/if}

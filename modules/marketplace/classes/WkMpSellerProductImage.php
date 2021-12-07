@@ -282,6 +282,7 @@ class WkMpSellerProductImage extends ObjectModel
             $finalData['status'] = 'fail';
             $finalData['file_name'] = '';
             $finalData['error_message'] = $data['errors'][0];
+	    //echo $data['errors'][0];
         } elseif ($data['isComplete']) {
             if ($data['data']['metas'][0]['name']) {
                 $imageNewName = $data['data']['metas'][0]['name'];

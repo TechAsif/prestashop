@@ -86,6 +86,7 @@ $(document).ready(function() {
             synchron: true,
             beforeSend: function() {},
             success: function(data, itemEl, listEl, boxEl, newInputEl, inputEl, id) {
+		//alert(data);
                 var newdata = JSON.parse(data);
                 var parent = itemEl.find(".jFiler-jProgressBar").parent(),
                     new_file_name = newdata.file_name,

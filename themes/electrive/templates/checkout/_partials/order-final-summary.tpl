@@ -81,7 +81,7 @@
             <span class="carrier-delay">{$selected_delivery_option.delay}</span>
           </div>
           <div class="col-md-2">
-            <span class="carrier-price">{$selected_delivery_option.price}</span>
+            <span class="carrier-price">On Actual</span>
           </div>
         </div>
       </div>
