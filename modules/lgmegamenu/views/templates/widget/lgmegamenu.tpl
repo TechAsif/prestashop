@@ -1,18 +1,16 @@
  <nav class="main-nav" role="navigation">
 
     <!-- Mobile menu toggle button (hamburger/x icon) -->
-    <input id="main-menu-state" type="checkbox" />
-    <label class="main-menu-btn" for="main-menu-state">
-      <span class="main-menu-btn-icon"></span> Toggle main menu visibility
-    </label>
+    
   
 <!--   <h2 class="nav-brand"><a href="#">Brand</a></h2>
  -->  
     <!-- Sample menu definition -->
     <ul id="main-menu" class="sm sm-simple">
+    <!-- FIRST mega menu start -->
       <li class="has-mega-menu"><a href="#">Fashion</a>
 
-        <!-- FIRST mega menu start -->
+        
         <ul class="mega-menu">
           <li>
             <div class="column-1-3">
@@ -150,8 +148,151 @@
             </div>
           </li>
         </ul>
-        <!-- First Mega Menu End -->
+        
       </li>
+      <!-- First Mega Menu End -->
+      <li class="has-mega-menu"><a href="#">Fashion</a>
+
+        
+        <ul class="mega-menu">
+          <li>
+            <div class="column-1-3">
+              <h4>Ladies</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                <li><a href="#">Kurtis</a></li>
+                <li><a href="#">Regular link</a></li>
+              </ul>
+
+              <h4>Gents</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                <li><a href="#">Kurtis</a></li>
+                <li><a href="#">Regular link</a></li>
+              </ul>
+
+              <h4>Couple</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                <li><a href="#">Kurtis</a></li>
+                <li><a href="#">Regular link</a></li>
+              </ul>
+
+
+            </div>
+            
+
+            <div class="column-1-3">
+              <h4>Ladies</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                <li><a href="#">Kurtis</a></li>
+                <li><a href="#">Regular link</a></li>
+              </ul>
+
+              <h4>Gents</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                <li><a href="#">Kurtis</a></li>
+                <li><a href="#">Regular link</a></li>
+              </ul>
+
+              <h4>Couple</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                <li><a href="#">Kurtis</a></li>
+                <li><a href="#">Regular link</a></li>
+              </ul>
+
+
+            </div>
+
+            <div class="column-1-3">
+              <h4>Ladies</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                <li><a href="#">Kurtis</a></li>
+                <li><a href="#">Regular link</a></li>
+              </ul>
+
+              <h4>Gents</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                <li><a href="#">Kurtis</a></li>
+                <li><a href="#">Regular link</a></li>
+              </ul>
+
+              <h4>Couple</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                <li><a href="#">Kurtis</a></li>
+                <li><a href="#">Regular link</a></li>
+              </ul>
+
+
+            </div>
+
+            
+            <div class="column-1-3">
+              <h4>Ladies</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                <li><a href="#">Kurtis</a></li>
+                <li><a href="#">Regular link</a></li>
+              </ul>
+
+              <h4>Gents</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                <li><a href="#">Kurtis</a></li>
+                <li><a href="#">Regular link</a></li>
+              </ul>
+
+              <h4>Couple</h4>
+              
+              <ul>
+                <li><a href="#">Salwar Kameezes</a></li>
+                <li><a href="#">Sarees</a></li>
+                
+              </ul>
+
+
+            </div>
+
+            
+
+
+            <div class="column-1-3">
+              <div class="mega-menu-sample-image">Image</div>
+              <div class="mega-menu-sample-image">Image</div>
+            </div>
+          </li>
+        </ul>
+        
+      </li>
+      <!-- First Mega Menu End -->
       <li class="has-mega-menu"><a href="#">Mega 2</a>
         <ul class="mega-menu">
           <li>

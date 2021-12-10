@@ -57,7 +57,7 @@ class Lgmegamenu extends Module implements WidgetInterface
     public function install()
     {
         return parent::install() &&
-        $this->registerHook('header');
+        $this->registerHook('header') && $this->createHook('displayLgMegaMenu','LG Static MegaMenu');
     }
 
 
@@ -100,6 +100,18 @@ class Lgmegamenu extends Module implements WidgetInterface
     }
 
 
+    public function createHook($name, $title = '')
+    {
+        if (!Hook::getIdByName($name)) {
+            $hook = new Hook();
+            $hook->name = $name;
+            $hook->title = $title;
+            return $hook->add();
+        }
+        return true;
+    }
+
+
     public function hookHeader()
     {
         $this->context->controller->addJS($this->_path.'views/js/jquery.js');
@@ -110,7 +122,7 @@ class Lgmegamenu extends Module implements WidgetInterface
         $this->context->controller->addCSS($this->_path.'views/css/style.css');
         $this->context->controller->addCSS($this->_path.'views/css/sm-simple.css');
         $this->context->controller->addCSS($this->_path.'views/css/sm-core-css.css');
-        /* $this->context->controller->addCSS($this->_path.'views/css/sm-blue.css'); */
+        $this->context->controller->addCSS($this->_path.'views/css/sm-blue.css');
     }
     
 
