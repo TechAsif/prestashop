@@ -42,6 +42,5 @@
         <option value="{$currency.url}"{if $currency.current} selected="selected"{/if}>{$currency.iso_code} {$currency.sign}</option>
       {/foreach}
     </select>
-    <i class="fa fa-angle-down hidden-lg-up"></i>
   </div>
 </div>

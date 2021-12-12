@@ -23,28 +23,29 @@
 *  @license    http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
 *  International Registered Trademark & Property of PrestaShop SA
 *}
-<div class="container">
-<div class="row">
-  <div class="menu-sp hidden-md-down col-xl-2 col-lg-2 col-md-3 col-sm-4"></div>
-<div class="slider-banner col-sm-12 col-xs-12">
-  <div class="s-panel">
-    <div class="loader wrloader"></div>
-    
-      {if $wbslider.slides}
-      <div class="homeslider-container slideshow-panel" data-interval="{$wbslider.speed}" data-wrap="{$wbslider.wrap}" data-pause="{$wbslider.pause}">
-        <div class="slide-progress"></div>
-        <ul id="owl-image-slider" class="image-slide owl-carousel owl-theme">
-          {foreach from=$wbslider.slides item=slide}
-            <li class="slide">
-              <a href="{$slide.url}">
-                <img src="{$slide.image_url}" alt="{$slide.legend}" class="img-responsive" />
-              </a>
-            </li>
-          {/foreach}
-        </ul>
+<div class="">
+  <div class="row">
+    <div class="menu-sp hidden-md-down col-xl-2 col-lg-2 col-md-3 col-sm-4"></div>
+    <div class="slider-banner col-sm-12 col-xs-12">
+      <div class="s-panel">
+        <div class="loader wrloader"></div>
+
+        {if $wbslider.slides}
+          <div class="homeslider-container slideshow-panel" data-interval="{$wbslider.speed}" data-wrap="{$wbslider.wrap}"
+            data-pause="{$wbslider.pause}">
+            <div class="slide-progress"></div>
+            <ul id="owl-image-slider" class="image-slide owl-carousel owl-theme">
+              {foreach from=$wbslider.slides item=slide}
+                <li class="slide">
+                  <a href="{$slide.url}">
+                    <img src="{$slide.image_url}" alt="{$slide.legend}" class="img-responsive" />
+                  </a>
+                </li>
+              {/foreach}
+            </ul>
+          </div>
+        {/if}
       </div>
-    {/if}
+    </div>
   </div>
-</div>
-</div>
 </div>

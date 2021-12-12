@@ -3281,14 +3281,14 @@ tbody.collapse.in {
     display: none;
     float: left;
     min-width: 10rem;
-    padding: .5rem 0;
-    margin: .125rem 0 0;
+    FONT-VARIANT: JIS04;
+    margin: 0 0 0;
     text-align: left;
     list-style: none;
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, .15);
-    border-radius: 0
+    border-radius: 0;
 }
 
 .dropdown-divider {
@@ -4257,7 +4257,7 @@ tbody.collapse.in {
 .navbar-nav .nav-link {
     display: block;
     padding-top: .425rem;
-    padding-bottom: .425rem
+    padding-bottom: .425rem;
 }
 
 .navbar-nav .nav-item+.nav-item,
@@ -7412,7 +7412,7 @@ small.value {
     -moz-appearance: none;
     border: 0 none;
     outline: 0 none;
-    background: #fff
+    background: transparent;
 }
 
 .dropdown-item:focus,

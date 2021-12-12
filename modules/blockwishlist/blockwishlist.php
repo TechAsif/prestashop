@@ -159,6 +159,8 @@ class BlockWishList extends Module
         return $this->display(__FILE__, '/views/templates/front/blockwishlist_button.tpl');
     }
 
+    public function hookdisplayNav(){ return $this->hookdisplayTop(); }
+
     public function hookdisplayTop()
     {
 

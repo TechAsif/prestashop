@@ -1,6 +1,5 @@
 .sm-simple {
   border: 1px solid #bbbbbb;
-  background: #fff;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 .sm-simple a, .sm-simple a:hover, .sm-simple a:focus, .sm-simple a:active {
@@ -9,7 +8,7 @@
   padding-right: 58px;
   color: #555555;
   font-family: "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", Arial, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal;
   line-height: 17px;
   text-decoration: none;
@@ -117,14 +116,13 @@
 
   /* ...end */
   .sm-simple {
-    background: #fff;
   }
   .sm-simple a, .sm-simple a:hover, .sm-simple a:focus, .sm-simple a:active, .sm-simple a.highlighted {
-    padding: 11px 20px;
+    padding: 10px 8px;
     color: #555555;
   }
   .sm-simple a:hover, .sm-simple a:focus, .sm-simple a:active, .sm-simple a.highlighted {
-    background: #eeeeee;
+  color: red;
   }
   .sm-simple a.current {
     background: #555555;
@@ -135,31 +133,25 @@
     color: #cccccc;
   }
   .sm-simple a.has-submenu {
-    padding-right: 32px;
   }
   .sm-simple a .sub-arrow {
-    top: 50%;
-    margin-top: -8px;
-    right: 20px;
-    width: 8px;
-    height: 16px;
-    font: 14px/16px monospace !important;
-    background: transparent;
+    display: none;
   }
   .sm-simple a.highlighted .sub-arrow::before {
     content: '+';
   }
   .sm-simple > li {
     border-top: 0;
-    border-left: 1px solid #eeeeee;
   }
   .sm-simple > li:first-child {
     border-left: 0;
   }
   .sm-simple ul {
-    border: 1px solid #bbbbbb;
-    background: #fff;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    padding: 0;
+    list-style: none;
   }
   .sm-simple ul a {
     border: 0 !important;

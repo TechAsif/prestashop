@@ -23,37 +23,43 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 
-<div id="_desktop_user_info" class="dropdown js-dropdown hidden-md-down text-xs-right d-inline-block">
+<div id="_desktop_user_info" class="dropdown js-dropdown text-xs-right d-inline-block">
+  {if $logged}
     <div class="user-info" data-toggle="dropdown">
-        <div class="nav-link usvg">
-          <div class="d-inline-block"><svg width="22px" height="22px" class="nav-link hidden-lg-up"> <use xlink:href="#huser"></use></svg><span class="hidden-md-down">{l s='My Account' d='Shop.Theme.Catalog'} <i class="fa fa-angle-down"></i></span></div>
-          {*  <span class="hidden-md-down userdess">{l s='My Account' d='Shop.Theme.Catalog'} <i class="fa fa-angle-down"></i></span> *}
-            {* <div class="hdis text-xs-left nav-link hidden-md-down">
-              <span class="hidden-sm-down userdess">{l s='My Account' d='Shop.Theme.Catalog'}</span><br class="hidden-md-down">
-              <span>{if $logged}{l s='Sign out' d='Shop.Theme.Actions'}{else}{l s='Sign in' d='Shop.Theme.Actions'}{/if}</span>
-            </div> *} 
-        </div>
+      <div class="nav-link">
+          <svg width="22px" height="22px" class="usvg nav-link hidden-lg-up">
+            <use xlink:href="#huser"></use>
+          </svg>
+          <span class="hidden-md-down">
+            {l s='My Account' d='Shop.Theme.Catalog'} <i class="fa fa-angle-down"></i>
+          </span>
+      </div>
     </div>
     <ul class="dropdown-menu user-down dropdown-menu-right">
-       {if $logged}
-       <li>
-      <a class="account" href="{$my_account_url}" title="{l s='View my customer account' d='Shop.Theme.Customeraccount'}" rel="nofollow">
-        <i class="fa fa-user logged"></i>
-        {$customerName}
-      </a>
+
+      <li>
+        <a class="account" href="{$my_account_url}"
+          title="{l s='View my customer account' d='Shop.Theme.Customeraccount'}" rel="nofollow">
+          <i class="fa fa-user logged"></i>
+          {$customerName}
+        </a>
       </li>
-       <li>
-      <a class="logout" href="{$logout_url}" rel="nofollow">
-        <i class="fa fa-sign-out"></i>
-        {l s='Sign out' d='Shop.Theme.Actions'}
-      </a>
+      <li>
+        <a class="logout" href="{$logout_url}" rel="nofollow">
+          <i class="fa fa-sign-out"></i>
+          {l s='Sign out' d='Shop.Theme.Actions'}
+        </a>
       </li>
-    {else}
-     <li> <a href="{$my_account_url}" title="{l s='Log in to your customer account' d='Shop.Theme.Customeraccount'}" rel="nofollow">
-        <i class="fa fa-user"></i>
-        <span>{l s='Sign in' d='Shop.Theme.Actions'}</span>
-      </a></li>
-    {/if}
-    {* {hook h='displayTopColumn'} *}
-  </ul>
+    </ul>
+  {else}
+    <a href="{$my_account_url}" title="{l s='Log in to your customer account' d='Shop.Theme.Customeraccount'}"
+      rel="nofollow">
+      {* <i class="fa fa-user"></i> *}
+      <span>{l s='Login' d='Shop.Theme.Actions'}</span>
+    </a> /
+    <a href="{$urls.pages.register}" data-link-action="display-register-form">
+      {l s='Register' d='Shop.Theme.Customeraccount'}
+    </a>
+
+  {/if}
 </div>

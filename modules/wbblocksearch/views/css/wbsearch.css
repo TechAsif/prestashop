@@ -14,35 +14,49 @@ body.fixed{position: fixed !important}
 /*background: url(../img/bkg_search.png) no-repeat top -1px right;*/
 }
 #search_query_top {
-  height: 45px;
-  background: #fff;
+  background: transparent;
   border: none;
-  border-radius: 4px;
+  position: relative;
+  padding: 5px;
+  line-height: 24px;
+  padding-left: 2.5rem;
+}
+#search_block_top .input-group:before {
+  content: '';
+  position: absolute;
+  height: 24px;
+  width: 25px;
+  top: 50%;
+  left: 8px;
+  background-image: url('../../views/img/search.png');
+  background-repeat: no-repeat;
+  transform: translateY(-50%);
 }
 #search_category {
     width: 150px;
-    height: 45px;
+    height: 34px;
     -webkit-appearance: none;
     background-repeat: no-repeat;
-    background-image: url('../../views/img/cate.png');
-    background-position: right 0 center;
-    position: relative;
+    /* background-image: url('../../views/img/cate.png'); */
+    background-image: url('../../views/img/Union.svg');
+    background-position: left 10px center;
     -moz-appearance: none;
     cursor: pointer;
     color: #222;
-    font-size: 13px;
-    border-radius: 4px;
     border: none;
-    background-color: #fff;
-    padding: 0 15px;
+    padding: 0 15px 0 40px;
+    background-color: transparent;
+    line-height: 34px;
 }
-/* .cat-select::before{
+.cat-select{position: relative;}
+.cat-select::after{
   content: '';
   border-left: 1px solid #ddd;
   position: absolute;
-  height: 34px;
-  top: 5px;
-} */
+  height: 20px;
+  top: 7px;
+  right: 0;
+}
 .button-search {
   fill: #f5f5f5;
   cursor: pointer;
@@ -58,6 +72,7 @@ body.fixed{position: fixed !important}
   transition: 0.3s ease;
   text-transform: uppercase;
   margin-right: -1px;
+  display: none;
 }
 .button-search:hover,.button-search:focus{
   color: #000;
@@ -68,7 +83,8 @@ body.fixed{position: fixed !important}
   transition: 0.3s ease;
 }
 #search_block_top .input-group{
-  width: auto;
+  width: 100%;
+  display: inline-block;
 }
 .items-list .wbContent{
   overflow: hidden;
@@ -110,9 +126,6 @@ body.fixed{position: fixed !important}
 #search_block_top {
     transition: all 0.5s;
     z-index: 9;
-    border-radius: 5px;
-    position: relative;
-    background-color: transparent;
 }
   #search_block_top.show {
    

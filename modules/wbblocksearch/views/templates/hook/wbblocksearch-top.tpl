@@ -35,15 +35,15 @@
 	</div>
 {else}
 <!-- Block search module TOP -->
-<div class="wbSearch search_widget col-xl-8 col-lg-7 col-md-7 col-sm-12 col-xs-12 text-xs-left" id="search_widget">
+<div class="search_widget wbSearch" id="search_widget">
 	<div id="search_block_top" class="text-xs-left">
-		<div class="cat-select float-xs-left">
-			{* <select id="search_category" name="search_category" class="form-control">
+		{* <div class="cat-select float-xs-left">
+			<select id="search_category" name="search_category" class="form-control">
 				<option value="all">{l s='All Categories' mod='wbblocksearch'}</option>
 				{$search_category|escape:'quotes':'UTF-8' nofilter}
-			</select> *}
-			{* <i class="fa fa-angle-down searchi"></i> *}
-		</div>
+			</select>
+			<i class="fa fa-angle-down searchi"></i>
+		</div> *}
 		<form id="searchbox" class="input-group" method="get" action="{$search_controller_url|escape:'html':'UTF-8'}">
 		   
 			<input type="hidden" name="controller" value="search">

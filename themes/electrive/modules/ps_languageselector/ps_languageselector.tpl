@@ -31,7 +31,7 @@
         <span class="expand-more text-capitalize">{$current_language.name_simple}</span>
         <i class="fa fa-angle-down"></i>
       </button>
-      <ul class="dropdown-menu dropdown-menu-right hidden-md-down" aria-labelledby="language-selector-label">
+      <ul class="dropdown-menu dropdown-menu-left hidden-md-down" aria-labelledby="language-selector-label">
         {foreach from=$languages item=language}
           <li {if $language.id_lang == $current_language.id_lang} class="current" {/if}>
             <a href="{url entity='language' id=$language.id_lang}" class="dropdown-item"><img class="lang-flag" src="{$urls.img_lang_url}{$language.id_lang}.jpg"/> {$language.name_simple}</a>
@@ -43,7 +43,6 @@
           <option value="{url entity='language' id=$language.id_lang}"{if $language.id_lang == $current_language.id_lang} selected="selected"{/if}>{$language.name_simple}</option>
         {/foreach}
       </select>
-      <i class="fa fa-angle-down hidden-lg-up"></i>
     </div>
   </div>
 </div>

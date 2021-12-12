@@ -28,7 +28,7 @@
 <div  class="wb-menu-vertical clearfix">
 {$id_lang = Context::getContext()->language->id}
 	
-	<div id="pt_vegamenu" class="title-menu wr-left-menu hidden-md-down">
+	{* <div id="pt_vegamenu" class="title-menu wr-left-menu hidden-md-down">
 		<div id="wr-menu-icon">
           <div class="wr-menu" data-toggle="collapse" data-target="#under-menu">
               <button class="btn-navbar navbar-toggle" type="button" data-toggle="collapse">
@@ -38,10 +38,10 @@
                   <div class="bar"></div>
                 </div>
               </button>
-              <span class="cate">{l s='all Categories' d='Shop.Theme.Catalog' mod='wbmegamenu'}{* <i class="fa fa-angle-down float-xs-right"></i> *}</span>
+              <span class="cate">{l s='all Categories' d='Shop.Theme.Catalog' mod='wbmegamenu'}<i class="fa fa-angle-down float-xs-right"></i></span>
           </div>
      	</div>
-    </div>
+    </div> *}
 	<div class="menu-vertical">
 	<a href="javascript:void(0);" class="close-menu-content"><span><i class="fa fa-times" aria-hidden="true"></i></span></a>
 	<ul class="menu-content">

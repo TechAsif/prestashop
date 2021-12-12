@@ -1109,6 +1109,7 @@ class WbThemeCustomizer extends Module
             'Ranchers' => array('subsets' => array('latin', 'latin-ext'), 'variants' => array('400')),
             'Rancho' => array('subsets' => array('latin'), 'variants' => array('400')),
             'Rationale' => array('subsets' => array('latin'), 'variants' => array('400')),
+            'Red Hat Display' => array('subsets' => array('latin'), 'variants' => array('400', '700', '900',)),
             'Redressed' => array('subsets' => array('latin'), 'variants' => array('400')),
             'Reenie Beanie' => array('subsets' => array('latin'), 'variants' => array('400')),
             'Revalia' => array('subsets' => array('latin', 'latin-ext'), 'variants' => array('400')),
