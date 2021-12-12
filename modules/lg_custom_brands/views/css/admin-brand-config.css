@@ -1,0 +1,21 @@
+#sortable1,
+#sortable2 {
+  border: 1px solid #c7c1c1;
+  width: 100%;
+  min-height: 20px;
+  list-style-type: none;
+  margin: 0;
+  padding: 15px;
+  margin-right: 10px;
+  background: #fff;
+}
+#sortable1 li,
+#sortable2 li {
+  margin: 0 5px 5px 5px;
+  padding: 5px;
+  font-size: 1.2em;
+  width: 120px;
+}
+.lg-brand .ui-sortable {
+    width: 100%;
+}
