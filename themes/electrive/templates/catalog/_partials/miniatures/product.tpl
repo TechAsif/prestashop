@@ -141,7 +141,18 @@
             <div class="button-group allpbt">
               
               <div class="absbtn">
-                  <div class="add-cart d-inline-block">
+                  
+                  {hook h='displayCompareButton' product=$product}
+                  {block name='quick_view'}
+                    <a class="quick-view quick" title="{l s='Quick-view' d='Shop.Theme.Catalog'}" href="#" data-link-action="quickview">
+                      <svg width="18px" height="18px"><use xlink:href="#bquick" /></svg><span>{l s='Quick-view' d='Shop.Theme.Catalog'}</span>
+                    </a>
+                  {/block}
+                  <button title="{l s='Wishlist' d='Shop.Theme.Catalog'}" class="wish" id="wishlist_button" onclick="WishlistCart('wishlist_block_list', 'add', '{$product.id_product|intval}', {$product.id_product_attribute}, 1); return false;"><svg width="20px" height="20px"><use xlink:href="#heart"></use></svg><span>{l s='Wishlist' d='Shop.Theme.Catalog'}</span></button>
+                </div>
+
+      
+                <div class="add-cart d-inline-block add-to-cart">
                     <form action="{$urls.pages.cart}" method="post" class="add-to-cart-or-refresh">
                     <input type="hidden" name="token" value="{$static_token}">
                     <input type="hidden" name="id_product" value="{$product.id}" class="product_page_product_id">
@@ -157,14 +168,6 @@
                     {/if}
                     </form>
                   </div>
-                  {hook h='displayCompareButton' product=$product}
-                  {block name='quick_view'}
-                    <a class="quick-view quick" title="{l s='Quick-view' d='Shop.Theme.Catalog'}" href="#" data-link-action="quickview">
-                      <svg width="18px" height="18px"><use xlink:href="#bquick" /></svg><span>{l s='Quick-view' d='Shop.Theme.Catalog'}</span>
-                    </a>
-                  {/block}
-                  <button title="{l s='Wishlist' d='Shop.Theme.Catalog'}" class="wish" id="wishlist_button" onclick="WishlistCart('wishlist_block_list', 'add', '{$product.id_product|intval}', {$product.id_product_attribute}, 1); return false;"><svg width="20px" height="20px"><use xlink:href="#heart"></use></svg><span>{l s='Wishlist' d='Shop.Theme.Catalog'}</span></button>
-                </div>
                 
               </div>
             </div>

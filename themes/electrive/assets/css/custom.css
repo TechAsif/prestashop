@@ -1002,6 +1002,13 @@ body::-webkit-scrollbar-thumb {
         position: absolute;
         left: 0;
         right: 0;
+        top: 10px;
+    }
+
+    .add-to-cart {
+        position: absolute;
+        left: 0;
+        right: 0;
         top: 32%;
     }
 }
