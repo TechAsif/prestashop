@@ -102,11 +102,11 @@ class Lg_Custom_Brands extends Module implements WidgetInterface
 		return (bool)$return;
 	}
 
-	public function getCustomBrands()
+	public function getMyBrands($brandKey = 'LG_CUSTOM_BRAND_IDS')
 	{
-		$manuddddList = Manufacturer::getManufacturers();
-		$manuList = Manufacturer::getLiteManufacturersList();
-		$custom_brand_ids = json_decode(Configuration::get('LG_CUSTOM_BRAND_IDS'));
+		// $manuddddList = Manufacturer::getManufacturers();
+		$avaiableCustomBrands = Manufacturer::getLiteManufacturersList();
+		$custom_brand_ids = json_decode(Configuration::get($brandKey));
 		$images_types = ImageType::getImagesTypes('manufacturers');
 
 		// $image = _PS_MANU_IMG_DIR_.$manufacturer->id.'.jpg';
@@ -114,17 +114,16 @@ class Lg_Custom_Brands extends Module implements WidgetInterface
 		// 		$this->imageType, true, true);
 		// $image_size = file_exists($image) ? filesize($image) / 1000 : false;
 
-
-		$custom_brands = [];
+		$my_brands = [];
 		$this->imageType = 'jpg';
 		$table = 'manufacturer';
-		foreach ($custom_brand_ids as $custom_brand_id) {
-			$tempbrand = array_filter($manuList, function($v, $k) use($custom_brand_id) {
+		foreach ((array)$custom_brand_ids as $custom_brand_id) {
+			$tempbrand = array_filter($avaiableCustomBrands, function($v, $k) use($custom_brand_id) {
 				return $v['id'] == $custom_brand_id;
 			}, ARRAY_FILTER_USE_BOTH);
 
 			foreach ($tempbrand as $key => $brand) {
-				unset($manuList[$key]);
+				unset($avaiableCustomBrands[$key]);
 				
 				// $current_logo_file = _PS_TMP_IMG_DIR_.'manufacturer_mini_'.$brand['id'].'_'.$this->context->shop->id.'.jpg';
 						
@@ -135,15 +134,38 @@ class Lg_Custom_Brands extends Module implements WidgetInterface
 
 				$brand['image'] = $image_url;
 				$brand['image_url'] = ImageManager::getThumbnailPath($cacheImage, false);
-				$custom_brands[] = $brand;
+				$my_brands[] = $brand;
 			}
 		}
-		// var_dump($custom_brands);
+		// var_dump($my_brands);
 
 		return [
-			'manufacturers' => $manuList,
-			'custom_brands' => $custom_brands,
+			'avaiable_brands' => $avaiableCustomBrands,
+			'brands' => $my_brands,
 		];
+	}
+	public function getCustomBrands()
+	{
+		$allBrands = Manufacturer::getLiteManufacturersList();
+
+		$customBrands = $this->getMyBrands('LG_CUSTOM_BRAND_IDS');
+		$topBrands = $this->getMyBrands('LG_TOP_BRAND_IDS');
+		$populerBrands = $this->getMyBrands('LG_POPULER_BRAND_IDS');
+		$featuredBrands = $this->getMyBrands('LG_FEATURED_BRAND_IDS');
+
+		$return = [
+			'manufacturers' => $allBrands,
+			'available_custom_brands' => $customBrands['avaiable_brands'],
+			'custom_brands' => $customBrands['brands'],
+			'available_top_brands' => $topBrands['avaiable_brands'],
+			'top_brands' => $topBrands['brands'],
+			'available_populer_brands' => $populerBrands['avaiable_brands'],
+			'populer_brands' => $populerBrands['brands'],
+			'available_featured_brands' => $featuredBrands['avaiable_brands'],
+			'featured_brands' => $featuredBrands['brands'],
+		];
+		// var_dump($return);
+		return $return;
 	}
 
 

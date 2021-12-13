@@ -27,16 +27,10 @@
   {if $logged}
     <div class="user-info" data-toggle="dropdown">
       <div class="nav-link">
-          <svg width="22px" height="22px" class="usvg nav-link hidden-lg-up">
-            <use xlink:href="#huser"></use>
-          </svg>
-          <span class="hidden-md-down">
-            {l s='My Account' d='Shop.Theme.Catalog'} <i class="fa fa-angle-down"></i>
-          </span>
+        {l s='My Account' d='Shop.Theme.Catalog'} <i class="fa fa-angle-down"></i>
       </div>
     </div>
     <ul class="dropdown-menu user-down dropdown-menu-right">
-
       <li>
         <a class="account" href="{$my_account_url}"
           title="{l s='View my customer account' d='Shop.Theme.Customeraccount'}" rel="nofollow">

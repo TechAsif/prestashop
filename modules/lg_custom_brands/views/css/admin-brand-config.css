@@ -1,5 +1,4 @@
-#sortable1,
-#sortable2 {
+.brands_sortable {
   border: 1px solid #c7c1c1;
   width: 100%;
   min-height: 20px;
@@ -9,13 +8,13 @@
   margin-right: 10px;
   background: #fff;
 }
-#sortable1 li,
-#sortable2 li {
+.brands_sortable li {
   margin: 0 5px 5px 5px;
   padding: 5px;
   font-size: 1.2em;
   width: 120px;
 }
 .lg-brand .ui-sortable {
-    width: 100%;
+  width: 100%;
 }
+.lg-brands-section {margin-top: 20px;}

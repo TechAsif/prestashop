@@ -24,21 +24,19 @@
  *}
 
 {block name='header_nav'}
-  <nav class="header-nav">
-    <div class="row">
-      <div class="head-left">
-        {hook h='displayNav1'}
-      </div>
-      <div class="text-sm-center hidden-md-down">
-        <span class="usp-banner">
-          {hook h='displayUSP'}
-        </span>
-      </div>
-      <div class="right-nav text-xs-right ">
-        {hook h='displayNav2'}
-      </div>
-
+  <nav class="header-nav v-center">
+    <div class="head-left">
+      {hook h='displayNav1'}
     </div>
+    <div class="text-sm-center hidden-md-down">
+      <span class="usp-banner">
+        {hook h='displayUSP'}
+      </span>
+    </div>
+    <div class="right-nav text-xs-right ">
+      {hook h='displayNav2'}
+    </div>
+
   </nav>
 
 {/block}

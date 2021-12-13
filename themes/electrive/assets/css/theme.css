@@ -3926,7 +3926,8 @@ tbody.collapse.in {
 }
 
 .nav-link {
-    display: inline-block
+    display: inline-block;
+    cursor: pointer;
 }
 
 .nav-link:focus,
@@ -7612,13 +7613,6 @@ small.value {
 
 #mobile_top_menu_wrapper .top-menu .sub-menu ul[data-depth="4"] li a {
     padding-left: 3.75rem
-}
-#mobile_top_menu_wrapper .js-top-menu-bottom .language-selector-wrapper {
-    padding: .625rem
-}
-
-#mobile_top_menu_wrapper .js-top-menu-bottom .language-selector-wrapper .language-selector {
-    display: inline
 }
 
 #mobile_top_menu_wrapper .js-top-menu-bottom #contact-link,

@@ -56,11 +56,11 @@ class AdminCustomBrandController extends ModuleAdminController
 		$response = array('status' => false, "message" => $message);
 
 		if (Tools::isSubmit('action')) {
-			// Configuration::get('LG_CUSTOM_BRAND_IDS');
 
 			$submitted_brands = json_encode(Tools::getValue('data'));
+			$brandKey = Tools::getValue('brandType');
 			
-			$order_query = Configuration::updateValue('LG_CUSTOM_BRAND_IDS', $submitted_brands);
+			$order_query = Configuration::updateValue($brandKey, $submitted_brands);
 			$message = ($order_query) ? $this->trans('Brands are updated.'): $message;
 			$response = array('status' => true, "message" =>  $message );
 

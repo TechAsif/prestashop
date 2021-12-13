@@ -2,9 +2,9 @@ $(document).ready(function () {
   $(function () {
     var ajaxHandler = null;
     
-    function updateCustomBrands() {
+    function updateMyBrands(brand2ul, brandType) {
       var values = [];
-      $("#sortable2 li").each(function (index) {
+      $("#"+brand2ul+" li").each(function (index) {
         values.push($(this).attr("id"));
       });
 
@@ -23,6 +23,7 @@ $(document).ready(function () {
           data: {
             controller: "AdminCustomBrand",
             action: "setCustomBrands",
+            brandType: brandType,
             ajax: true,
             data: values,
           },
@@ -30,35 +31,32 @@ $(document).ready(function () {
             $.simplyToast('success', response.message, {ele: '.lg-brand'});
           },
         });
-      }, 300);
+      }, 500);
     }
-    $("#sortable1, #sortable2").sortable({
-      connectWith: ".connectedSortable",
+    $("#custom_brands1, #custom_brands2").sortable({
+      connectWith: ".custom_brands_sortable",
       update: function (event, ui) {
-        updateCustomBrands();
+        updateMyBrands('custom_brands2', 'LG_CUSTOM_BRAND_IDS');
+      }, //end update
+    });
+    $("#top_brands1, #top_brands2").sortable({
+      connectWith: ".top_brands_sortable",
+      update: function (event, ui) {
+        updateMyBrands('top_brands2', 'LG_TOP_BRAND_IDS');
+      }, //end update
+    });
+    $("#featured_brands1, #featured_brands2").sortable({
+      connectWith: ".featured_brands_sortable",
+      update: function (event, ui) {
+        updateMyBrands('featured_brands2', 'LG_FEATURED_BRAND_IDS');
+      }, //end update
+    });
+    $("#populer_brands1, #populer_brands2").sortable({
+      connectWith: ".populer_brands_sortable",
+      update: function (event, ui) {
+        updateMyBrands('populer_brands2', 'LG_POPULER_BRAND_IDS');
       }, //end update
     });
   });
 
-  $("#trackFlingexOrders").on("click", function (e) {
-    e.preventDefault();
-    $(this).prop("disabled", true);
-
-    $.ajax({
-      url: flingex_ajax,
-      type: "GET",
-      dataType: "json",
-      data: {
-        controller: "AdminFlingex",
-        action: "getFlingexOrders",
-        ajax: true,
-      },
-      success: function (response) {
-        $("#trackingOutput").slideDown().append("Tracker running....\n");
-        var POrders = response.data;
-
-        trackFlingexOrders(POrders);
-      },
-    });
-  });
 });
