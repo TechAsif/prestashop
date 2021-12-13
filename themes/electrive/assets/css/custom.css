@@ -1036,7 +1036,7 @@ body::-webkit-scrollbar-thumb {
         top: 10px;
     }
 
-    .add-to-cart {
+    .lg-add-to-cart {
         position: absolute;
         left: 0;
         right: 0;

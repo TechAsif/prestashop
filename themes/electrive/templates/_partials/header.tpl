@@ -79,7 +79,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarReviews">
                   <div class="">
-                    {widget name="lg_custom_brands"}
+                    {widget name="lg_popular_products"}
                   </div>
                 </div>
               </li>

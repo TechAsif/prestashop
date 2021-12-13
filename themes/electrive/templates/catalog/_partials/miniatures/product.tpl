@@ -152,7 +152,7 @@
                 </div>
 
       
-                <div class="add-cart d-inline-block add-to-cart">
+                <div class="add-cart d-inline-block lg-add-to-cart">
                     <form action="{$urls.pages.cart}" method="post" class="add-to-cart-or-refresh">
                     <input type="hidden" name="token" value="{$static_token}">
                     <input type="hidden" name="id_product" value="{$product.id}" class="product_page_product_id">

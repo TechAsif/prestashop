@@ -32,7 +32,7 @@ if (empty($_REQUEST['queryString'])) {
     $search_string = '';
 } else {
     $search_string = Tools::replaceAccentedChars($_REQUEST['queryString']);
-    $id_cat = Tools::replaceAccentedChars($_REQUEST['id_Cat']);
+    $id_cat = (isset($_REQUEST['id_Cat']) && $_REQUEST['id_Cat'] ) ? Tools::replaceAccentedChars($_REQUEST['id_Cat']) : 'all';
 }
   
 $wblivesearch = new WbBlockSearch();
