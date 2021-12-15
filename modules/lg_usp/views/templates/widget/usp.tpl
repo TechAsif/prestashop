@@ -14,14 +14,12 @@ https://codepen.io/ToshibaNakamura/pen/mdPpgBv
 https://codepen.io/solidpixel/pen/YxLzmP
 *}
 
-USP to Be furnished
-{* <div class="v-slider-frame">
-  <ul class="v-slides">
-    <li class="v-slide">Websites</li>
-    <li class="v-slide">Plugins</li>
-    <li class="v-slide">Web Apps</li>
-    <li class="v-slide">Portals</li>
-    <li class="v-slide">Communities</li>
-    <li class="v-slide">Digital Marketing</li>
-  </ul>
-</div> *}
+
+
+<div class="tlt">
+	<ul class="texts">
+		<li>CASH ON DELIVERY</li>
+		<li>FAST DELIVERY</li>
+    <li>BEST PRICES</li>
+	</ul>
+</div>
