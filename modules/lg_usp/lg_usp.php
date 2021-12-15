@@ -90,9 +90,9 @@ class Lg_Usp extends Module implements WidgetInterface
 	public function hookDisplayHeader($params)
 	{
 		$this->context->controller->addJquery();
-		$this->context->controller->addJS($this->_path . 'views/js/scripts.js');
 		$this->context->controller->addJS($this->_path . 'views/js/jquery.lettering.min.js');
 		$this->context->controller->addJS($this->_path . 'views/js/jquery.textillate.min.js');
+		$this->context->controller->addJS($this->_path . 'views/js/scripts.js');
 
 
 		$this->context->controller->addCSS($this->_path . 'views/css/styles.css');

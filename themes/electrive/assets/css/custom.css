@@ -296,7 +296,9 @@ body::-webkit-scrollbar-thumb {
 .usp-banner {
     font-size: 16px;
     line-height: 17px;
-    color: #A9A9A9;
+    color: #ef3e3e;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 .header-top .dropdown-menu {
     border-radius: 7px;
@@ -650,7 +652,6 @@ body::-webkit-scrollbar-thumb {
         width: 20%;
     }
     .all-sidepro{
-        width: 80%;
     }
     .wb-menu-vertical ul li.level-1 > a strong{
         display: none
@@ -1055,7 +1056,7 @@ body::-webkit-scrollbar-thumb {
 }
 .thumbnail-container .button-group button, .thumbnail-container .button-group a {
     transition: 0.3s ease;
-    background-color: #f5f5f5;
+    background-color: #f1eded;
     fill: #4c4c4c;
     width: 36px;
     height: 36px;
@@ -1068,6 +1069,19 @@ body::-webkit-scrollbar-thumb {
     border: 1px solid #f5f5f5;
     cursor: pointer;
 }
+.wb-product-list .thumbnail-container .button-group button.cartb svg {
+    fill: #4c4c4c;
+    width: 22px;
+    height: 17px;
+}
+
+.thumbnail-container .button-group button.cartb:hover svg {
+    fill: #fff;
+}
+.wb-product-list .thumbnail-container .button-group button.cartb:hover svg {
+    fill: #fff;
+    fill: #4c4c4c;
+}
 .thumbnail-container .button-group button:hover, .thumbnail-container .button-group a:hover{
     background-color: #ffcc00;
     border: 1px solid #ffcc00;
@@ -1075,14 +1089,46 @@ body::-webkit-scrollbar-thumb {
 .thumbnail-container .button-group button:hover svg, .thumbnail-container .button-group a:hover svg{
     fill: #000;
 }
-@media(min-width: 768px){
 
+.wb-product-list .thumbnail-container .button-group button.cartb {
+    width: 36px;
+    height: 36px;
+    background-color: #f1eded;
+    margin-top: 0;
+    border-radius: 5px;
+}
+.wb-product-list .add-cart.lg-add-to-cart {display: inline-block;}
+@media(min-width: 768px){
+    .thumbnail-container .button-group button.cartb {
+    background: rgba(97, 97, 97, 0.52);
+    border: none;
+    fill: #fff;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+.thumbnail-container .button-group button.cartb svg {
+    width: 60%;
+    height: auto;
+    fill: #ffffff;
+}
     .thumbnail-container .compare,.thumbnail-container .quick-view{
         display: inline-block;
     }
     .thumbnail-container .button-group span{
         display: none;
     }
+    .thumbnail-container .button-group button.cartb span {display: block;text-transform: uppercase;padding: 7px 7px 0px 7px;color: #fff;}
+    .wb-product-grid .thumbnail-container .button-group {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        /* height: 100%; */
+        /* background: rgba(0, 0, 0, 0.42); */
+        }
+        .wb-product-list .thumbnail-container .button-group button.cartb {}
     .thumbnail-container .button-group{
         opacity: 0;
         transition: 0.4s ease;
@@ -1096,13 +1142,6 @@ body::-webkit-scrollbar-thumb {
         left: 0;
         right: 0;
         top: 10px;
-    }
-
-    .lg-add-to-cart {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 32%;
     }
 }
 .custlistds{
@@ -1169,10 +1208,12 @@ body::-webkit-scrollbar-thumb {
     padding: 0 15px;
 }
 .listdss {
-    max-height: 43px;
+    /* max-height: 43px; */
     overflow: hidden;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
+    font-size: 14px;
 }
+.listdss p:last-child {margin-bottom: 0;}
 /* banner */
 /* blog */
 #module-wbblog-single .page-footer{
@@ -2464,28 +2505,26 @@ body::-webkit-scrollbar-thumb {
     display: block;
 }
 .wb-product-list .thumbnail-container {
-    float: left;
+    float: none;
     width: 100%;
     border-radius: 5px;
     margin-bottom: 20px;
+    padding-bottom: 15px;
     border: none;
     transition: none;
     background-color: #fff;
 }
 .wb-product-list .product-miniature .thumbnail-container:hover{
-    padding-bottom: 0;
-    margin-bottom: 20px;
-    box-shadow: none;
 }
 .listds p{
     font-size: 13px;
     overflow: hidden;
     margin-bottom: 0;
-    max-height: 38px;
+    /* max-height: 38px; */
     text-transform: capitalize;
 }
 .listds{
-    max-height: 38px;
+    /* max-height: 38px; */
     overflow: hidden;
     margin-bottom: 12px;
 }
@@ -2505,6 +2544,7 @@ body::-webkit-scrollbar-thumb {
 .wb-product-list .product-miniature{
     padding: 0;
     border: none;
+    float: none;
 }
 .wb-product-list .wb-image-block{
     padding: 0;
@@ -2512,6 +2552,7 @@ body::-webkit-scrollbar-thumb {
     position: relative;
     border-radius: 5px;
 }
+body.tax-display-enabled #products .product-description, body.tax-display-enabled .featured-products .product-description, body.tax-display-enabled .product-accessories .product-description, body.tax-display-enabled #products .thumbnail-container, body.tax-display-enabled .featured-products .thumbnail-container, body.tax-display-enabled .product-accessories .thumbnail-container {height:auto;}
 @media(min-width: 768px){
     .wb-product-list .wb-product-desc{
         text-align: left;
@@ -2626,6 +2667,7 @@ body::-webkit-scrollbar-thumb {
 
 .wb-product-list .item-product{
     padding: 0 0px;
+    float: none;
 }
 .wb-product-grid{
     margin: 0 -15px;
@@ -3328,10 +3370,11 @@ body::-webkit-scrollbar-thumb {
         padding: 2px 0;
         height: 28px !important;
     }
+
     .cartb span{
         display: none;
     }
-    .absbtn{
+    .absbtn, .lg-add-to-cart {
         display: inline-block;
     }
     .thumbnail-container .button-group button svg, .thumbnail-container .button-group a svg{
@@ -3517,7 +3560,7 @@ body::-webkit-scrollbar-thumb {
         width: 30%;
     }
     .wb-product-grid .item-product, .wb-product-list .item-product {
-        width: 33.33%;
+        /* width: 33.33%; */
     }
 }
 @media(max-width: 599px){
@@ -3549,7 +3592,7 @@ body::-webkit-scrollbar-thumb {
         float: none !important;
     }
     .wb-product-grid .item-product, .wb-product-list .item-product {
-        width: 50%;
+        /* width: 50%; */
     }
     .product-actions .add-to-cart{
         padding: 0 5px;

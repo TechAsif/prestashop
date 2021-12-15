@@ -39,9 +39,9 @@ $(document).ready(function () {
   if ($(document).width() >= 992) {
     $(window).scroll(function () {
       if ($(this).scrollTop() > 165) {
-        $("#index .header-top").addClass("fixed fadeInDown animated");
+        $("#header .header-top").addClass("fixed fadeInDown animated");
       } else {
-        $("#index .header-top").removeClass("fixed fadeInDown animated");
+        $("#header .header-top").removeClass("fixed fadeInDown animated");
       }
     });
   }

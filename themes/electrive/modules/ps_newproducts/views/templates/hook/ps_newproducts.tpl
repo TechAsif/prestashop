@@ -23,36 +23,48 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 
-<div class="container">
-  <div class="home-heading"><h2 class="bold-second-word"><span>{l s='New Products' d='Shop.Theme.Catalog'}</span></h2></div>
-  <div class="row">
-     <div class="left-bnr leftbanner1 col-lg-3 col-md-3 col-sm-4 col-xs-12 hidden-sm-down"></div>
-     <section class="clearfix next-prevb all-sidepro col-lg-9 col-md-9 col-sm-8 col-xs-12">
-      <div class="products row marginrow">
-          <div id="owl-new" class="owl-carousel owl-theme">
-              {$num_row=2} <!-- Number of Row Ex 2,3,4,5....etc-->
-              {$i=0}
-              {if count($products) <= 6}
-                {foreach from=$products item="product"}
-                  {include file="catalog/_partials/miniatures/all-product.tpl" product=$product}
-                {/foreach}
-              {else}
-                {foreach from=$products item="product"}
-                  {if $i == 0}
-                    <ul>
-                      <li>
-                  {/if}
-                        {include file="catalog/_partials/miniatures/all-product.tpl" product=$product}
-                        {$i=$i+1}
-                  {if $i == $num_row}
-                      </li>
-                    </ul>
-                    {$i=0}
-                  {/if}
-                {/foreach}
-              {/if}
-           </div>
-         </div>
-    </section>
-  </div>
-</div>
+ <div class="container">
+
+
+ {* <div class="pro-tab tabs text-capitalize text-xs-right">
+     <h2 class="bold-second-word float-xs-left">{l s='top product' d='Shop.Theme.Catalog'}</h2>
+     <ul class="list-inline nav nav-tabs">
+         <li class="nav-item"><a class="nav-link active" href="#tab-fea-0"  data-toggle="tab">{l s='featured' d='Shop.Theme.Catalog'}</a></li><li class="nav-item tabl"><a class="nav-link" href="#tab-best-0"  data-toggle="tab">{l s='popular' d='Shop.Theme.Catalog'}</a></li><li class="nav-item"><a class="nav-link" href="#tab-new-0"  data-toggle="tab">{l s='New' d='Shop.Theme.Catalog'}</a></li>
+     </ul>
+ </div> *}
+ 
+ <section class="clearfix next-prevb">
+ 
+   <div class="home-heading"><h2 class="bold-second-word"><span>{l s='New Products' d='Shop.Theme.Catalog'}</span></h2></div>
+   <div class="products row marginrow">
+      <div id="owl-fea" class="owl-carousel owl-theme">
+            {$num_row=1} <!-- Number of Row Ex 2,3,4,5....etc-->
+           {$i=0}
+           {if count($products) <= 10}
+             {foreach from=$products item="product"}
+               {include file="catalog/_partials/miniatures/product.tpl" product=$product}
+             {/foreach}
+           {else}
+             {foreach from=$products item="product"}
+               {if $i == 0}
+                 <ul>
+                   <li>
+               {/if}
+                     {include file="catalog/_partials/miniatures/product.tpl" product=$product}
+                     {$i=$i+1}
+               {if $i == $num_row}
+                   </li>
+                 </ul>
+                 {$i=0}
+               {/if}
+             {/foreach}
+           {/if}
+   </div>
+   </div>
+  {*  <a class="all-product-link float-xs-left float-md-right h4" href="{$allProductsLink}">
+     {l s='All products' d='Shop.Theme.Catalog'}<i class="material-icons">&#xE315;</i>
+   </a> *}
+ </section>
+ 
+ </div>
+ 
