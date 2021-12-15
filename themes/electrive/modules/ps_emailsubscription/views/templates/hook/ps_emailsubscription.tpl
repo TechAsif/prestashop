@@ -26,7 +26,6 @@
 <div class="newsc">
  <div class="block_newsletter row">  
     <div class="hidden-sm-down col-lg-5 col-sm-6 col-xs-12">
-      <span class="newssvg d-inline-block"><svg width="100px" height="100px"><use xlink:href="#esend"></use></svg></span>
       <span class="d-inline-block">
         <h3 class="h3"><span>{l s='join our Newsletter now' d='Shop.Theme.Catalog'}</span></h3>
         {* <h4>{l s='Get our updates on new arrivals' d='Shop.Theme.Catalog'}</h4> *}

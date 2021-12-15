@@ -310,8 +310,11 @@ body::-webkit-scrollbar-thumb {
 @media(min-width: 1200px){
     .header-top .dropdown-menu{
         width: 1100px;
+        max-height: 470px;
+        overflow: auto;
     }
 }
+#brandings {overflow: hidden;}
 #brandings .brand_list {
     padding: 15px;
 }    
@@ -569,6 +572,7 @@ body::-webkit-scrollbar-thumb {
 .topmenu{
     padding: 6px 0;
     margin-top: 10px;
+    text-align: center;
 }
 .statmenu li {
     display: inline-block;
@@ -666,7 +670,6 @@ body::-webkit-scrollbar-thumb {
   border-radius: 2px;
 }
 .homeslider-container{
-    position: relative;
 }
 #owl-image-slider .owl-dots{
     position: absolute;

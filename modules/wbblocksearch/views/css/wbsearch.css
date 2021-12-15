@@ -213,6 +213,8 @@ form#searchbox .button.button-small i {
 
 .items-list li.item{
   clear: both;
+  display: inline-block;
+  width: 100%;
 }
 #wbsearch_content_result{
     background: #fff none repeat scroll 0 0;

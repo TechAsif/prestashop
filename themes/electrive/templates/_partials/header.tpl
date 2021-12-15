@@ -71,11 +71,11 @@
               </li>
 
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarReviews" role="button" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle" href="#" id="navbarPopulerProducts" role="button" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false">
-                  Top Reviews
+                  Popular Products
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarReviews">
+                <div class="dropdown-menu" aria-labelledby="navbarPopulerProducts">
                   <div class="">
                     {widget name="lg_popular_products"}
                   </div>
@@ -124,12 +124,8 @@
       </div>
     </div>
   </div>
-  <div class="topmenu">
-    <div class="container">
-      <div class="row">
-        {hook h='displayNavFullWidth'}
-      </div>
-    </div>
+  <div class="topmenu container-fluid">
+      {hook h='displayNavFullWidth'}
   </div>
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="lgLogo" viewBox="0 0 47 41">

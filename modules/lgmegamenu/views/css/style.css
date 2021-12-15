@@ -1,5 +1,8 @@
 .main-nav {
   position: relative;
+  text-align: center;
+  /* display: flex; */
+  /* align-items: center; */
 }
 
 .main-nav:after {
@@ -37,8 +40,9 @@
 
 @media (min-width: 768px) {
   #main-menu {
-    float: left;
-    clear: none;
+    /* float: left; */
+    /* clear: none; */
+    display: inline-block;
   }
 }
 

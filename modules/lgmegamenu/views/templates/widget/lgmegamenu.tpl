@@ -851,7 +851,7 @@
 
     <!-- 8th mega menu start -->
     <li class="has-mega-menu">
-      <a href="#">Bikes &amp; Autos</a>
+      <a href="#">Bikes &amp; Sports</a>
 
       <ul class="mega-menu">
         <li>
@@ -901,11 +901,6 @@
               <li><a href="https://letsgobd.com/en/726-bike-tyres">Bike Tyres</a></li>
               <li><a href="https://letsgobd.com/en/876-tyre-gel">Tyre Gel</a></li>
             </ul>
-
-          </div>
-
-
-          <div class="col-sm-3 mr-20 ml-20">
             <h4>Bikes Riding Gears</h4>
             <ul>
               <li><a href="https://letsgobd.com/en/647-helmet">Helmet</a></li>
@@ -914,26 +909,19 @@
               <li><a href="https://letsgobd.com/en/650-gear-accessories">Gear Accessories</a></li>
             </ul>
 
+            <h4>Exercise &amp; Fitness</h4>
+            <ul>
+              <li><a href="https://letsgobd.com/en/607-treadmills">Treadmills</a></li>
+              <li><a href="https://letsgobd.com/en/608-fitness-accessories">Fitness Accessories</a></li>
+              <li><a href="https://letsgobd.com/en/609-exercise-bike">Exercise Bike</a>
+              </li>
+              <li><a href="https://letsgobd.com/en/610-elliptical-trainers">Elliptical Trainers</a></li>
+              <li><a href="https://letsgobd.com/en/611-strength-training-equipments">Strength Training
+                  Equipments</a></li>
+            </ul>
           </div>
 
-          <div class="col-sm-3 mr-20 ml-20">
-            <div class="mega-menu-sample-image">Image</div>
-            <div class="mega-menu-sample-image">Image</div>
-          </div>
-        </li>
-      </ul>
-    </li>
-    <!-- 8th  Mega Menu End -->
 
-
-
-
-    <!-- 9th mega menu start -->
-    <li class="has-mega-menu">
-      <a href="#">Sports</a>
-
-      <ul class="mega-menu">
-        <li>
           <div class="col-sm-3 mr-20 ml-20">
             <h4>Cycling</h4>
             <ul>
@@ -950,10 +938,6 @@
               <li><a href="https://letsgobd.com/en/600-punching-bags-accessories">Punching Bags &amp;
                   Accessories</a></li>
             </ul>
-
-          </div>
-
-          <div class="col-sm-3 mr-20 ml-20">
             <h4>Outdoor Recreation</h4>
             <ul>
               <li><a href="https://letsgobd.com/en/602-golf">Golf</a></li>
@@ -964,19 +948,7 @@
               <li><a href="https://letsgobd.com/en/795-touch-light">Touch Light</a></li>
             </ul>
 
-            <h4>Exercise &amp; Fitness</h4>
-            <ul>
-              <li><a href="https://letsgobd.com/en/607-treadmills">Treadmills</a></li>
-              <li><a href="https://letsgobd.com/en/608-fitness-accessories">Fitness Accessories</a></li>
-              <li><a href="https://letsgobd.com/en/609-exercise-bike">Exercise Bike</a>
-              </li>
-              <li><a href="https://letsgobd.com/en/610-elliptical-trainers">Elliptical Trainers</a></li>
-              <li><a href="https://letsgobd.com/en/611-strength-training-equipments">Strength Training
-                  Equipments</a></li>
-            </ul>
-
           </div>
-
 
           <div class="col-sm-3 mr-20 ml-20">
             <h4>Racket</h4>
@@ -1004,15 +976,10 @@
             </ul>
 
           </div>
-
-          <div class="col-sm-3 mr-20 ml-20">
-            <div class="mega-menu-sample-image">Image</div>
-            <div class="mega-menu-sample-image">Image</div>
-          </div>
         </li>
       </ul>
     </li>
-    <!-- 9th  Mega Menu End -->
+    <!-- 8th  Mega Menu End -->
 
 
 

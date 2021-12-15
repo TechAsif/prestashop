@@ -25,22 +25,22 @@
 {extends file='catalog/listing/product-list.tpl'}
 
 {block name='product_list_header'}
-    <div class="block-category card card-block hidden-sm-down">
-      <h1 class="h1 bh">{$category.name}</h1>
+  <div class="block-category card card-block hidden-sm-down">
+    <h1 class="h1 bh">{$category.name}</h1>
     <div class="row">
       {if $category.description}
-        <div id="category-description" class="text-muted col-lg-10 col-md-9 col-sm-12">{$category.description nofilter}</div>
+        <div id="category-description" class="text-muted col-sm-12">{$category.description nofilter}</div>
       {/if}
-      {if $category.image.large.url}
+      {* {if $category.image.large.url}
         <div class="category-cover col-lg-2 col-md-3 col-sm-12">
           <img class="img-responsive center-block" src="{$category.image.large.url}" alt="{$category.image.legend}">
         </div>
-      {/if}
+      {/if} *}
     </div>
-    </div>
-    <div class="text-sm-center hidden-md-up">
-      <h1 class="h1 bh">{$category.name}</h1>
-    </div>
+  </div>
+  <div class="text-sm-center hidden-md-up">
+    <h1 class="h1 bh">{$category.name}</h1>
+  </div>
 
   {*   {if isset($subcategories)}
 
@@ -48,7 +48,7 @@
         <p class="subcategory-heading"><span>{l s='Subcategories' d='Shop.Theme.Catalog'}</span></p>
         <div id="subcat" class="owl-theme owl-carousel">
             {foreach from=$subcategories item=subcategory}
-            
+
                 <li>
                         <a href="{$link->getCategoryLink($subcategory.id_category, $subcategory.link_rewrite)|escape:'html':'UTF-8'}" title="{$subcategory.name|escape:'html':'UTF-8'}" class="cati">
                             {if $subcategory.id_image}
@@ -58,9 +58,9 @@
                             {/if}
                         </a>
                     <h5 class="text-xs-center"><a class="subcategory-name" href="{$link->getCategoryLink($subcategory.id_category, $subcategory.link_rewrite)|escape:'html':'UTF-8'}">{$subcategory.name|truncate:25:'...'|escape:'html':'UTF-8'}</a></h5>
-      
+
                 </li>
-            
+
             {/foreach}  </div>
     </div>
 {/if} *}
