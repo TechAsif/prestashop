@@ -24,7 +24,9 @@
  */
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 let config = {
   entry: {
@@ -37,35 +39,48 @@ let config = {
     path: path.resolve(__dirname, '../assets/js'),
     filename: 'theme.js'
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
         test: /\.js/,
         loader: 'babel-loader'
       },
+  
+      // compile all .scss files to plain old css
       {
+        // test: /\.(c|sc|sa)ss$/,
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                minimize: true
-              }
-            },
-            'postcss-loader',
-            'sass-loader'
-          ]
-        })
+        use: [
+          MiniCssExtractPlugin.loader, 
+          'css-loader', 
+          'postcss-loader',
+          'sass-loader'
+        ]
       },
+      // {
+      //   test: /\.scss$/,
+      //   use: ExtractTextPlugin.extract({
+      //     fallback: 'style-loader',
+      //     use: [
+      //       {
+      //         loader: 'css-loader',
+      //         options: {
+      //           minimize: true
+      //         }
+      //       },
+      //       'postcss-loader',
+      //       'sass-loader'
+      //     ]
+      //   })
+      // },
       {
         test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/,
         use: [
           {
             loader: 'file-loader',
             options: {
-              name: '../css/[hash].[ext]'
+              name: '../css/[name].[ext]'
             }
           }
         ]
@@ -82,26 +97,28 @@ let config = {
     jquery: 'jQuery'
   },
   plugins: [
-    new ExtractTextPlugin(path.join('..', 'css', 'theme.css'))
-  ]
+    new MiniCssExtractPlugin({
+      filename: path.join('..', 'css', 'theme.css'),
+      // filename: '../css/[name].css',
+      // chunkFilename: "./css/build/[id].css"
+    }),
+    // new ExtractTextPlugin(path.join('..', 'css', 'theme.css'))
+  ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        test: /\.js(\?.*)?$/i,
+        extractComments: false,
+        terserOptions: {
+          format: {
+            comments: false,
+          },
+        },
+      }),
+    ],
+  },
 };
 
-config.plugins.push(
-  new webpack.optimize.UglifyJsPlugin({
-    sourceMap: false,
-    compress: {
-      sequences: true,
-      conditionals: true,
-      booleans: true,
-      if_return: true,
-      join_vars: true,
-      drop_console: true
-    },
-    output: {
-      comments: false
-    },
-    minimize: true
-  })
-);
 
 module.exports = config;
