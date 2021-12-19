@@ -23,6 +23,8 @@
  * International Registered Trademark & Property of PrestaShop SA
  */
 // import 'expose-loader?Tether!tether';
+import tether from 'tether';
+global.Tether = tether;
 import 'bootstrap/dist/js/bootstrap.min';
 import 'flexibility';
 import 'bootstrap-touchspin';
