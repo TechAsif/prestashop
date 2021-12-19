@@ -28,7 +28,7 @@ $(document).ready(function () {
             data: values,
           },
           success: function (response) {
-            $.simplyToast('success', response.message, {ele: '.lg-brand'});
+            $.simplyToast('success', response.message, {ele: '#content.bootstrap'});
           },
         });
       }, 500);

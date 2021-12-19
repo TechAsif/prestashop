@@ -43,6 +43,7 @@
     /* float: left; */
     /* clear: none; */
     display: inline-block;
+    position: relative !important;
   }
 }
 
@@ -52,7 +53,7 @@
 
 #main-menu,
 #main-menu > .has-mega-menu {
-  position: static !important;
+  position: static;
 }
 
 #main-menu .mega-menu {

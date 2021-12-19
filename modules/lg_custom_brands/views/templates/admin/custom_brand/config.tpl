@@ -1,4 +1,4 @@
-<div class="bootstrap">
+<div class="bootstrap lg_brand_wrap">
   <div class="row lg-brands-section">
     <div class="col-sm-12">
       <p>Please drug the following brands to "Custom Selected Brands" section to display them in home page </p>

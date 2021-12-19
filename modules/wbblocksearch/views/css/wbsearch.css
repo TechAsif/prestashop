@@ -225,7 +225,7 @@ form#searchbox .button.button-small i {
     padding: 0;
     position: absolute;
     /* top: 44px; */
-    z-index: 999;
+    z-index: 1000;
     border: 1px solid #e7e7e7;
     left: 0;
     right: 0;
