@@ -103,7 +103,9 @@
   padding: 0;
   background: transparent;
 }
-
+#main-menu .mega-menu h4 a {
+    font-size: 1.125rem;
+}
 /* simple columns inside the mega menus */
 
 #main-menu .mega-menu .column-1-3 {

@@ -3193,7 +3193,7 @@ body.tax-display-enabled #products .product-description, body.tax-display-enable
         z-index: 9;
     }
     #search_query_top,.button-search{
-        height: 40px;
+        padding-left: 10px;
     }
     #search_block_top{
         /* margin: 0; */
@@ -3204,6 +3204,7 @@ body.tax-display-enabled #products .product-description, body.tax-display-enable
         margin-top: 1px;
     }
     #search_widget {
+    position: initial;
     }   
     .xsse {
         margin-top: 5px;
@@ -3221,9 +3222,8 @@ body.tax-display-enabled #products .product-description, body.tax-display-enable
     .header-nav {
     }
     #wbsearch_content_result{
-        top: 65px;
-        left: 0;
-        right: 0;
+        left: 4px;
+        right: 4px;
     }
     .wb-menu-vertical li.level-1 > a, .view_menu a,.wb-menu-vertical ul li.level-1:hover > a, .view_menu a:hover{
         color: #222;
