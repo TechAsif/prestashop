@@ -94,9 +94,8 @@ class Lg_Usp extends Module implements WidgetInterface
 		$this->context->controller->addJS($this->_path . 'views/js/jquery.textillate.min.js');
 		$this->context->controller->addJS($this->_path . 'views/js/scripts.js');
 
-
-		$this->context->controller->addCSS($this->_path . 'views/css/styles.css');
 		$this->context->controller->addCSS($this->_path . 'views/css/animate.min.css');
+		$this->context->controller->addCSS($this->_path . 'views/css/styles.css');
 	}
 
 

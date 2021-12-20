@@ -1,0 +1,11 @@
+.lg_usp .tlt {display: inline-block;}
+.lg_usp ul {}
+.lg_usp ul li {
+  display: inline-block;
+  vertical-align: middle;
+}
+.lg_usp img {
+  margin-right: 5px;
+  vertical-align: middle;
+  height: 21px;
+}

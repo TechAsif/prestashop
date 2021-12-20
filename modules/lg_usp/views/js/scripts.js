@@ -1,18 +1,12 @@
-
-$(function(){
-  $('.tlt').textillate({ 
-    
-     in : {
-          effect:'flash'
-         
-      },
-      out: {
-          effect: 'flipOutX'
-          
-      },
-      loop: true
+$(function () {
+  $(".tlt").textillate({
+    in: {
+      effect: "fadeIn",
+    },
+    out: {
+      effect: "fadeOut",
+      // effect: "flipOutX",
+    },
+    loop: true,
   });
 });
-
-
-

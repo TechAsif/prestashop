@@ -291,12 +291,18 @@ body::-webkit-scrollbar-thumb {
 .product-tab-item .js-product-miniature {
     margin-bottom: 40px;
 }
+input.js-cart-line-product-quantity {
+    display: inline-block;
+    width: 100%;
+    border: 1px solid #b7b7b78a;
+    padding: 5px;
+}
 .allhead {}
 .top-menus {/* margin-left: 2%; */}
 .usp-banner {
     font-size: 16px;
     line-height: 17px;
-    color: #ef3e3e;
+    color: #161616;
     font-weight: bold;
     letter-spacing: 2px;
 }
@@ -754,15 +760,16 @@ body::-webkit-scrollbar-thumb {
     text-transform: uppercase;
     font-size: 14px;
     margin-top: 10px;
+    line-height: 1.4;
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    /* white-space: nowrap; */
+    /* text-overflow: ellipsis; */
 }
 .categorybr a{
     display: block
 }
 .categorybr{
-    background: #fff;
+    /* background: #fff; */
     border-radius: 4px;
     padding: 10px;
     border: 1px solid transparent;
@@ -862,6 +869,18 @@ body::-webkit-scrollbar-thumb {
     margin-bottom: 30px;
     margin-top: 50px;
     position: relative;
+}
+.wb_category_feature .home-heading {
+    text-align: center;
+}
+.wb_category_feature .home-heading h2 {
+    font-size: 30px;
+    padding: 0 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.wb_category_feature .home-heading h2 span {
+    color: #000;
 }
 .co-heading{
     margin-bottom: 30px;
@@ -1069,6 +1088,7 @@ body::-webkit-scrollbar-thumb {
     border: 1px solid #f5f5f5;
     cursor: pointer;
 }
+.page-home .thumbnail-container .compare, .page-home .thumbnail-container .quick-view , .page-home .thumbnail-container .wish {display: none;}
 .wb-product-list .thumbnail-container .button-group button.cartb svg {
     fill: #4c4c4c;
     width: 22px;
@@ -1100,16 +1120,16 @@ body::-webkit-scrollbar-thumb {
 .wb-product-list .add-cart.lg-add-to-cart {display: inline-block;}
 @media(min-width: 768px){
     .thumbnail-container .button-group button.cartb {
-    background: rgba(97, 97, 97, 0.52);
+    background: rgb(97 97 97 / 76%);
     border: none;
     fill: #fff;
-    width: 130px;
-    height: 130px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     margin-top: 10px;
 }
 .thumbnail-container .button-group button.cartb svg {
-    width: 60%;
+    width: 50%;
     height: auto;
     fill: #ffffff;
 }

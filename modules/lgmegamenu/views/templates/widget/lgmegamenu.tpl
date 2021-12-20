@@ -1,6 +1,7 @@
 {* Change host name IF required *}
 
-{assign var="host" value="https://letsgobd.com/en/" }
+{* {assign var="host" value="https://letsgobd.com/en/" } *}
+{assign var="host" value="http://localhost/letsgo/en/" }
 
 
 

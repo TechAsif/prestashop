@@ -24,6 +24,22 @@
  *}
 {extends file='layouts/layout-both-columns.tpl'}
 
+
+{block name="left_column"}
+
+  {if $category.description}
+    <div id="category-description" class="col-sm-12">{$category.description nofilter}</div>
+  {/if}
+
+  <div id="left-column" class="col-xs-12 col-sm-4 col-md-3">
+    {if $page.page_name == 'product'}
+      {hook h='displayLeftColumnProduct'}
+    {else}
+      {hook h="displayLeftColumn"}
+    {/if}
+  </div>
+{/block}
+
 {block name='right_column'}{/block}
 
 {block name='content_wrapper'}

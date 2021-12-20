@@ -39,7 +39,7 @@
       <div class="js_nav_tabs">
         <div class="brand-navs ">
           <span class="js_tab_nav highlight" data-id='top-brandbox'>Top Brands</span>
-          <span class="js_tab_nav" data-id='populer-brandbox'>Populer Brands</span>
+          <span class="js_tab_nav" data-id='new-brandbox'>New Brands</span>
           <span class="js_tab_nav" data-id='featured-brandbox'>Featured Brands</span>
         </div>
         <div class="brand-boxes">
@@ -56,10 +56,10 @@
               {/if}
             </ul>
           </div>
-          <div id="populer-brandbox" class="brand-box">
+          <div id="new-brandbox" class="brand-box">
             <ul class="brand-contents">
-              {if $populer_brands && !empty($populer_brands) }
-                {foreach $populer_brands as $manufacturer}
+              {if $new_brands && !empty($new_brands) }
+                {foreach $new_brands as $manufacturer}
                   <li class="item-brand" id="{$manufacturer['id']}">
                     <a href="{$manufacturer['link']}" title="{$manufacturer['name']}">
                       <img src="{$manufacturer['image_url']}" alt="{$manufacturer['name']}" class="imgm img-thumbnail" />

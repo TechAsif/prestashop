@@ -16,10 +16,23 @@ https://codepen.io/solidpixel/pen/YxLzmP
 
 
 
-<div class="tlt">
-	<ul class="texts">
-		<li>CASH ON DELIVERY</li>
-		<li>FAST DELIVERY</li>
-    <li>BEST PRICES</li>
-	</ul>
+<div class="lg_usp">
+  <img src="{$smarty.const._MODULE_DIR_}lg_usp/views/img/Cash-on-Delivery.png" />
+  <div class="tlt">
+    <ul class="texts">
+      <li>CASH ON DELIVERY</li>
+    </ul>
+  </div>
+  <img src="{$smarty.const._MODULE_DIR_}lg_usp/views/img/Fast-Delivery.png" />
+  <div class="tlt">
+    <ul class="texts">
+      <li>FAST DELIVERY</li>
+    </ul>
+  </div>
+  <img src="{$smarty.const._MODULE_DIR_}lg_usp/views/img/Best-Prices.png" />
+  <div class="tlt">
+    <ul class="texts">
+      <li>BEST PRICES</li>
+    </ul>
+  </div>
 </div>
