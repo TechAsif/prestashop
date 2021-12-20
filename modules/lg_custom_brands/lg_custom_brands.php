@@ -102,7 +102,7 @@ class Lg_Custom_Brands extends Module implements WidgetInterface
 		return (bool)$return;
 	}
 
-	public function getMyBrands($brandKey = 'LG_CUSTOM_BRAND_IDS')
+	public function getMyBrands($brandKey = 'LG_NEW_BRAND_IDS')
 	{
 		// $manuddddList = Manufacturer::getManufacturers();
 		$avaiableCustomBrands = Manufacturer::getLiteManufacturersList();
@@ -148,15 +148,15 @@ class Lg_Custom_Brands extends Module implements WidgetInterface
 	{
 		$allBrands = Manufacturer::getLiteManufacturersList();
 
-		$customBrands = $this->getMyBrands('LG_CUSTOM_BRAND_IDS');
+		$newBrands = $this->getMyBrands('LG_NEW_BRAND_IDS');
 		$topBrands = $this->getMyBrands('LG_TOP_BRAND_IDS');
 		$populerBrands = $this->getMyBrands('LG_POPULER_BRAND_IDS');
 		$featuredBrands = $this->getMyBrands('LG_FEATURED_BRAND_IDS');
 
 		$return = [
 			'manufacturers' => $allBrands,
-			'available_custom_brands' => $customBrands['avaiable_brands'],
-			'custom_brands' => $customBrands['brands'],
+			'available_new_brands' => $newBrands['avaiable_brands'],
+			'new_brands' => $newBrands['brands'],
 			'available_top_brands' => $topBrands['avaiable_brands'],
 			'top_brands' => $topBrands['brands'],
 			'available_populer_brands' => $populerBrands['avaiable_brands'],

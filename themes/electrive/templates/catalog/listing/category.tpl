@@ -25,22 +25,22 @@
 {extends file='catalog/listing/product-list.tpl'}
 
 {block name='product_list_header'}
-  <div class="block-category card card-block hidden-sm-down">
+  {* <div class="block-category card card-block hidden-sm-down">
     <h1 class="h1 bh">{$category.name}</h1>
     <div class="row">
       {if $category.description}
         <div id="category-description" class="text-muted col-sm-12">{$category.description nofilter}</div>
       {/if}
-      {* {if $category.image.large.url}
+      {if $category.image.large.url}
         <div class="category-cover col-lg-2 col-md-3 col-sm-12">
           <img class="img-responsive center-block" src="{$category.image.large.url}" alt="{$category.image.legend}">
         </div>
-      {/if} *}
+      {/if}
     </div>
   </div>
   <div class="text-sm-center hidden-md-up">
     <h1 class="h1 bh">{$category.name}</h1>
-  </div>
+  </div> *}
 
   {*   {if isset($subcategories)}
 

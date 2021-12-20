@@ -33,10 +33,10 @@ $(document).ready(function () {
         });
       }, 500);
     }
-    $("#custom_brands1, #custom_brands2").sortable({
-      connectWith: ".custom_brands_sortable",
+    $("#new_brands1, #new_brands2").sortable({
+      connectWith: ".new_brands_sortable",
       update: function (event, ui) {
-        updateMyBrands('custom_brands2', 'LG_CUSTOM_BRAND_IDS');
+        updateMyBrands('new_brands2', 'LG_NEW_BRAND_IDS');
       }, //end update
     });
     $("#top_brands1, #top_brands2").sortable({
