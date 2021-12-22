@@ -38,10 +38,10 @@ $.wbCountDownTimer = function (event) {
 $(document).ready(function () {
   if ($(document).width() >= 992) {
     $(window).scroll(function () {
-      if ($(this).scrollTop() > 165) {
-        $("#header .header-top").addClass("fixed fadeInDown animated");
+      if ($(this).scrollTop() > 230) {
+        $("#header .allhead").addClass("fixed fadeInDown animated");
       } else {
-        $("#header .header-top").removeClass("fixed fadeInDown animated");
+        $("#header .allhead").removeClass("fixed fadeInDown animated");
       }
     });
   }
@@ -111,6 +111,13 @@ $(document).ready(function () {
   $("#scroll").click(function () {
     $("html, body").animate({ scrollTop: 0 }, 600);
     return false;
+  });
+
+  $('body').on('click', '.js-search-link', function (event) {
+    event.preventDefault();
+    setTimeout(function () {   
+      $("html, body").animate({ scrollTop: $('#products').offset().top - 100 }, 600); 
+    }, 1000)
   });
 });
 

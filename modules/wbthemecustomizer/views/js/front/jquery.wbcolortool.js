@@ -26,7 +26,7 @@
 $(document).ready(function () {
   function add_backgroundcolor(bgcolor) {
     $(
-      '<style type="text/css">.product-additional-info .add_to_compare, .product-additional-info .prowish,.btn-primary,.block-social .social li:hover,.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot span:hover, .owl-theme .owl-dots .owl-dot:hover span,.foot-sp,.owl-theme .owl-dots .owl-dot span,.blogd,.button-search,.view_more:hover i,#scroll,.ico-menu .bar::after{ background:#' +
+      '<style type="text/css">.product-additional-info .add_to_compare, .product-additional-info .prowish,.btn-primary,.block-social .social li:hover,.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot span:hover, .owl-theme .owl-dots .owl-dot:hover span,.foot-sp,.owl-theme .owl-dots .owl-dot span,.blogd,.button-search,.view_more:hover i,#scroll,.ico-menu .bar::after, .pagination .page-list li a { background:#' +
         bgcolor +
         "}</style>"
     ).appendTo("head");

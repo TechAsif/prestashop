@@ -123,9 +123,9 @@
 
       </div>
     </div>
-  </div>
-  <div class="topmenu container-fluid">
-      {hook h='displayNavFullWidth'}
+    <div class="topmenu container-fluid">
+        {hook h='displayNavFullWidth'}
+    </div>
   </div>
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="lgLogo" viewBox="0 0 47 41">
