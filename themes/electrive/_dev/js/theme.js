@@ -47,6 +47,7 @@ import EventEmitter from 'events';
 
 import './lib/bootstrap-filestyle.min';
 import './lib/jquery.scrollbox.min';
+import './lib/jquery.simply-toast';
 
 import './components/block-cart';
 

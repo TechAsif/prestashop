@@ -29,6 +29,9 @@ prestashop.blockcart = prestashop.blockcart || {};
 
 prestashop.blockcart.showModal = (html) => {
   console.log('showMOdal', html)
+  
+  $.simplyToast('success', 'The item was added to cart successfully', {ele: 'body'});
+
   // function getBlockCartModal() {
   //   return $('#blockcart-modal');
   // }
