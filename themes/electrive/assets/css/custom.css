@@ -594,10 +594,7 @@ input.js-cart-line-product-quantity {
     position: relative;
 }
 
-.header-top.fixed {
-    background: rgb(244 244 244 / 90%);
-    padding: 5px 17px;
-}
+
 .header-top {
     padding: 15px 17px;
     box-shadow: 0px 3px 6px 0px #00000040;
@@ -623,6 +620,17 @@ input.js-cart-line-product-quantity {
     background: #FFFFFF;
     border-radius: 14px;
     height: 34px;
+}
+.allhead.fixed {
+    background: rgb(244 244 244 / 90%);
+}
+.allhead.fixed .header-top {
+    padding: 5px 17px;
+}
+.allhead.fixed .topmenu {
+    padding: 0;
+    margin-top: 5px;
+    text-align: center;
 }
 #_desktop_top_menu {
     position: relative;
@@ -2636,12 +2644,7 @@ body.tax-display-enabled #products .product-description, body.tax-display-enable
 }
 /* pagination */
 .pagination {
-    display: inline-block;
-    background: #fff;
     text-transform: capitalize;
-    padding: 7px 0;
-    border: 1px solid #f2f2f2;
-    border-radius: 5px;
     margin-top: 30px;
 }
 .pagination i{
@@ -2653,13 +2656,13 @@ body.tax-display-enabled #products .product-description, body.tax-display-enable
     background: #222;
     color: #fff;
     text-align: center;
-    font-weight: normal;
-    margin: 0;
-    padding: 5px 7px 5px 7px;
-    width: 35px;
+    margin: 5px;
+    padding: 7px;
+    width: 40px;
     line-height: 24px;
-    font-size: 15px;
+    font-size: 19px;
     border-radius: 5px;
+    font-weight: bold;
 }
 .pagination .page-list li a:hover,.pagination .page-list li a:focus,.pagination .page-list li.current a{
     background: #ffcc00;
@@ -2924,8 +2927,8 @@ body.tax-display-enabled #products .product-description, body.tax-display-enable
 
 #left-column{
     position: sticky;
-    top: 60px;
-    max-height: 90vh;
+    top: 100px;
+    max-height: calc(100vh - 100px);
     overflow-y: scroll;
 }
 /* responsive */
@@ -3243,7 +3246,7 @@ body.tax-display-enabled #products .product-description, body.tax-display-enable
         margin: 0;
     }
     .topmenu{
-        /* display: none; */
+        display: none;
         padding: 0;
     }
     .header-nav {
