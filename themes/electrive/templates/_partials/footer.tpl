@@ -25,7 +25,7 @@
 
 
 
-  <div class="foot-sp">
+  {* <div class="foot-sp">
   <div class="footnews container">
     <div class="emailp">
         {block name='hook_footer_before'}
@@ -33,7 +33,7 @@
         {/block}
       </div>
   </div>
-  </div> 
+  </div>  *}
 
 <div class="footer-container">
 {hook h='displayHomeBlock'}

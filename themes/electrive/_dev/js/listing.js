@@ -136,6 +136,9 @@ $(document).ready(() => {
   $('body').on('click', '.js-search-link', function (event) {
     event.preventDefault();
     prestashop.emit('updateFacets', $(event.target).closest('a').get(0).href);
+    $("html, body").animate({
+      scrollTop: $(window).offset().top
+    }, 1e3)
   });
 
   $('body').on('change', '#search_filters select', function (event) {
