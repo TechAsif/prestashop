@@ -8830,7 +8830,7 @@ body#checkout #gift_message textarea {
     width: 100%
 }
 .pagination .page-list li {
-    display: inline
+    display: inline;
 }
 .pagination .current a {
     color: #2fb5d2;
