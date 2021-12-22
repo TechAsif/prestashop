@@ -2921,6 +2921,13 @@ body.tax-display-enabled #products .product-description, body.tax-display-enable
         font-size: 12px !important;
     }
 }
+
+#left-column{
+    position: sticky;
+    top: 60px;
+    max-height: 90vh;
+    overflow-y: scroll;
+}
 /* responsive */
 @media(min-width: 1410px){
     #left-column{
