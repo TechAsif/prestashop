@@ -3872,4 +3872,7 @@ body.active .sidenav {
     width: 0px !important;
 }
 
+.facet-label a span {
+    position: unset !important;
+}
 /* end temorary added css */

@@ -24,7 +24,6 @@
  */
 const webpack = require('webpack');
 const path = require('path');
-// const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
@@ -97,6 +96,14 @@ let config = {
     jquery: 'jQuery'
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      'window.jQuery': 'jquery',
+      'window.Tether': 'tether',
+      tether: 'tether',
+      Tether: 'tether'
+    }),
     new MiniCssExtractPlugin({
       filename: path.join('..', 'css', 'theme.css'),
       // filename: '../css/[name].css',

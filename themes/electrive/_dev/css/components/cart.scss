@@ -28,15 +28,11 @@
 }
 /** CART BODY **/
 .cart-grid-body {
-  a.label {
-    &:hover {
-      color: $brand-primary;
-    }
-  }
   .card-block {
     padding: 1rem;
     h1 {
       margin-bottom: 0;
+      font-size: 14px;
     }
   }
   .cart-overview {
@@ -120,6 +116,7 @@
 .product-line-grid-left {
   img {
     max-width: 100%;
+    border-radius: 5px;
   }
 }
 /** CONTENT BODY **/
@@ -186,16 +183,5 @@
   }
   .product-line-grid-left {
     padding-right: 0 !important;
-  }
-}
-
-@media (max-width: 360px) {
-  .product-line-grid-right {
-    .qty {
-      width: 100%;
-    }
-    .price {
-      width: 100%;
-    }
   }
 }
