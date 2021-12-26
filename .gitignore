@@ -42,5 +42,6 @@ modules/marketplace/views/img/product_img/
 themes/*
 !themes/electrive/
 themes/electrive/_dev/node_modules
+themes/electrive/_dev/package-lock.json
 themes/electrive/assets/js/*
 !themes/electrive/assets/js/custom.js
