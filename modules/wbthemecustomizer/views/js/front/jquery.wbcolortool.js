@@ -46,7 +46,7 @@ $(document).ready(function () {
         "}</style>"
     ).appendTo("head");
     $(
-      '<style type="text/css">.read_more:hover svg,#footer_contact .icon svg,#_desktop_language_selector button:hover svg, #_desktop_currency_selector button:hover svg, .user-info:hover svg, .head-logo svg, .top-logo svg { fill:#' +
+      '<style type="text/css">.read_more:hover svg,#footer_contact .icon svg,#_desktop_language_selector button:hover svg, #_desktop_currency_selector button:hover svg, .user-info:hover svg { fill:#' +
         bgcolor +
         "}</style>"
     ).appendTo("head");

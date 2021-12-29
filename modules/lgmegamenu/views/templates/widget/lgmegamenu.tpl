@@ -1,7 +1,8 @@
 {* Change host name IF required *}
 
 {* {assign var="host" value="https://letsgobd.com/en/" } *}
-{assign var="host" value="http://localhost/letsgo/en/" }
+{* {assign var="host" value="http://localhost/letsgo/en/" } *}
+{assign var="host" value="`$urls.base_url``$language.iso_code`/" }
 
 
 
@@ -1314,7 +1315,7 @@
 
 
     <!-- 12 mega menu start -->
-    <li class="">
+    <li class="special-offer-menu">
       <a href="{$host}796-special-offers">Special Offers</a>
       <ul>
         <li><a href="{$host}891-lets-play">Let’s Play</a></li>
