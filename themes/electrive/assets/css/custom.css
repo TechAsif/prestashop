@@ -434,6 +434,14 @@ input.js-cart-line-product-quantity {
   /* padding: 10px; */
   width: 100%;
 }
+.cart-logo {
+    text-align: center;
+    padding: 15px;
+}
+.cart-logo a svg {
+    width: 30%;
+    height: auto;
+}
 
 .hcart {
   cursor: pointer;

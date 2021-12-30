@@ -99,6 +99,15 @@
                   {/foreach}
                 </ul>
                 <div class="cart-action-container">
+                  <div class="cart-logo">
+                    <a href="{$urls.base_url}">
+
+                      <svg width="47" height="41">
+                        <use xlink:href="#lgLogo">
+                      </svg>
+                    </a>
+                  </div>
+
                   <table class="cdroptable">
                     <tbody>
                       <tr>
