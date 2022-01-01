@@ -348,7 +348,7 @@ input.js-cart-line-product-quantity {
 }
 @media (min-width: 1200px) {
   .header-top .dropdown-menu {
-    width: 1100px;
+    width: 1000px;
     max-height: 470px;
     overflow: auto;
   }
@@ -437,6 +437,7 @@ input.js-cart-line-product-quantity {
 .cart-logo {
     text-align: center;
     padding: 15px;
+    padding-bottom: 25px;
 }
 .cart-logo a svg {
     width: 30%;
@@ -3323,6 +3324,7 @@ body.tax-display-enabled .product-accessories .thumbnail-container {
   }
 }
 @media (max-width: 991px) {
+  .category-back {margin-top: 20px; margin-bottom: 40px;}
   .wbcookies-notice-img-inner .wbcookie-content-box {
     float: none;
     margin-bottom: 5px;

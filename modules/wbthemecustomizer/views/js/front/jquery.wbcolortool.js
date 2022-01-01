@@ -119,26 +119,11 @@ $(document).ready(function () {
     if ($(this).hasClass("wbclrdisable")) {
       $(this).removeClass("wbclrdisable");
       $(this).addClass("wbclrenable");
-
-      $(".wbcolor_box").animate({ right: "30px" }, 450);
-
-      $(".wbcolor_box").css({
-        "box-shadow": "0 10px 35px 10px rgba(0,0,0,.06)",
-        background: "#fff",
-        "border-radius": "4px 0 4px 4px",
-      });
-      $(".wbcolor_option,.wbcolor_title").animate({ opacity: "1" }, 450);
+      $(".wbcolor_box").slideDown();
     } else {
       $(this).removeClass("wbclrenable");
       $(this).addClass("wbclrdisable");
-
-      $(".wbcolor_box").animate({ right: "-250px" }, 450);
-
-      $(".wbcolor_box").css({
-        "box-shadow": "none",
-        background: "transparent",
-      });
-      $(".wbcolor_option,.wbcolor_title").animate({ opacity: "0" }, 450);
+      $(".wbcolor_box").slideUp();
     }
   });
   $("#backgroundColor, #hoverColor").each(function () {

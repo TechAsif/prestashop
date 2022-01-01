@@ -193,33 +193,33 @@
   background: url("../../img/color_select.png") no-repeat scroll 0 0 transparent;
   background-size: 105px;
 } 
+body > .wballcor {display: none;}
 .wballcor {
   background: transparent;
   color: #000;
   font-size: 14px;
   line-height: 20px;
-  right: -250px;
-  padding: 8px;
-  position: fixed;
-  text-align: left;
-  top: 150px;
-  width: 250px;
   transition: background 0.5s ease-in-out 0s;
-  z-index: 999
+  z-index: 999999;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  margin-left: 8px;
 }
 .wbcolor_box {
-  background: transparent;
+  background: white;
   color: #000;
   font-size: 14px;
   line-height: 20px;
-  right: -250px;
+  right: 0;
   padding: 8px 15px 15px;
-  position: fixed;
+  position: absolute;
   text-align: left;
-  top: 167px;
+  top: 100%;
   width: 250px;
   transition: background 0.5s ease-in-out 0s;
-  z-index: 999
+  z-index: 999999;
+  display: none;
 }
 .wbcolor_box .wbcolor_title {
   padding: 5px;
@@ -235,10 +235,6 @@
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 .wbopen-closeclr {
   cursor: pointer;
-  float: left;
-  border-radius: 4px 0px 0px 4px;
-  margin-left: -74px;
-  margin-top: -42px;
 }
   
 .wbopen-closeclr.wbclrdisable::before {
@@ -246,13 +242,13 @@
   content: "";
   font-family: fontawesome;
   font-size: 24px;
-  line-height: 36px; 
+  line-height: 36px;
   padding: 0 10px;
   background: url(../../img/color-circle.png) no-repeat;
-  width: 36px;
-  height: 36px;
-  background-size: 36px;
-  display: block;
+  width: 20px;
+  height: 20px;
+  background-size: 20px;
+  display: inline-block;
   -webkit-animation:spin 3s linear infinite;
   -moz-animation:spin 3s linear infinite;
   animation:spin 3s linear infinite;
@@ -262,12 +258,12 @@
   content: "";
   font-family: fontawesome;
   font-size: 24px;
-  line-height: 36px; 
+  line-height: 20px;
   padding: 0 10px;
   background: url(../../img/color-circle.png) no-repeat;
-  width: 36px;
-  height: 36px;
-  background-size: 36px;
+  width: 20px;
+  height: 20px;
+  background-size: 20px;
   display: block;
   -webkit-animation:spin 3s linear infinite;
   -moz-animation:spin 3s linear infinite;
@@ -278,11 +274,7 @@
   border: none;
 } */
 .wbopen-closeclr {
-  background-color: #fff;
-  border: medium none;
-  box-shadow: 1px 2px 5px rgba(0,0,0,0.1);
-  padding: 7px 15px;
-  transition: 0.3s ease-in-out
+  transition: 0.3s ease-in-out;
 }
 .wbopen-closeclr.wbclrdisable{
   border-radius: 25px 0 0 25px;
@@ -293,9 +285,6 @@
   outline: none;
 }
 .wbopen-closeclr.wbclrenable {
-    border-radius: 30px 30px 0 0;
-    margin-left: -94px;
-    padding: 8px 10px;
 }
 /* .wbcolor_box .wbcolor_option {
   padding: 5px 0 5px 4px;
@@ -311,7 +300,7 @@
   width: 50%;
   padding: 0 5px;
   padding-bottom: 0;
-  margin-top: 16px;
+  margin-top: 8px;
   border-radius: 4px;
 }
 .wbcolor_field.last {
@@ -333,7 +322,7 @@
   margin: 0;
   background: #f5f5f5;
   color: #000;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border-radius: 4px;
   transition: 0.3s ease;
   width: 104px;
@@ -402,7 +391,7 @@
 }
 .wbcolor_box .wbcolorp1,.wbcolor_box .wbcolorp2 {
   width: 90px;
-  height: 34px;
+  height: 30px;
   padding: 0;
   text-indent: -9999px;
   border: none;
@@ -426,7 +415,7 @@
 .wbcolor_box .wbcolorpart span{
   float: left;
   width: 50%;
-  height: 36px;
+  height: 30px;
 }
 .wbcolor_tblbox h6{
   font-size: 14px;
@@ -604,6 +593,7 @@ span.wbcolor16{background:#8c83f3;border-radius: 0 4px 4px 0;}
 } 
 .wbopen-closeclr{
     position: relative;
+    display: inline-block;
 }
 
 

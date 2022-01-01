@@ -914,6 +914,7 @@ if ($(window).width() <= 991) {
     return false;
   });
   $("#main-menu").appendTo("#mobile_top_menu_wrapper");
+  $(".category-back").insertBefore(".slider-banner");
 }
 
 // disabled
@@ -971,20 +972,6 @@ $(".wbblog_submit_btn").on("click", function (e) {
     });
   }
 });
-
-/* sticky header */
-// if ($(window).width() > 992) {
-//   $(document).ready(function(){
-//        $(window).scroll(function () {
-//          if ($(this).scrollTop() > 300) {
-//              $('#index .topmenu').addClass('fixed fadeInDown animated');
-
-//          } else {
-//              $('#index .topmenu').removeClass('fixed fadeInDown animated');
-//          }
-//        });
-//  });
-// };
 
 /* responsive menu */
 if ($(document).width() >= 768 && $(document).width() <= 991) {

@@ -35,6 +35,7 @@
     </div>
     <div class="right-nav text-xs-right ">
       {hook h='displayNav2'}
+      {include file="../../modules/wbthemecustomizer/views/templates/front/colortool.tpl"}
     </div>
 
   </nav>

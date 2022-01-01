@@ -39,15 +39,13 @@
 .sm-simple a.highlighted .sub-arrow::before {
   content: '-';
 }
-.sm-simple li {
+.sm-simple > li {
   border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 .sm-simple > li:first-child {
   border-top: 0;
 }
-.sm-simple ul {
-  background: rgba(179, 179, 179, 0.1);
-}
+
 .sm-simple ul a, .sm-simple ul a:hover, .sm-simple ul a:focus, .sm-simple ul a:active {
   font-size: 14px;
   border-left: 8px solid transparent;
@@ -77,7 +75,7 @@
   border-left: 40px solid transparent;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   /* Switch to desktop layout
   -----------------------------------------------
      These transform the menu tree from
@@ -87,6 +85,7 @@
   .sm-simple ul {
     position: absolute;
     width: 12em;
+    background: rgba(179, 179, 179, 0.1);
   }
 
   .sm-simple li {
