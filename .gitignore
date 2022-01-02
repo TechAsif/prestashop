@@ -35,6 +35,7 @@ modules/marketplace/views/img/product_img/
 !modules/wbmegamenu/
 !modules/wbimageslider/
 !modules/wbthemecustomizer/
+!modules/amazzingfilter/
 
 # Ignore everything in the "themes" directory, except the themes you
 # specify (see the commented-out example for a hint on how to do this.)
