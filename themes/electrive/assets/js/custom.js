@@ -36,7 +36,7 @@ $.wbCountDownTimer = function (event) {
 /* sticky header */
 
 $(document).ready(function () {
-  if ($(document).width() >= 992) {
+  // if ($(document).width() >= 992) {
     $(window).scroll(function () {
       if ($(this).scrollTop() > 230) {
         $("#header .allhead").addClass("fixed fadeInDown animated");
@@ -44,7 +44,7 @@ $(document).ready(function () {
         $("#header .allhead").removeClass("fixed fadeInDown animated");
       }
     });
-  }
+  // }
 });
 
 $(document).ready(function () {

@@ -26,6 +26,13 @@
 {block name='header_nav'}
   <nav class="header-nav v-center">
     <div class="head-left">
+      <span class="mobile-logo hidden-lg-up">
+        <a href="{$urls.base_url}">
+          <svg width="47" height="41">
+            <use xlink:href="#lgLogo">
+          </svg>
+        </a>
+      </span>
       {hook h='displayNav1'}
     </div>
     <div class="text-sm-center hidden-md-down">
@@ -72,8 +79,8 @@
               </li>
 
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarPopulerProducts" role="button" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarPopulerProducts" role="button"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Popular Products
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarPopulerProducts">
@@ -125,7 +132,7 @@
       </div>
     </div>
     <div class="topmenu container-fluid">
-        {hook h='displayNavFullWidth'}
+      {hook h='displayNavFullWidth'}
     </div>
   </div>
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">

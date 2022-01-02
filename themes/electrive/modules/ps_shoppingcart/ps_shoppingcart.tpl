@@ -99,7 +99,7 @@
                   {/foreach}
                 </ul>
                 <div class="cart-action-container">
-                  <div class="cart-logo">
+                  <div class="cart-logo hidden-md-down">
                     <a href="{$urls.base_url}">
 
                       <svg width="47" height="41">

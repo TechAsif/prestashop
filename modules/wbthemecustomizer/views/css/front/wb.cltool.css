@@ -237,7 +237,7 @@ body > .wballcor {display: none;}
   cursor: pointer;
 }
   
-.wbopen-closeclr.wbclrdisable::before {
+.wbopen-closeclr::before {
   color: #ffffff;
   content: "";
   font-family: fontawesome;
@@ -245,26 +245,21 @@ body > .wballcor {display: none;}
   line-height: 36px;
   padding: 0 10px;
   background: url(../../img/color-circle.png) no-repeat;
-  width: 20px;
-  height: 20px;
-  background-size: 20px;
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
   display: inline-block;
   -webkit-animation:spin 3s linear infinite;
   -moz-animation:spin 3s linear infinite;
   animation:spin 3s linear infinite;
 }
-.wbopen-closeclr.wbclrenable::before {
-  color: #ffffff;
+.wbopen-closeclr.wbclrdisable::before {
   content: "";
-  font-family: fontawesome;
-  font-size: 24px;
-  line-height: 20px;
-  padding: 0 10px;
-  background: url(../../img/color-circle.png) no-repeat;
-  width: 20px;
-  height: 20px;
-  background-size: 20px;
-  display: block;
+  -webkit-animation:spin 3s linear infinite;
+  -moz-animation:spin 3s linear infinite;
+  animation:spin 3s linear infinite;
+}
+.wbopen-closeclr.wbclrenable::before {
   -webkit-animation:spin 3s linear infinite;
   -moz-animation:spin 3s linear infinite;
   animation:spin 3s linear infinite;
