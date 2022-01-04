@@ -78,12 +78,16 @@ $(document).ready(function () {
 /* sidemenu */
 function openNav() {
   $("body").addClass("active");
+  // $("#mySidenav").toggle("slide", { direction: "left" }, 1000);
+  // $("#mySidenav").animate({width:'toggle'},350);
+
   document.getElementById("mySidenav").style.width = "280px";
   $("#mobile_top_menu_wrapper").addClass("dblock");
   $("#mobile_top_menu_wrapper").removeClass("dnone");
 }
 function closeNav() {
   $("body").removeClass("active");
+  // $("#mySidenav").toggle("slide", { direction: "left" }, 1000);
   document.getElementById("mySidenav").style.width = "0";
   $("#mobile_top_menu_wrapper").addClass("dnone");
   $("#mobile_top_menu_wrapper").removeClass("dblock");
@@ -93,14 +97,19 @@ function closeNav() {
 $(document).keyup(function (e) {
   if (e.keyCode == 27) {
     // escape key maps to keycode `27`
-    $("body").removeClass("active");
-    document.getElementById("mySidenav").style.width = "0";
-    $("#mobile_top_menu_wrapper").addClass("dnone");
+    closeNav();
   }
 });
 
-//go to top
 $(document).ready(function () {
+  $('#menu-icon').on('click', function() {
+    $('#mobile_top_menu_wrapper').toggle();
+    self.toggleMobileMenu();
+  });
+  
+  if ($(window).width() <= 991) {
+    $("#main-menu").appendTo("#mobile_category_pill");
+  }
   $(window).scroll(function () {
     if ($(this).scrollTop() > 100) {
       $("#scroll").fadeIn();
@@ -913,7 +922,6 @@ if ($(window).width() <= 991) {
     $(".currency-selector").removeClass("open");
     return false;
   });
-  $("#main-menu").appendTo("#mobile_top_menu_wrapper");
   $(".category-back").insertBefore(".slider-banner");
 }
 

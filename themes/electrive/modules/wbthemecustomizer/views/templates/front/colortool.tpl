@@ -102,24 +102,25 @@
                 <div class="wbcolor_field">{l s='Mode' mod='wbthemecustomizer'}</div>
                 <div class="wbdarkmode-layout"><label for="wbdarkmclr"><input id="wbdarkmclr" type="radio" name="wbdlmodecolor_input" value="wbdarkmode"/><span></span><p><svg><use xlink:href="#wbdarkmoon"></use></svg> {l s='Dark' mod='wbthemecustomizer'}</p></label></div><div class="wblightmode-layout"><label for="wblightmclr"><input id="wblightmclr" type="radio" name="wbdlmodecolor_input" value="wblightmode"/><span></span><p><svg><use xlink:href="#wblightsun"></use></svg> {l s='Light' mod='wbthemecustomizer'}</p></label></div>
             </div><hr> 
-
-            <div class="wbcolor_field">{l s='Favourite Color' mod='wbthemecustomizer'}</div>
-            <div class="wbfavcolor">
-                <div class="wbcolor_field wbcolor_field-background">
-                    <div class="wbcolorp2">
-                        <div class="wbcolor_custom" id="backgroundColor">
-                                <div style="background-color: {$WB_mainColorScheme}"></div>
-                        </div>
-                    </div> 
-                    <div class="wbcolorp1">{l s='Main Color' mod='wbthemecustomizer'}</div>
-                </div>
-                <div class="wbcolor_field wbcolor_field-link">
-                    <div class="wbcolorp2">
-                        <div class="wbcolor_custom" id="hoverColor">
-                                <div style="background-color: {$WB_activeColorScheme}"></div>
-                        </div>
+            <div class="wbcolor_wrap">
+                <div class="wbcolor_field">{l s='Favourite Color' mod='wbthemecustomizer'}</div>
+                <div class="wbfavcolor">
+                    <div class="wbcolor_field wbcolor_field-background">
+                        <div class="wbcolorp2">
+                            <div class="wbcolor_custom" id="backgroundColor">
+                                    <div style="background-color: {$WB_mainColorScheme}"></div>
+                            </div>
+                        </div> 
+                        <div class="wbcolorp1">{l s='Main Color' mod='wbthemecustomizer'}</div>
                     </div>
-                    <div class="wbcolorp1">{l s='Sub Color' mod='wbthemecustomizer'}</div>
+                    <div class="wbcolor_field wbcolor_field-link">
+                        <div class="wbcolorp2">
+                            <div class="wbcolor_custom" id="hoverColor">
+                                    <div style="background-color: {$WB_activeColorScheme}"></div>
+                            </div>
+                        </div>
+                        <div class="wbcolorp1">{l s='Sub Color' mod='wbthemecustomizer'}</div>
+                    </div>
                 </div>
             </div>
             <div class="wbcolor_field wbclrreset">

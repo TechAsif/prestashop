@@ -101,12 +101,55 @@
           </div>
           <div id="mySidenav" class="sidenav">
             <div class="close-nav">
-              <span class="categories">{l s='Category' d='Shop.Theme.Catalog'}</span>
-              <a href="javascript:void(0)" class="closebtn float-xs-right" onclick="closeNav()"><i
-                  class="fa fa-close"></i></a>
+              <a href="javascript:void(0)" class="closebtn float-xs-right" onclick="closeNav()">
+                <svg width="12" height="41" viewBox="0 0 12 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11 1.47168L1.74927 20.5003L11 39.529" stroke="#FF0000" stroke-opacity="0.38" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
             </div>
             <div id="mobile_top_menu_wrapper">
-              <div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+              <div class="mobile_menu_header">
+                <a class="mobile_menu_logo" href="{$urls.base_url}">
+                  <svg width="47" height="41">
+                    <use xlink:href="#lgLogo">
+                  </svg>
+                </a>
+              </div>
+              <div class="mobile_menu_contents">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="mobile_category_pill-tab" data-toggle="pill"
+                      href="#mobile_category_pill" role="tab" aria-controls="mobile_category_pill"
+                      aria-selected="true">Category</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="mobile_brands_pill-tab" data-toggle="pill" href="#mobile_brands_pill"
+                      role="tab" aria-controls="mobile_brands_pill" aria-selected="false">Brands</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="mobile_populer_products_pill-tab" data-toggle="pill"
+                      href="#mobile_populer_products_pill" role="tab" aria-controls="mobile_populer_products_pill"
+                      aria-selected="false">Popular Products</a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade in show active" id="mobile_category_pill" role="tabpanel"
+                    aria-labelledby="mobile_category_pill-tab"></div>
+                  <div class="tab-pane fade" id="mobile_brands_pill" role="tabpanel"
+                    aria-labelledby="mobile_brands_pill-tab">
+                    <div class="">
+                      {widget name="lg_custom_brands"}
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="mobile_populer_products_pill" role="tabpanel"
+                    aria-labelledby="mobile_populer_products_pill-tab">
+                    <div class="">
+                      {widget name="lg_popular_products"}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

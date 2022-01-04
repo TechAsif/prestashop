@@ -194,17 +194,21 @@
   background-size: 105px;
 } 
 body > .wballcor {display: none;}
+
 .wballcor {
   background: transparent;
   color: #000;
   font-size: 14px;
   line-height: 20px;
   transition: background 0.5s ease-in-out 0s;
-  z-index: 999999;
+  z-index: 999;
   display: inline-block;
   vertical-align: middle;
   position: relative;
   margin-left: 8px;
+}
+@media (min-width: 992px) {
+  .wballcor {z-index: 1000;}
 }
 .wbcolor_box {
   background: white;
@@ -220,6 +224,7 @@ body > .wballcor {display: none;}
   transition: background 0.5s ease-in-out 0s;
   z-index: 999999;
   display: none;
+  box-shadow: 0px 3px 3px 1px #0000003b;
 }
 .wbcolor_box .wbcolor_title {
   padding: 5px;
@@ -579,7 +584,7 @@ span.wbcolor16{background:#8c83f3;border-radius: 0 4px 4px 0;}
 }
 @media (max-width: 991px) {
   .wbcolor_box{
-    height: 400px !important;
+    max-height: calc(100vh - 100px);
     overflow-y: scroll;
    }
    .wbcolor_tblbox{
