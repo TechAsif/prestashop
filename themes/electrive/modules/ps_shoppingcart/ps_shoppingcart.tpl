@@ -98,31 +98,41 @@
                     <hr>{/if}
                   {/foreach}
                 </ul>
-                <hr>
-                <table class="cdroptable">
-                  <tbody>
-                    <tr>
-                      <td class="text-xs-left">{l s='Total products:' d='Shop.Theme.Checkout'}</td>
-                      <td class="text-xs-right">{$cart.subtotals.products.value}</td>
-                    </tr>
-                    <tr>
-                      <td class="text-xs-left">{l s='Total shipping:' d='Shop.Theme.Checkout'}</td>
-                      <td class="text-xs-right">{$cart.subtotals.shipping.value}
-                        {hook h='displayCheckoutSubtotalDetails' subtotal=$cart.subtotals.shipping}</td>
-                    </tr>
-                    <tr>
-                      <td class="text-xs-left">{l s='Total:' d='Shop.Theme.Checkout'}</td>
-                      <td class="text-xs-right">{$cart.totals.total.value} {$cart.labels.tax_short}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <!-- checkout -->
-                <!--    <button type="button">{l s='Continue shopping' d='Shop.Theme.Actions'}</button> -->
-                <a href="{$cart_url}"
-                  class="btn btn-primary btn-block float-xs-right">{l s='checkout' d='Shop.Theme.Actions'}</a>
+                <div class="cart-action-container">
+                  <div class="cart-logo hidden-md-down">
+                    <a href="{$urls.base_url}">
+
+                      <svg width="47" height="41">
+                        <use xlink:href="#lgLogo">
+                      </svg>
+                    </a>
+                  </div>
+
+                  <table class="cdroptable">
+                    <tbody>
+                      <tr>
+                        <td class="text-xs-left">{l s='Total products:' d='Shop.Theme.Checkout'}</td>
+                        <td class="text-xs-right">{$cart.subtotals.products.value}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-xs-left">{l s='Total shipping:' d='Shop.Theme.Checkout'}</td>
+                        <td class="text-xs-right">{$cart.subtotals.shipping.value}
+                          {hook h='displayCheckoutSubtotalDetails' subtotal=$cart.subtotals.shipping}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-xs-left">{l s='Total:' d='Shop.Theme.Checkout'}</td>
+                        <td class="text-xs-right">{$cart.totals.total.value} {$cart.labels.tax_short}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- checkout -->
+                  <!--    <button type="button">{l s='Continue shopping' d='Shop.Theme.Actions'}</button> -->
+                  <a href="{$cart_url}"
+                    class="btn btn-primary btn-block float-xs-right">{l s='checkout' d='Shop.Theme.Actions'}</a>
+                </div>
               {else}
                 <p class="no-items">{l s='Your cart is empty!' d='Shop.Theme.Checkout'}</p>
-              {/if}<div class="clearfix"></div>
+              {/if}
             </li>
           {/block}
         </ul>

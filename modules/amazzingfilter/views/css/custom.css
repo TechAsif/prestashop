@@ -1,0 +1,14 @@
+/*
+* Override this file if you want to keep custom styles after module upgrade
+*/
+
+/* special fix for uniform drop-down lists in default-bootstrap theme */
+@media (min-width: 480px) {
+	.af_filter.type-3 .af_filter_content .selector {
+		padding-left: 0;
+		border-left: 1px solid #DDD;
+	}
+	.af_filter.type-3 .af_filter_content .selector span {
+		padding-left: 10px;
+	}
+}

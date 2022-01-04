@@ -2025,10 +2025,10 @@ class WbThemeCustomizer extends Module
             $this->context->controller->addJS($this->_path.'views/js/front/colorpicker.js');
             $this->context->controller->addJS($this->_path.'views/js/front/jquery.wbcolortool.js');
             $this->context->controller->addCSS(_MODULE_DIR_ . $this->name . '/views/css/front/wb.cltool.css');
-            $this->smarty->assignGlobal(
-                'WB_PANELTOOL_TPL',
-                _PS_MODULE_DIR_.$this->name.'/views/templates/front/colortool.tpl'
-            );
+            // $this->smarty->assignGlobal(
+            //     'WB_PANELTOOL_TPL',
+            //     _PS_MODULE_DIR_.$this->name.'/views/templates/front/colortool.tpl'
+            // );
         }
 
 

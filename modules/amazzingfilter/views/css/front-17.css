@@ -1,0 +1,20 @@
+.af_subtitle {
+	font-size: 1rem;
+}
+.dynamic-product-count {
+	display: block;
+	margin: 0.5em 0 1.5em 0;
+}
+.relative-container {
+	position: relative;
+}
+.manage-permanent-filters {
+	font-size: 12px;
+	border: 1px solid;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.page-my-account #content .links a.af i {
+	height: 0;
+}
+/* since 3.1.2 */

@@ -35,6 +35,7 @@ modules/marketplace/views/img/product_img/
 !modules/wbmegamenu/
 !modules/wbimageslider/
 !modules/wbthemecustomizer/
+!modules/amazzingfilter/
 
 # Ignore everything in the "themes" directory, except the themes you
 # specify (see the commented-out example for a hint on how to do this.)
@@ -42,6 +43,7 @@ modules/marketplace/views/img/product_img/
 themes/*
 !themes/electrive/
 themes/electrive/_dev/node_modules
+themes/electrive/_dev/package-lock.json
 themes/electrive/assets/js/*
 !themes/electrive/assets/js/custom.js
 
