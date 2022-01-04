@@ -60,6 +60,6 @@ export default class TopMenu extends DropDown {
     prestashop.on('responsive update', function(event) {
       $('.js-sub-menu').removeAttr('style');
     });
-    super.init();
+    // super.init();
   }
 }
