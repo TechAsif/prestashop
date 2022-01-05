@@ -461,9 +461,10 @@ input.js-cart-line-product-quantity {
     padding: 15px;
     padding-bottom: 25px;
 }
-.cart-logo a svg {
+.cart-logo svg {
     width: 30%;
     height: auto;
+    opacity: .6;
 }
 
 .hcart {

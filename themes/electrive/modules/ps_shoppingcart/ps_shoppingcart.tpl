@@ -100,12 +100,9 @@
                 </ul>
                 <div class="cart-action-container">
                   <div class="cart-logo hidden-md-down">
-                    <a href="{$urls.base_url}">
-
-                      <svg width="47" height="41">
-                        <use xlink:href="#lgLogo">
-                      </svg>
-                    </a>
+                    <svg width="47" height="41">
+                      <use xlink:href="#lgLogo">
+                    </svg>
                   </div>
 
                   <table class="cdroptable">

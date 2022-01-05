@@ -38,10 +38,13 @@ $.wbCountDownTimer = function (event) {
 $(document).ready(function () {
   // if ($(document).width() >= 992) {
     $(window).scroll(function () {
-      if ($(this).scrollTop() > 230) {
+      var HerderHeight = $("#header").height();
+      if ($(this).scrollTop() > HerderHeight) {
+        $("#header .header-nav").css({marginBottom: $("#header .allhead").height() });
         $("#header .allhead").addClass("fixed fadeInDown animated");
       } else {
         $("#header .allhead").removeClass("fixed fadeInDown animated");
+        $("#header .header-nav").css({marginBottom: 0 });
       }
     });
   // }
@@ -68,9 +71,9 @@ $(document).ready(function () {
   $("#ratep").click(function () {
     $("html, body").animate(
       {
-        scrollTop: $(".pro-review").offset().top,
+        scrollTop: $(".pro-review").offset().top - $('.allhead').height(),
       },
-      1800
+      1000
     );
   });
 });
