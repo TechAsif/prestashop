@@ -27,7 +27,7 @@
 
 {block name="left_column"}
 
-  {if $category.description}
+  {if isset($category) && $category.description}
     <div id="category-description" class="col-sm-12">{$category.description nofilter}</div>
   {/if}
 
