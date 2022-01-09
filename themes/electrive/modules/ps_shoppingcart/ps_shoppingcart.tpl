@@ -108,7 +108,7 @@
                   <table class="cdroptable">
                     <tbody>
                       <tr>
-                        <td class="text-xs-left">{l s='Total products:' d='Shop.Theme.Checkout'}</td>
+                        <td class="text-xs-left">{l s='Product Cost:' d='Shop.Theme.Checkout'}</td>
                         <td class="text-xs-right">{$cart.subtotals.products.value}</td>
                       </tr>
                       <tr>

@@ -153,21 +153,19 @@ transition:all 0.5s;
     top: 0;
     width: 44px;}
  #close_search_query_nav{
-  display: block;
   position: absolute;
-  right: 0;
+  right: 0px;
   text-align: center;
-  top: 15px;
+  top: 0px;
   z-index: 999;
+  padding: 3px 6px;
  }
  #close_search_query_nav:before{
    content: "\f00d";
    font-family: fontawesome;
-   display: inline-block;
-   
  }
- #close_search_query_nav span{color: #999; font-size: 0; font-family: Myriad Pro;
-  letter-spacing: 3px; text-transform: uppercase; position: relative; right: 50px; top: 20px;
+ #close_search_query_nav span{
+  display: none;
   }  
  #close_search_query_nav:hover span{color: #000;}
 form#searchbox input#search_query_block {
@@ -262,9 +260,10 @@ form#searchbox .button.button-small i {
 #wbsearch_data .search-title{
   font-size: 11px;
   letter-spacing: 1px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border-bottom: 1px solid #e7e7e7;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
+  padding-right: 10px;
 }
 #wbsearch_data .search-title span{font-size: 11px;}
 #wbsearch_data .title_showall_text{letter-spacing: 2px; font-size: 13px;}
@@ -274,6 +273,7 @@ form#searchbox .button.button-small i {
 #wbsearch_data  .items-list{overflow: hidden;}
 .wbContent{
   padding: 0 15px;
+  padding-right: 0;
 }
 #wbsearch_data  .items-list li .wberContent{
   overflow:hidden;

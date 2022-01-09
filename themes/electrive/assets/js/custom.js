@@ -474,7 +474,7 @@ $(document).ready(function () {
         1590: { items: 8, slideBy: 1 },
       },
       dots: false,
-      nav: false,
+      nav: true,
       navText: [
         '<i class="fa fa-angle-left"></i>',
         '<i class="fa fa-angle-right"></i>',

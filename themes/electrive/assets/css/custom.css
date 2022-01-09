@@ -4242,12 +4242,49 @@ body.active .sidenav .mobile_top_menu_wrapper {
   -moz-text-fill-color: transparent;
 }
 
+#wb_category_feature .owl-carousel,
+#wb_category_feature .owl-carousel .owl-stage-outer {
+    position: initial;
+}
+#wb_category_feature .owl-theme .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
 #wb_category_feature {
   width: 100%;
   overflow: hidden;
+  position: relative;
 }
 #wb_category_feature .list_carousel {
   width: calc(100% + 60px);
+}
+#wb_category_feature  .owl-theme .owl-nav [class*=owl-] {
+  padding: 4px 22px;
+  position: absolute;
+  background: #0000009c;
+  opacity: 0;
+  top: 50%;
+  transform: translateY(-100%);
+  transition: all .3s ease;
+}
+#wb_category_feature .owl-theme .owl-nav [class*=owl-]:hover {
+  background: #282828;
+}
+#wb_category_feature:hover .owl-theme .owl-nav [class*=owl-] {
+  opacity: 1;
+}
+#wb_category_feature  .owl-theme .owl-nav [class*=owl-] i {
+
+  font-size: 45px;
+}
+
+
+#wb_category_feature .owl-carousel .owl-nav .owl-next {
+    right: 0;
+}
+#wb_category_feature .owl-carousel .owl-nav .owl-prev {
+    left: 0;
 }
 
 #main-menu .special-offer-menu > a {

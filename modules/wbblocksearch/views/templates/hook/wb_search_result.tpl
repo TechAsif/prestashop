@@ -93,7 +93,7 @@
 <p class="title_showall_text">{l s='Search limited to ' mod='wbblocksearch'} {$limit_item|escape:'quotes':'UTF-8'} {l s='products' mod='wbblocksearch'}</p>
 <p class="title_showall">
 <a href="#" onclick="Show_All_Search();return false;">
-    <span>{l s='show alls' mod='wbblocksearch'}</span>
+    <span>{l s='show all' mod='wbblocksearch'}</span>
     </a>
 </p>
 {/if}
