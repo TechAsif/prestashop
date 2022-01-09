@@ -98,6 +98,10 @@
 }
 #main-menu .mega-menu h4 a {
     font-size: 1.125rem;
+    color: #000;
+}
+#main-menu .mega-menu h4 a:hover {
+    color: #f9495a;
 }
 /* simple columns inside the mega menus */
 

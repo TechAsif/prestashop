@@ -363,9 +363,12 @@ input.js-cart-line-product-quantity {
 #brandings {
   overflow: hidden;
 }
-#brandings .brand_list {
-  padding: 15px;
+@media (min-width: 992px) {
+  #brandings .brand_list {
+    padding: 15px;
+  }
 }
+
 #brandings .brand_list h3 {
   font-weight: bold;
   font-size: 16px;
@@ -435,6 +438,18 @@ input.js-cart-line-product-quantity {
 }
 #brandings li a img {
 }
+
+@media (min-width: 992px) {
+  #brandings > .row {
+    display: flex;
+  }
+}
+@media (max-width: 991px) {
+  #brandings .brand_list {
+    padding: 0px 15px 15px 15px;
+  }
+  #brandings .brand_list h3:first-child {margin-top: 0;}
+}
 /* cart modal over */
 /* cart dropdown */
 .cart-det {
@@ -446,9 +461,10 @@ input.js-cart-line-product-quantity {
     padding: 15px;
     padding-bottom: 25px;
 }
-.cart-logo a svg {
+.cart-logo svg {
     width: 30%;
     height: auto;
+    opacity: .6;
 }
 
 .hcart {
@@ -4017,28 +4033,34 @@ body.active::before {
   -ms-transition: all 0.2s ease 0s;
   -o-transition: all 0.2s ease 0s;
 }
-body.active .sidenav {
+body.active .sidenav .mobile_top_menu_wrapper {
   overflow-y: scroll;
 }
 .sidenav {
   height: 100vh;
-  width: 280px;
+  width: 0px;
   position: fixed;
   z-index: 999;
   top: 0;
   left: 0;
-  background-color: #fff;
+  /* background-color: #fff; */
   transition: 0.5s;
-  box-shadow: 5px 0 5px 0 rgba(0, 0, 0, 0.06);
+  /* box-shadow: 5px 0 5px 0 rgba(0, 0, 0, 0.06); */
   clear: both;
   text-align: left;
+  padding-right: 0px;
+  overflow: hidden;
 }
 .sidenav .close-nav {
   display: inline-block;
   position: absolute;
   top: 50%;
-  left: 92%;
+  right: 0;
+  transform: translateY(-50%);
   z-index: 1;
+  background: #F4F4F4;
+  border-radius: 0px 44px 44px 0px;
+  padding: 50px 11px 50px 7px;
 }
 .dblock {
   display: block;
@@ -4049,7 +4071,9 @@ body.active .sidenav {
 #mobile_top_menu_wrapper {
   margin: 0;
   line-height: 20px;
-  display: block !important;
+  height: 100vh;
+  overflow: auto;
+  width: 100%;
 }
 .close-nav i {
 }
@@ -4233,12 +4257,49 @@ body.active .sidenav {
   -moz-text-fill-color: transparent;
 }
 
+#wb_category_feature .owl-carousel,
+#wb_category_feature .owl-carousel .owl-stage-outer {
+    position: initial;
+}
+#wb_category_feature .owl-theme .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
 #wb_category_feature {
   width: 100%;
   overflow: hidden;
+  position: relative;
 }
 #wb_category_feature .list_carousel {
   width: calc(100% + 60px);
+}
+#wb_category_feature  .owl-theme .owl-nav [class*=owl-] {
+  padding: 4px 22px;
+  position: absolute;
+  background: #0000009c;
+  opacity: 0;
+  top: 50%;
+  transform: translateY(-100%);
+  transition: all .3s ease;
+}
+#wb_category_feature .owl-theme .owl-nav [class*=owl-]:hover {
+  background: #282828;
+}
+#wb_category_feature:hover .owl-theme .owl-nav [class*=owl-] {
+  opacity: 1;
+}
+#wb_category_feature  .owl-theme .owl-nav [class*=owl-] i {
+
+  font-size: 45px;
+}
+
+
+#wb_category_feature .owl-carousel .owl-nav .owl-next {
+    right: 0;
+}
+#wb_category_feature .owl-carousel .owl-nav .owl-prev {
+    left: 0;
 }
 
 #main-menu .special-offer-menu > a {
@@ -4252,8 +4313,41 @@ body.active .sidenav {
 #main-menu .special-offer-menu > a:hover {
   color: #fff;
 }
+@media (max-width: 991px) {
+  #main-menu .special-offer-menu > a {
+    border-radius: 0;
+    padding: 13px 20px;
+  }
+}
 
+.mobile_menu_contents .nav-pills {
+    padding: 5px;
+}
+.mobile_menu_contents .nav-pills .nav-item .nav-link {
+    background: #FFFFFF;
+    /* border: 1px solid rgba(0, 0, 0, 0.1); */
+    box-sizing: border-box;
+    /* border-radius: 5px; */
+    color: #000;
+    padding: 5px 6px;
+    margin: 2px;
+    padding: 5px 0px;
+    /* font-size: 14px; */
+    border-bottom: 2px solid transparent;
+}
+.mobile_menu_contents .nav-pills .nav-item .nav-link:hover,
+.mobile_menu_contents .nav-pills .nav-item .nav-link.active {
+    /* color: #fff; */
+    border-bottom-color: #fece3c;
+}
 
+.mobile_menu_logo {
+    padding: 5px;
+    display: inline-block;
+    background: #FFC700;
+    border-radius: 7px;
+    margin: 5px;
+}
 
 @media (min-width: 1200px) {
 }

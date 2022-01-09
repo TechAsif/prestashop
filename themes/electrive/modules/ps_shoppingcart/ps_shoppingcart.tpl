@@ -100,18 +100,15 @@
                 </ul>
                 <div class="cart-action-container">
                   <div class="cart-logo hidden-md-down">
-                    <a href="{$urls.base_url}">
-
-                      <svg width="47" height="41">
-                        <use xlink:href="#lgLogo">
-                      </svg>
-                    </a>
+                    <svg width="47" height="41">
+                      <use xlink:href="#lgLogo">
+                    </svg>
                   </div>
 
                   <table class="cdroptable">
                     <tbody>
                       <tr>
-                        <td class="text-xs-left">{l s='Total products:' d='Shop.Theme.Checkout'}</td>
+                        <td class="text-xs-left">{l s='Product Cost:' d='Shop.Theme.Checkout'}</td>
                         <td class="text-xs-right">{$cart.subtotals.products.value}</td>
                       </tr>
                       <tr>

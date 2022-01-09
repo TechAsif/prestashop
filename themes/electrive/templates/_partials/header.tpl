@@ -101,7 +101,7 @@
           </div>
           <div id="mySidenav" class="sidenav">
             <div class="close-nav">
-              <a href="javascript:void(0)" class="closebtn float-xs-right" onclick="closeNav()">
+              <a class="closebtn float-xs-right">
                 <svg width="12" height="41" viewBox="0 0 12 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M11 1.47168L1.74927 20.5003L11 39.529" stroke="#FF0000" stroke-opacity="0.38" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round" />
@@ -117,7 +117,7 @@
                 </a>
               </div>
               <div class="mobile_menu_contents">
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <ul class="nav nav-pills mb-1" id="pills-tab" role="tablist">
                   <li class="nav-item">
                     <a class="nav-link active" id="mobile_category_pill-tab" data-toggle="pill"
                       href="#mobile_category_pill" role="tab" aria-controls="mobile_category_pill"

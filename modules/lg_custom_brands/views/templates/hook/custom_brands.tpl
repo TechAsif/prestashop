@@ -10,8 +10,8 @@
 * @link      http://www.silbersaiten.de
 *}
 <div id="brandings">
-  <div class="row" style="display: flex;">
-    <div class="col-sm-4">
+  <div class="row" >
+    <div class="col-md-4">
     <div class="brand_list">
       <h3>Top Brands</h3>
       <ul id="top-brands" class="">
@@ -35,15 +35,15 @@
       </ul>
     </div>
     </div>
-    <div class="col-sm-8 ">
+    <div class="col-md-8 ">
       <div class="js_nav_tabs">
         <div class="brand-navs ">
-          <span class="js_tab_nav highlight" data-id='top-brandbox'>Top Brands</span>
-          <span class="js_tab_nav" data-id='new-brandbox'>New Brands</span>
-          <span class="js_tab_nav" data-id='featured-brandbox'>Featured Brands</span>
+          <span class="js_tab_nav highlight" data-class='top-brandbox'>Top Brands</span>
+          <span class="js_tab_nav" data-class='new-brandbox'>New Brands</span>
+          <span class="js_tab_nav" data-class='featured-brandbox'>Featured Brands</span>
         </div>
         <div class="brand-boxes">
-          <div id="top-brandbox" class="brand-box" style="display: block;">
+          <div class="top-brandbox brand-box" style="display: block;">
             <ul class="brand-contents">
               {if $top_brands && !empty($top_brands) }
                 {foreach $top_brands as $manufacturer}
@@ -56,7 +56,7 @@
               {/if}
             </ul>
           </div>
-          <div id="new-brandbox" class="brand-box">
+          <div class="new-brandbox brand-box">
             <ul class="brand-contents">
               {if $new_brands && !empty($new_brands) }
                 {foreach $new_brands as $manufacturer}
@@ -69,7 +69,7 @@
               {/if}
             </ul>
           </div>
-          <div id="featured-brandbox" class="brand-box">
+          <div class="featured-brandbox brand-box">
             <ul class="brand-contents">
               {if $featured_brands && !empty($featured_brands) }
                 {foreach $featured_brands as $manufacturer}
