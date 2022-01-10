@@ -48,8 +48,8 @@ let config = {
   
       // compile all .scss files to plain old css
       {
-        // test: /\.(c|sc|sa)ss$/,
-        test: /\.scss$/,
+        test: /\.(c|sc|sa)ss$/,
+        // test: /\.scss$/,
         use: [
           MiniCssExtractPlugin.loader, 
           'css-loader', 

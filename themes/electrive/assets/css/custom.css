@@ -4207,7 +4207,7 @@ body.active .sidenav .mobile_top_menu_wrapper {
 
 #wrapper .breadcrumb ol {
   background-color: transparent;
-  padding: 8px 0px;
+  padding: 0;
 }
 .product-quantity #quantity_wanted {
   width: 60%;

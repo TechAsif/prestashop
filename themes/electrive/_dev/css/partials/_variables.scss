@@ -2,7 +2,7 @@ $gray-darker: #232323;
 $gray: #7A7A7A;
 $gray-light: #F1F1F1;
 $gray-lighter: #f6f6f6;
-$brand-primary: #2fb5d2;
+$brand-primary: #f3283d;
 $brand-secondary: #f39d72;
 $brand-success: #4cbb6c;
 $brand-warning: #ff9a52;
@@ -55,3 +55,30 @@ $display4-weight: 400;
 $text-muted: $gray;
 $NotoSansPath: "~notosans-fontface/fonts";
 $NotoSansVersion: "1.0.1";
+
+
+
+$grid-breakpoints: (
+  // Extra small screen / phone
+  xs: 0,
+  // Small screen / phone
+  sm: 576px,
+  // Medium screen / tablet
+  md: 768px,
+  // Large screen / desktop
+  lg: 992px,
+  // Extra large screen / wide desktop
+  xl: 1200px,
+  // Extra large screen / wide desktop
+  xxl: 1410px,
+  xxxl: 1590px
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1380px,
+  xxxl: 1560px
+); 

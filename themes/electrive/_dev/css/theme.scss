@@ -37,6 +37,9 @@
 #index #wrapper .breadcrumb[data-depth="1"] {
   display: none;
 }
+.header-right-navs {
+  display: flex;
+}
 
 #wrapper .breadcrumb ol {
   margin-bottom: 20px;
@@ -71,6 +74,8 @@
 #notifications ul {
   margin-bottom: 0;
 }
+
+.breadcrumb {background: transparent;}
 
 /*** Responsive part ***/
 @include media-breakpoint-down(sm) {
