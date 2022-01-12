@@ -4059,6 +4059,7 @@ body.active .sidenav .mobile_top_menu_wrapper {
   height: 100vh;
   overflow: auto;
   width: 100%;
+  padding-bottom: 40px;
 }
 .close-nav i {
 }
