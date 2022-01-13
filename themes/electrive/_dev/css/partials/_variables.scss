@@ -15,11 +15,11 @@ $btn-primary-border: transparent;
 $btn-secondary-color: $gray-darker;
 $btn-secondary-bg: $gray-lighter;
 $btn-secondary-border: transparent;
-$btn-border-radius: 0;
-$input-border-color: rgba(0, 0, 0, 0.25);
+$btn-border-radius: 5px;
+$border-radius: 5px;
+$input-border-color: rgba(0, 0, 0, 0.05);
 $headings-font-weight: 700;
 $tooltip-bg: $brand-danger;
-$border-radius: 0;
 $extra-small-space: 0.3125rem;
 $small-space: 0.625rem;
 $medium-space: 1.25rem;
@@ -75,9 +75,9 @@ $grid-breakpoints: (
 );
 
 $container-max-widths: (
-  sm: 540px,
-  md: 720px,
-  lg: 960px,
+  // sm: 540px,
+  // md: 720px,
+  // lg: 960px,
   xl: 1140px,
   xxl: 1380px,
   xxxl: 1560px

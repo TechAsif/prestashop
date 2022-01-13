@@ -35,7 +35,7 @@ p {
 .dropdown-item:hover {
   background: none;
 }
-.color,
+.color, 
 .custom-checkbox input[type="checkbox"] + span.color {
   width: 1.25rem;
   height: 1.25rem;
@@ -47,14 +47,14 @@ p {
   background-size: contain;
   &.active,
   &:hover {
-    border: 2px solid $gray-darker;
+    border: 1px solid $gray-darker;
   }
 }
 .facet-label {
   &.active,
   &:hover {
     .custom-checkbox span.color {
-      border: 2px solid $gray-darker;
+      border: 1px solid $gray-darker;
     }
   }
 }
@@ -68,22 +68,12 @@ p {
   font-weight: $headings-font-weight;
   color: $gray-darker;
 }
-.btn-primary,
-.btn-secondary {
-  @include box-shadow-light;
-  text-transform: uppercase;
-  font-weight: 600;
-  padding: 0.5rem 1.25rem;
-  .material-icons {
-    margin-right: $small-space;
-  }
-}
+
 .btn-tertiary {
   @extend .btn-secondary;
   background-color: #F7F7F7;
   text-transform: lowercase;
   color: $gray;
-  box-shadow: 0.0625rem 0.0625rem 0.0625rem 0 rgba(0, 0, 0, 0.1);
   padding: 0.25rem;
   margin: 0.25rem 0;
   font-weight: 400;
@@ -92,7 +82,6 @@ p {
     font-size: $base-font-size;
   }
   &:hover {
-    box-shadow: 0.0625rem 0.0625rem 0.0625rem 0 rgba(0, 0, 0, 0.2);
     border: $input-btn-border-width solid rgba(35, 35, 35, 0.2);
   }
 }
@@ -109,7 +98,7 @@ p {
   }
 }
 .card {
-  @include box-shadow;
+  border: 1px solid $input-border-color;
 }
 label ,.label {
   color: $gray-darker;
@@ -123,7 +112,7 @@ small.label, small.value {
   padding-top: 0.625rem;
 }
 .form-control {
-  background: $gray-light;
+  background: white;
   color: $gray;
   border: $input-btn-border-width solid $input-border-color;
   padding: 0.5rem 1rem;
@@ -134,9 +123,6 @@ small.label, small.value {
   }
 }
 .input-group {
-  &.focus {
-    outline: 0.1875rem solid $brand-primary;
-  }
   .form-control:focus {
     outline: none;
   }
@@ -152,7 +138,7 @@ small.label, small.value {
       padding: 0.625rem 1rem;
       text-transform: uppercase;
       &[data-action="show-password"]{
-        background: $gray;
+        background: $brand-primary;
         height: 100%;
       }
     }
@@ -190,8 +176,8 @@ input, textarea {
   height: 2.625rem;
   -moz-appearance: none;
   -webkit-appearance: none;
-  background: $gray-light url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAAPklEQVR4Ae3TwREAEBQD0V/6do4SXPZg7EsBhsQ8IEmSMOsiuEfg3gL3oXC7wK0bd1G4o8X9F4yIkyQfSrIByQBjp7QuND8AAAAASUVORK5CYII=") no-repeat scroll right 0.5rem center / 1.25rem 1.25rem;
-  padding: 0 0.5rem;
+  background: white url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAAPklEQVR4Ae3TwREAEBQD0V/6do4SXPZg7EsBhsQ8IEmSMOsiuEfg3gL3oXC7wK0bd1G4o8X9F4yIkyQfSrIByQBjp7QuND8AAAAASUVORK5CYII=") no-repeat scroll right 0.5rem center / 1.25rem 1.25rem;
+  padding: 0 0.5rem; 
 }
 .form-control-valign {
   padding-top: 0.5rem;
@@ -211,7 +197,7 @@ input, textarea {
   &.has-error {
     input,
     select {
-      outline: 0.1875rem solid $brand-danger;
+      border-color: $brand-danger;
     }
     .help-block {
       color: $brand-danger;
@@ -233,9 +219,7 @@ input, textarea {
 }
 .bootstrap-touchspin {
   width: auto;
-  float: left;
   display: inline-block;
-  @include box-shadow-light;
   input {
     &:focus {
       outline: none;
@@ -290,12 +274,12 @@ input, textarea {
 .custom-radio {
   display: inline-block;
   position: relative;
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem; 
   vertical-align: middle;
   cursor: pointer;
   border-radius: 50%;
-  border: $gray 2px solid;
+  border: $brand-primary 1px solid;
   background: white;
   margin-right: 1.25rem;
   input[type="radio"] {
@@ -306,12 +290,12 @@ input, textarea {
     &:checked + span {
       display: block;
       background-color: $brand-primary;
-      width: 12px;
-      height: 12px;
+      width: 0.9rem;
+      height: 0.9rem;
       border-radius: 50%;
       position: absolute;
-      left: 0.125rem;
-      top: 0.125rem;
+      left: 0.1rem;
+      top: 0.12rem;
     }
     &:focus + span {
       border-color: $gray;
@@ -321,32 +305,37 @@ input, textarea {
 .custom-checkbox {
   position: relative;
   input[type="checkbox"] {
-    margin-top: 0.25rem;
     opacity: 0;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     position: absolute;
+    z-index: 99;
     + span {
-      margin-right: 3px;
       display: inline-block;
-      width: 0.9375rem;
-      height: 0.9375rem;
+      width: 20px;
+      height: 20px;
       vertical-align: middle;
       cursor: pointer;
-      border: 2px $gray-darker solid;
+      border: 1px solid $brand-primary;
+      border-radius: 4px;
       .checkbox-checked {
         display: none;
-        margin: -0.25rem -0.125rem;
-        font-size: 1.1rem;
-        color: $gray-darker;
+        font-size: 1rem;
+        color: #ffffff;
+        background: $brand-primary;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        top: 1px;
+        position: relative;
+        left: 1px;
       }
     }
     &:checked + span {
       .checkbox-checked {
         display: block;
       }
-    }
-    &:focus + span {
-      border-color: $gray;
     }
   }
   label {
@@ -368,7 +357,7 @@ input, textarea {
     width: 3.438rem;
     height: 3.438rem;
     overflow: hidden;
-    border: $gray-light 1px solid;
+    border: $input-border-color 1px solid;
     margin: $small-space 0;
     img {
       width: 55px;
@@ -437,7 +426,7 @@ input, textarea {
   background-image: none;
   background-color: transparent;
   border-color: $btn-tertiary-color;
-  border: 0.15rem solid $btn-tertiary-color;
+  border: 1px solid $btn-tertiary-color;
   @include transition(all .4s ease-in-out);
   &:hover {
     border-color: $btn-tertiary-hover;
@@ -447,17 +436,8 @@ input, textarea {
 .alert {
   font-size: 0.8125rem;
 }
-.nav-item {
-  .nav-link,
-  .nav-separtor {
-    color: $gray;
-    font-weight: bold;
-    &.active {
-      color: $gray-darker;
-    }
-  }
-}
+
 .separator {
   margin: 0;
-  border-color: rgba(0, 0, 0, 0.25);
+  border-color: $input-border-color;
 }

@@ -36,7 +36,8 @@ let config = {
   },
   output: {
     path: path.resolve(__dirname, '../assets/js'),
-    filename: 'theme.js'
+    filename: 'theme.js',
+    // assetModuleFilename: 'images/[hash][ext][query]'
   },
   devtool: 'source-map',
   module: {
@@ -75,15 +76,20 @@ let config = {
       // },
       {
         test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '../css/[name].[ext]'
-            }
-          }
-        ]
+        type: 'asset/resource',
+        dependency: { not: ['url'] },
       },
+      // {
+      //   test: /.(png|woff(2)?|eot|ttf|svg)(\?[a-z0-9=\.]+)?$/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //       options: {
+      //         name: '../css/[name].[ext]'
+      //       }
+      //     }
+      //   ]
+      // },
       {
         test : /\.css$/,
         use: ['style-loader', 'css-loader', 'postcss-loader']
