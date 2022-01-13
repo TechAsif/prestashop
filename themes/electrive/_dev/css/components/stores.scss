@@ -4,7 +4,6 @@
       padding-left: 0.75rem;
       padding-right: 0.75rem;
     }
-    width: 85%;
     margin: 0 auto;
     .store-picture {
       img {
@@ -45,6 +44,8 @@
         border-top: $gray-light 1px solid;
       }
       div:first-child {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 65%;    
         flex: 0 0 65%;
       }
       i.material-icons{
@@ -79,10 +80,7 @@
           border-left: none;
         }
         .store-description {
-          a {
-            margin-bottom: 0.5rem;
-          }
-          address {
+          a , address {
             margin-bottom: 0.5rem;
           }
         }

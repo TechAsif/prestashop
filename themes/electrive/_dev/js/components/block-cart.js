@@ -28,22 +28,26 @@ import $ from 'jquery';
 prestashop.blockcart = prestashop.blockcart || {};
 
 prestashop.blockcart.showModal = (html) => {
-  function getBlockCartModal() {
-    return $('#blockcart-modal');
-  }
+  console.log('showMOdal', event.currentTarget)
+  
+  $.simplyToast('danger', 'The item was added to cart successfully', {ele: 'body'});
 
-  let $blockCartModal = getBlockCartModal();
-  if ($blockCartModal.length){
-    $blockCartModal.remove();
-  }
+  // function getBlockCartModal() {
+  //   return $('#blockcart-modal');
+  // }
 
-  $('body').append(html);
+  // let $blockCartModal = getBlockCartModal();
+  // if ($blockCartModal.length){
+  //   $blockCartModal.remove();
+  // }
 
-  $blockCartModal = getBlockCartModal();
-  $blockCartModal.modal('show').on('hidden.bs.modal', (event) => {
-    prestashop.emit('updateProduct', {
-      reason: event.currentTarget.dataset
-    });
-  });
+  // $('body').append(html);
+
+  // $blockCartModal = getBlockCartModal();
+  // $blockCartModal.modal('show').on('hidden.bs.modal', (event) => {
+  //   prestashop.emit('updateProduct', {
+  //     reason: event.currentTarget.dataset
+  //   });
+  // });
 };
 

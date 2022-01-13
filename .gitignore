@@ -46,3 +46,10 @@ themes/electrive/_dev/node_modules
 themes/electrive/_dev/package-lock.json
 themes/electrive/assets/js/*
 !themes/electrive/assets/js/custom.js
+
+
+themes/electrive/assets/css/*
+!themes/electrive/assets/css/custom.css
+!themes/electrive/assets/css/error.css
+!themes/electrive/assets/css/rtl.css
+!themes/electrive/assets/css/index.php

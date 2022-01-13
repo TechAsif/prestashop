@@ -1,25 +1,7 @@
 body#checkout {
-  color: $gray-darker;
-  #header .header-nav {
-    max-height: none;
-    padding: 5rem 0 0.9375rem;
-    border: none;
-    margin-bottom: 0;
-    @include box-shadow;
-    .logo {
-      max-height: 4.375rem;
-      width: auto;
-    }
-  }
   .custom-checkbox {
-    display: flex;
     span {
-      flex: 0 0 15px;
-      margin-top: 0.1875rem;
     }
-  }
-  a:hover {
-    color: #1a8196;
   }
   section#content {
     margin-bottom: 1.563rem;
@@ -28,10 +10,12 @@ body#checkout {
     min-height: 100%;
   }
   section.checkout-step {
-    @include box-shadow;
     background-color: white;
-    border-bottom: 1px rgba(0, 0, 0, 0.25) solid;
-    padding: 0.9375rem;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid $input-border-color;
+    margin-bottom: 5px;
+
     &:last-child {
       border: 0;
     }
@@ -269,7 +253,7 @@ body#checkout {
   #cart-summary-product-list {
     font-size: $font-size-sm;
     img {
-      border: $gray-light 1px solid;
+      border: $input-border-color 1px solid;
       width: 3.125rem;
     }
     .media-body {
@@ -312,13 +296,13 @@ body#checkout {
       padding: 1rem;
       margin-bottom: 2rem;
       background-color: #fff;
-      border: 3px solid #e5e5e5;
+      border: 3px solid $input-border-color;
       border-radius: 0;
     }
     .summary-selected-carrier {
       margin-bottom: 0.75rem;
       background-color: #fff;
-      border: 1px solid #e5e5e5;
+      border: 1px solid $input-border-color;
       border-radius: 0;
       padding: 1rem;
     }

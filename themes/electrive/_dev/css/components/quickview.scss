@@ -4,7 +4,6 @@
     max-width: 64rem;
   }
   .modal-content {
-    background: $gray-light;
     min-height: 28.13rem;
   }
   .modal-header {
@@ -26,7 +25,6 @@
   .images-container {
     display: flex;
     z-index: 1;
-    min-height: 21.88rem;
     .product-images > li.thumb-container > .thumb {
       width: 100%;
       max-width: 4.938rem;
@@ -35,10 +33,17 @@
     }
   }
   .mask {
-    width: 35%;
-    max-height: 22.5rem;
+    width: 45%;
+    max-height: 324px;
     overflow: hidden;
     margin-left: $small-space;
+    z-index: 1;
+  }
+  .js-thumb{
+    margin-bottom: 13px;
+  }
+  .propage .wbproductcountdown{
+    display: none
   }
   .arrows {
     position: absolute;
@@ -47,19 +52,30 @@
     max-height: 22.5rem;
     right: 5rem;
     z-index: 0;
+    .arrow-up,.arrow-down {
+      border-radius: 5px;
+      cursor: pointer;
+      background: #eee;
+      color: #000;
+      min-width: 28px;
+      min-height: 28px;
+      transition: 0.3s ease;
+      opacity: 0.2;
+    }
     .arrow-up {
       margin-top: -3.125rem;
-      cursor: pointer;
-      opacity: 0.2;
+      padding: 2px 1px;
     }
     .arrow-down {
       position: absolute;
       bottom: -1.875rem;
-      cursor: pointer;
+      padding: 2px 2px;
     }
-  }
-  .social-sharing {
-    margin-top: 0;
-    margin-left: $extra-large-space;
+    .arrow-up,.arrow-down {
+      &:hover {
+        background: #ffcc00;
+        color: #000;
+      }
+    }
   }
 }

@@ -110,7 +110,7 @@ $(document).ready(function () {
   $('#menu-icon').on('click', function() {
     openNav();
   });
-  
+
   if ($(window).width() <= 991) {
     $("#main-menu").appendTo("#mobile_category_pill");
   }

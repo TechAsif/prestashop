@@ -96,8 +96,8 @@ $(document).ready(function () {
     let quantityInput = $('#quantity_wanted');
     quantityInput.TouchSpin({
       verticalbuttons: true,
-      verticalupclass: 'material-icons touchspin-up',
-      verticaldownclass: 'material-icons touchspin-down',
+      verticalupclass: '',
+      verticaldownclass: '',
       buttondown_class: 'btn btn-touchspin js-touchspin',
       buttonup_class: 'btn btn-touchspin js-touchspin',
       min: parseInt(quantityInput.attr('min'), 10),

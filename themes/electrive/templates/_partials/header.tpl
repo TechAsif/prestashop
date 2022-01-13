@@ -156,7 +156,7 @@
         <div style="flex: 1;text-align: center;">
           {hook h='displayTop'}
         </div>
-        <div>
+        <div class="header-right-navs">
           {hook h='displayNav'}
           <a href="{$urls.pages.addresses}" class="d-inline-block hidden-md-down my-info text-xs-center">
             <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -11,7 +11,7 @@
 *}
 <div id="brandings">
   <div class="row" >
-    <div class="col-md-4">
+    <div class="col-lg-4">
     <div class="brand_list">
       <h3>Top Brands</h3>
       <ul id="top-brands" class="">
@@ -35,7 +35,7 @@
       </ul>
     </div>
     </div>
-    <div class="col-md-8 ">
+    <div class="col-lg-8 ">
       <div class="js_nav_tabs">
         <div class="brand-navs ">
           <span class="js_tab_nav highlight" data-class='top-brandbox'>Top Brands</span>

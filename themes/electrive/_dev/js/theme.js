@@ -22,7 +22,9 @@
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  * International Registered Trademark & Property of PrestaShop SA
  */
-import 'expose-loader?Tether!tether';
+// import 'expose-loader?Tether!tether';
+import tether from 'tether';
+global.Tether = tether;
 import 'bootstrap/dist/js/bootstrap.min';
 import 'flexibility';
 import 'bootstrap-touchspin';
@@ -45,6 +47,7 @@ import EventEmitter from 'events';
 
 import './lib/bootstrap-filestyle.min';
 import './lib/jquery.scrollbox.min';
+import './lib/jquery.simply-toast';
 
 import './components/block-cart';
 
