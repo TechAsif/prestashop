@@ -325,7 +325,7 @@ body > .wballcor {display: none;}
   padding: 5px 10px;
   border-radius: 4px;
   transition: 0.3s ease;
-  width: 104px;
+  width: 100px;
   text-align: center;
 }
 .wbcolor_field.wbcolor_field-mode label:hover{
@@ -477,13 +477,15 @@ span.wbcolor16{background:#8c83f3;border-radius: 0 4px 4px 0;}
 }
 .wbcolor_darkmode .wbdarkmode-layout span{
   background: url('../../img/wbdark-mode.png');
-  width: 104px;
+  width: 100px;
   height: 54px;
+  background-size: 100px;
 }
 .wbcolor_darkmode .wblightmode-layout span{
   background: url('../../img/wblight-mode.png');
-  width: 104px;
+  width: 100px;
   height: 54px;
+  background-size: 100px;
 }
 
 /* User Darl Light Mode */

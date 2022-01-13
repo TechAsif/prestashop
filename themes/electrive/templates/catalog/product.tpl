@@ -51,7 +51,7 @@
     <meta itemprop="url" content="{$product.url}">
 
     <div class="row probg">
-      <div class="col-xl-5 col-lg-5 col-md-6 col-sm-6 col-xs-12 sticky">
+      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 sticky">
         {block name='page_content_container'}
           <section class="page-content" id="content">
             {block name='page_content'}
@@ -77,9 +77,9 @@
           </section>
         {/block}
       </div>
-      <div class="col-xl-7 col-lg-7 col-md-6 col-sm-6 col-xs-12 propage">
+      <div class="col-xl-8 col-lg-8 col-md-6 col-sm-6 col-xs-12 propage">
         <div class="row">
-          <div class="col-xl-8 col-lg-7 col-xs-12 prorightw">
+          <div class="col-lg-7 col-xs-12 prorightw">
             {block name='page_header_container'}
               {block name='page_header'}
                 <h1 class="h1" itemprop="name">{block name='page_title'}{$product.name}{/block}</h1>
@@ -213,7 +213,7 @@
 
           </div>
 
-          <div class="col-xl-4 col-lg-5 col-xs-12 prorightwt">
+          <div class="col-lg-5 col-xs-12 prorightwt">
             <div class="productpbr">
               <div class="product-actions">
                 {block name='product_prices'}

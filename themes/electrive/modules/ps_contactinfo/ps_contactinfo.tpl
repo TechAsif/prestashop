@@ -23,57 +23,67 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 
-<div class="block-contact col-md-3 col-sm-3 col-lg-3 col-xs-12 links wrapper">
+<div class="block-contact col-md-3 col-lg-3 col-xs-12 links wrapper">
 
-<div class="title clearfix hidden-md-up" data-toggle="collapse" data-target="#footer_contact">
+  <div class="title clearfix hidden-md-up" data-toggle="collapse" data-target="#footer_contact">
     <span class="c-info h3">{l s='contact info' d='Shop.Theme.Catalog'}</span>
-   <span class="float-xs-right">
-          <span class="navbar-toggler collapse-icons">
-           <i class="fa fa-plus add"></i>
-            <i class="fa fa-minus remove"></i>
-          </span>
-  </span>
+    <span class="float-xs-right">
+      <span class="navbar-toggler collapse-icons">
+        <i class="fa fa-plus add"></i>
+        <i class="fa fa-minus remove"></i>
+      </span>
+    </span>
   </div>
   <span class="c-info hidden-sm-down">{l s='contact info' d='Shop.Theme.Catalog'}</span>
- 
+
   <ul id="footer_contact" class="fthr collapse">
-  <li class="block">
-    <div class="icon"><svg width="20px" height="20px"><use xlink:href="#add"></use></svg></div>
-    <div class="data ad">{$contact_infos.address.formatted nofilter}</div>
-  </li>
+    <li class="block">
+      <div class="icon"><svg width="20px" height="20px">
+          <use xlink:href="#add"></use>
+        </svg></div>
+      <div class="data ad">{$contact_infos.address.formatted nofilter}</div>
+    </li>
 
-  {if $contact_infos.phone}
-    <li class="block">
-      <div class="icon"><svg width="20px" height="20px"><use xlink:href="#phone"></use></svg></div>
-      <div class="data">
-        <a href="tel:{$contact_infos.phone}">{$contact_infos.phone}</a>
-       </div>
-      <div class="icon"><svg width="20px" height="20px"><use xlink:href="#phone"></use></svg></div>
-      <div class="data">
-        <a href="tel:{$contact_infos.phone}">+8809666 757 779</a>
-       </div>
-    </li>
-  {/if}
+    {if $contact_infos.phone}
+      <li class="block">
+        <div class="icon"><svg width="20px" height="20px">
+            <use xlink:href="#phone"></use>
+          </svg></div>
+        <div class="data">
+          <a href="tel:{$contact_infos.phone}">{$contact_infos.phone}</a>
+        </div>
+        <div class="icon"><svg width="20px" height="20px">
+            <use xlink:href="#phone"></use>
+          </svg></div>
+        <div class="data">
+          <a href="tel:{$contact_infos.phone}">+8809666 757 779</a>
+        </div>
+      </li>
+    {/if}
 
-  {if $contact_infos.fax}
-    <li class="block">
-      <div class="icon"><svg width="21px" height="20px"><use xlink:href="#fax"></use></svg></div>
-      <div class="data">
-             {$contact_infos.fax}
-      </div>
-    </li>
-  {/if}
-  {if $contact_infos.email}
-    <li class="block">
-      <div class="icon"><svg width="22px" height="22px"><use xlink:href="#mail"></use></svg></div>
-      <div class="data email ad">
-      <a href="mailto:{$contact_infos.email}">{$contact_infos.email}</a>
-       </div>
-    </li>
-  {/if} 
-  {block name='hook_footerAfter'}
-  {hook h='displayFooterAfter'}
-{/block}   
-</ul>
+    {if $contact_infos.fax}
+      <li class="block">
+        <div class="icon"><svg width="21px" height="20px">
+            <use xlink:href="#fax"></use>
+          </svg></div>
+        <div class="data">
+          {$contact_infos.fax}
+        </div>
+      </li>
+    {/if}
+    {if $contact_infos.email}
+      <li class="block">
+        <div class="icon"><svg width="22px" height="22px">
+            <use xlink:href="#mail"></use>
+          </svg></div>
+        <div class="data email ad">
+          <a href="mailto:{$contact_infos.email}">{$contact_infos.email}</a>
+        </div>
+      </li>
+    {/if}
+    {block name='hook_footerAfter'}
+      {hook h='displayFooterAfter'}
+    {/block}
+  </ul>
 
 </div>

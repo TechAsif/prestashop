@@ -40,7 +40,7 @@ svg {
   vertical-align: middle;
 }
 ul {
-  margin-bottom: 0;
+  /* margin-bottom: 0; */
 }
 [disabled],
 .owl-theme .owl-nav .disabled {
@@ -547,7 +547,7 @@ input.js-cart-line-product-quantity {
   fill: #4a4a4a;
 }
 .header-nav {
-  padding: 15px 17px 14px 17px;
+  padding: 6px 17px 6px 17px;
   vertical-align: middle;
 }
 .header-nav .dropdown-menu,
@@ -2281,9 +2281,9 @@ li.product-flag.on-sale {
   content: "|";
   padding: 0 20px;
 }
-.product-tab .nav-item a:hover,
-.product-tab .nav-item a.active {
-  color: #ffcc00;
+.product-tab .nav-tabs .nav-item a:hover, .product-tab .nav-tabs .nav-item a.active {
+  color: #dc0c22;
+  border-color: transparent;
 }
 .product-tab {
   background: #fff;
@@ -2337,27 +2337,11 @@ li.product-flag.on-sale {
 .custhr {
   margin-bottom: 0;
 }
-.product-tab .nav-tabs .nav-item a.active::before {
-  background-color: #ffcc00;
-  height: 2px;
-  width: 40px;
-}
-.product-tab .nav-tabs .nav-item a::before {
-  background-color: transparent;
-  content: "";
-  height: 2px;
-  margin: 0 auto;
-  position: absolute;
-  top: 36px;
-  transition: all 0.4s ease-out 0s;
-  width: 3px;
-}
+
 .product-tab .nav-item {
   display: inline-block;
   position: relative;
-}
-.product-tab .nav-item a:hover {
-  color: #ffcc00;
+  margin-bottom: 0px;
 }
 .product-manufacturer {
   margin-bottom: 10px;
@@ -4318,6 +4302,9 @@ body.active .sidenav .mobile_top_menu_wrapper {
     border-radius: 0;
     padding: 13px 20px;
   }
+  #mobile_populer_products_pill .items-list li.item {
+    padding: 0 10px;
+}
 }
 
 .mobile_menu_contents .nav-pills {
@@ -4325,19 +4312,15 @@ body.active .sidenav .mobile_top_menu_wrapper {
 }
 .mobile_menu_contents .nav-pills .nav-item .nav-link {
     background: #FFFFFF;
-    /* border: 1px solid rgba(0, 0, 0, 0.1); */
     box-sizing: border-box;
-    /* border-radius: 5px; */
+    border-radius: 0;
     color: #000;
-    padding: 5px 6px;
     margin: 2px;
     padding: 5px 0px;
-    /* font-size: 14px; */
     border-bottom: 2px solid transparent;
 }
 .mobile_menu_contents .nav-pills .nav-item .nav-link:hover,
 .mobile_menu_contents .nav-pills .nav-item .nav-link.active {
-    /* color: #fff; */
     border-bottom-color: #fece3c;
 }
 

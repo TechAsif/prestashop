@@ -23,7 +23,7 @@
  * International Registered Trademark & Property of PrestaShop SA
  *}
 
-<div id="block_myaccount_infos" class="links wrapper col-md-3 col-sm-3 col-lg-3 col-xs-12 lnk-link">
+<div id="block_myaccount_infos" class="links wrapper col-md-3 col-lg-3 col-xs-12 lnk-link">
   <h3 class="myaccount-title hidden-sm-down">
     <a class="text-uppercase" href="{$urls.pages.my_account}" rel="nofollow">
       {l s='Your account' d='Shop.Theme.Customeraccount'}
