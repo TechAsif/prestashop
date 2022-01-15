@@ -332,20 +332,18 @@ class WbBlockSearch extends Module implements WidgetInterface
             $sql_groups = 'AND cg.`id_group` '.(count($groups) ? 'IN ('.implode(',', $groups).')' : '= 1');
         }
 
-        $results = $db->executeS('
-        SELECT cp.`id_product`
-        FROM `'._DB_PREFIX_.'category_product` cp
+        $searchSql = 'SELECT cp.`id_product` FROM `'._DB_PREFIX_.'category_product` cp
         '.(Group::isFeatureActive() ? 'INNER JOIN `'._DB_PREFIX_.'category_group` cg ON cp.`id_category` = cg.`id_category`' : '').'
         INNER JOIN `'._DB_PREFIX_.'category` c ON cp.`id_category` = c.`id_category`
         INNER JOIN `'._DB_PREFIX_.'product` p ON cp.`id_product` = p.`id_product`
         '.Shop::addSqlAssociation('product', 'p', false).'
-        WHERE c.`active` = 1
-        AND product_shop.`active` = 1
-        AND product_shop.`active` = 1
+        WHERE c.`active` = 1 AND product_shop.`active` = 1
         '.($id_cat ? 'AND c.`id_category` = '.$id_cat.'':'').'
         AND product_shop.`visibility` IN ("both", "search")
         AND product_shop.indexed = 1
-        '.$sql_groups, true, false);
+        '.$sql_groups;
+
+        $results = $db->executeS($searchSql, true, false);
 
         $eligible_products = array();
         foreach ($results as $row) {

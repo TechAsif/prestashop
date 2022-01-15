@@ -122,6 +122,7 @@ $(document).ready(() => {
 
   var handleCartAction = (event) => {
     event.preventDefault();
+    event.stopPropagation();
 
     let $target = $(event.currentTarget);
     let dataset = event.currentTarget.dataset;

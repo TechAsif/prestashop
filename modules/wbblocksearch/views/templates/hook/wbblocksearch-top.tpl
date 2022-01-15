@@ -67,7 +67,7 @@
 {/if}
 
 <script type="text/javascript">
-var limit_character = "<p class='limit'>{l s='Number of characters at least are 3' mod='wbblocksearch'}</p>";
+var limit_character = "<p class='limit'>{l s='Number of characters at least are 2' mod='wbblocksearch'}</p>";
 var close_text = "{l s='close' mod='wbblocksearch'}";
 </script>
 <!-- /Block search module TOP -->

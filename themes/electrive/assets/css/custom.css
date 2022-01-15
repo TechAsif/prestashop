@@ -1247,9 +1247,7 @@ body.active .allhead.fixed {
   fill: #fff;
   fill: #4c4c4c;
 }
-.thumbnail-container .button-group button:hover,
-.thumbnail-container .button-group a:hover,
-.thumbnail-container .button-group button.cartb:hover {
+.thumbnail-container .button-group button:hover, .thumbnail-container .button-group a:hover, .thumbnail-container .button-group button.cartb:hover, .wb-product-list .thumbnail-container .button-group button.cartb:hover {
   background-color: #ffcc00;
   border: 1px solid #ffcc00;
 }
@@ -2780,7 +2778,7 @@ body.tax-display-enabled .product-accessories .thumbnail-container {
 }
 @media (min-width: 768px) {
   .wb-product-list .wb-product-desc {
-    text-align: left;
+    text-align: left !important;
     padding: 15px 15px 0 15px;
     border-top: none;
     margin: 0;

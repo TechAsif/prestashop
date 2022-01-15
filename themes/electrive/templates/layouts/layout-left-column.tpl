@@ -31,7 +31,7 @@
     <div id="category-description" class="col-sm-12">{$category.description nofilter}</div>
   {/if}
 
-  <div id="left-column" class="col-xs-12 col-sm-4 col-md-3">
+  <div id="left-column" class="col-xs-12 col-sm-12 col-md-3">
     {if $page.page_name == 'product'}
       {hook h='displayLeftColumnProduct'}
     {else}
@@ -43,7 +43,7 @@
 {block name='right_column'}{/block}
 
 {block name='content_wrapper'}
-  <div id="content-wrapper" class="left-column col-xs-12 col-sm-8 col-md-9">
+  <div id="content-wrapper" class="left-column col-xs-12 col-sm-12 col-md-9">
     {hook h="displayContentWrapperTop"}
     {block name='content'}
       <p>Hello world! This is HTML5 Boilerplate.</p>
