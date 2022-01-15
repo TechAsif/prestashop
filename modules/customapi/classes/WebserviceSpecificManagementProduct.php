@@ -101,7 +101,31 @@ class WebserviceSpecificManagementProduct implements WebserviceSpecificManagemen
         return $this;
     }
 
-    public function getProducts($id_category, $limit, $name, $date, $sale, $attribute) {
+    public function getProducts($id_category, $limit, $name, $date, $sale, $attribute, $id_product) {
+
+        $abc = '
+        SELECT DISTINCT p.`id_product`
+        FROM `' . _DB_PREFIX_ . 'product` p
+        LEFT JOIN `' . _DB_PREFIX_ . 'product_lang` pl ON pl.`id_product` = p.`id_product`
+        LEFT JOIN `' . _DB_PREFIX_ . 'category_product` c ON c.`id_product` = p.`id_product`
+        LEFT JOIN `' . _DB_PREFIX_ . 'specific_price` pr ON pr.`id_product` = p.`id_product`
+        LEFT JOIN `' . _DB_PREFIX_ . 'product_attribute` pa ON pa.`id_product` = p.`id_product`
+        LEFT JOIN `' . _DB_PREFIX_ . 'product_attribute_combination` pac ON pac.`id_product_attribute` = pa.`id_product_attribute`
+        WHERE 1 AND p.`active` = 1 AND p.`id_product` = '.$id_product.'
+        ' . (!empty($attribute) ? ' AND pac.`id_attribute` = ' . $attribute . '' : '') . '
+        ' . (!empty($sale) ? ' AND pr.`reduction` IS NOT NULL' : '') . '
+        ' . (!empty($id_category) ? ' AND c.`id_category` IN (' . $id_category . ')' : '') . ' ' . (!empty($name) ? ' AND pl.`name` LIKE \'%' . pSQL($name) . '%\'
+        OR p.`ean13` LIKE \'%' . pSQL($name) . '%\'
+        OR p.`isbn` LIKE \'%' . pSQL($name) . '%\'
+        OR p.`upc` LIKE \'%' . pSQL($name) . '%\'
+        OR p.`reference` LIKE \'%' . pSQL($name) . '%\'
+        OR p.`supplier_reference` LIKE \'%' . pSQL($name) . '%\'
+        OR EXISTS(SELECT * FROM `' . _DB_PREFIX_ . 'product_supplier` sp WHERE sp.`id_product` = p.`id_product` AND `product_supplier_reference` LIKE \'%' . pSQL($name) . '%\')' : '') . '
+        ' . (!empty($date) ? 'ORDER BY p.`date_upd` DESC' : 'ORDER BY p.`date_upd` DESC') . '
+        LIMIT '.$limit;
+
+        $ab= 10;
+         
         return Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS(
             '
             SELECT DISTINCT p.`id_product`
@@ -111,7 +135,7 @@ class WebserviceSpecificManagementProduct implements WebserviceSpecificManagemen
             LEFT JOIN `' . _DB_PREFIX_ . 'specific_price` pr ON pr.`id_product` = p.`id_product`
             LEFT JOIN `' . _DB_PREFIX_ . 'product_attribute` pa ON pa.`id_product` = p.`id_product`
             LEFT JOIN `' . _DB_PREFIX_ . 'product_attribute_combination` pac ON pac.`id_product_attribute` = pa.`id_product_attribute`
-            WHERE 1 AND p.`active` = 1 
+            WHERE 1 AND p.`active` = 1 AND p.`id_product` = '.$id_product.'
             ' . (!empty($attribute) ? ' AND pac.`id_attribute` = ' . $attribute . '' : '') . '
             ' . (!empty($sale) ? ' AND pr.`reduction` IS NOT NULL' : '') . '
             ' . (!empty($id_category) ? ' AND c.`id_category` IN (' . $id_category . ')' : '') . ' ' . (!empty($name) ? ' AND pl.`name` LIKE \'%' . pSQL($name) . '%\'
@@ -165,6 +189,7 @@ class WebserviceSpecificManagementProduct implements WebserviceSpecificManagemen
         
         $objects_products['empty'] = new Product();
         $id_category = $this->wsObject->urlFragments['id_category'] ?? null;
+        $id_product = $this->wsObject->urlFragments['id_product'] ?? null;
         $limit = $this->wsObject->urlFragments['limit'] ?? '0,10';
         $name = $this->wsObject->urlFragments['name'] ?? null;
         $date = $this->wsObject->urlFragments['date'] ?? null;
@@ -173,7 +198,7 @@ class WebserviceSpecificManagementProduct implements WebserviceSpecificManagemen
         $lang = $this->wsObject->urlFragments['lang'] ?? 'en';
         $lang = $this->getLanguageId($lang) ?? [];
         $lang = count($lang) > 0 ? strval($lang[0]['id_lang']) : '1';
-        $products = $this->getProducts($id_category, $limit, $name, $date, $sale, $attribute);
+        $products = $this->getProducts($id_category, $limit, $name, $date, $sale, $attribute, $id_product);
         foreach($products as $product) {
             $pro = new Product($product['id_product']);
             if (Configuration::get('CUSTOMAPI_ENABLE_TAX', true) == true) {
