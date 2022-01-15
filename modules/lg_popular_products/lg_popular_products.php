@@ -62,7 +62,7 @@ class lg_popular_products extends Module implements WidgetInterface
 	public function getPopularProducts()
 	{
 
-		$product_ids = "5935, 5933, 5928, 5916, 5912, 5910, 5900";
+		$product_ids = "5672, 13687, 18222, 14180, 17638, 17148, 13585, 14851, 18531, 9424";
 
 
 		$sql = 'SELECT p.*, pl.*, image_shop.*, il.*, m.`name` AS manufacturer_name, s.`name` AS supplier_name
