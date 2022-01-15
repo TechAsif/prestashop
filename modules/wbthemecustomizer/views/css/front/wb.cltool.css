@@ -278,6 +278,7 @@ body > .wballcor {display: none;}
 }
 .wbopen-closeclr.wbclrdisable{
   border-radius: 25px 0 0 25px;
+  background: transparent;
 }
 .wbopen-closeclr a:hover {
   cursor: pointer;
