@@ -108,6 +108,21 @@
 						</span>
 					</li>
 				{/if}
+
+                {if $customer.id_default_group == "4"}
+				<li {if $logic == 10}class="menu_active"{/if}>
+					<span>
+						<a href="{if isset($product_list_link)}{$product_list_link}{else}{$link->getModuleLink('marketplace', 'youroffers')|addslashes}{/if}">
+							<i class="material-icons">&#xE149;</i>
+							Your Offers
+							<span class="wkbadge-primary" style="float:right;">{$totalSellerOffersProducts}</span>
+							<div class="clearfix"></div>
+						</a>
+					</span>
+				</li>
+				{/if}
+                
+
 				{hook h="displayMPMenuBottom"}
 			</ul>
 		</div>
