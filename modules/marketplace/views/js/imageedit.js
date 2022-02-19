@@ -79,6 +79,42 @@ $(document).ready(function() {
         });
     }
 
+    /* This is for your offers template */
+    if ($("#mp_b").length) {
+        $('#mp_b').DataTable({
+            "bStateSave": true,
+            "order": [],
+            "sDom": 'lrtip',
+            "ordering": false,
+            "pageLength": 10,
+            "lengthChange": false,
+
+            "columnDefs": [{
+                "targets": "_all",
+                "defaultContent": "-",
+                "orderable": false,
+                
+    
+                
+                
+                
+            }],
+            "language": {
+                "lengthMenu": display_name + " _MENU_ " + records_name,
+                "zeroRecords": no_product,
+                "info": show_page + " _PAGE_ " + show_of + " _PAGES_ ",
+                "infoEmpty": no_record,
+                "infoFiltered": "(" + filter_from + " _MAX_ " + t_record + ")",
+                "sSearch": search_item,
+                "oPaginate": {
+                    "sPrevious": p_page,
+                    "sNext": n_page
+                }
+            },
+            
+        });
+    }
+
     // popup image details on image quick details
     $(document).on('click', '.edit_seq', function(e) {
         e.preventDefault();

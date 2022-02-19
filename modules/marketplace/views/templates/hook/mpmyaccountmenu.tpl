@@ -69,6 +69,16 @@
 			{l s='Payment Detail' mod='marketplace'}
 		</span>
 	</a>
+
+	{if $customer.id_default_group == "4"}
+           <a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" title="{l s='Payment Detail' mod='marketplace'}" href="{if isset($payment_detail_link)}{$payment_detail_link}{else}{$link->getModuleLink('marketplace', 'youroffers')}{/if}">
+				<span class="link-item">
+					<i class="material-icons">local_offer</i>
+					Your Offers
+				</span>
+	      </a>
+	{/if}	  	  		
+
 	{if Configuration::get('WK_MP_PRESTA_ATTRIBUTE_ACCESS')}
 		<a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" href="{$link->getModuleLink('marketplace', 'productattribute')}" title="{l s='Product Attributes' mod='marketplace'}">
 			<span class="link-item">
@@ -101,6 +111,8 @@
 			</div>
 		</div>
 	{/if}
+
+
 	{hook h="displayMpMyAccountMenuInactiveSeller"}
 {else if $is_seller == -1}
 	<a class="col-lg-4 col-md-6 col-sm-6 col-xs-12" title="{l s='Click Here for Seller Request' mod='marketplace'}" href="{$link->getModuleLink('marketplace', 'sellerrequest')}">
